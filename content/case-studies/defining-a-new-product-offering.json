@@ -6,6 +6,7 @@
   "client": "The Pill Club",
   "status": "Shipped",
   "thumbnailTone": "mint-50",
+  "heroTone": "gold-200",
   "thumbnailImage": "/assets/thumb-pillclub.png",
   "heroImages": [
     "/assets/thumb-checklist.png",

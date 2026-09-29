@@ -48,7 +48,11 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
 
               <div
                 className="relative flex h-[220px] w-full items-end justify-center gap-4 overflow-hidden rounded-[var(--radius-card)] px-4 pt-8 md:h-[368px] md:gap-6 md:px-10"
-                style={{ backgroundColor: tokenBg(study.thumbnailTone) }}
+                style={{
+                  backgroundColor: tokenBg(
+                    study.heroTone ?? study.thumbnailTone,
+                  ),
+                }}
               >
                 {heroImages.slice(0, 3).map((src, i) => (
                   <div

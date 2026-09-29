@@ -66,8 +66,10 @@ export interface CaseStudy {
   year: string;
   client: string;
   status: "Concept" | "Shipped" | string;
-  /** Landing card + case study hero background token */
+  /** Landing card background token */
   thumbnailTone: TokenColor;
+  /** Case study hero band token (falls back to thumbnailTone) */
+  heroTone?: TokenColor;
   thumbnailImage: string;
   /** Optional second/third hero phone images */
   heroImages?: string[];

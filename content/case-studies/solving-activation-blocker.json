@@ -1,0 +1,53 @@
+{
+  "slug": "solving-activation-blocker",
+  "title": "Solving activation blocker",
+  "summary": "Shipped work addressing an activation blocker for Boost Mobile.",
+  "year": "2026",
+  "client": "Boost Mobile",
+  "status": "Shipped",
+  "thumbnailTone": "gold-200",
+  "thumbnailImage": "/assets/thumb-checklist.png",
+  "heroImages": ["/assets/thumb-checklist.png"],
+  "pills": [
+    { "label": "Boost Mobile", "tone": "orange" },
+    { "label": "Shipped", "tone": "green" },
+    { "label": "2026", "tone": "blue" }
+  ],
+  "meta": {
+    "tools": "Figma, Analytics",
+    "team": "Design + Product",
+    "duration": "2026"
+  },
+  "featuredOrder": 4,
+  "cardHeight": "short",
+  "sections": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "title": "Removing friction at the moment of activation.",
+      "body": "Focused on the steps that blocked new members from completing activation.",
+      "nav": true
+    },
+    {
+      "id": "problem",
+      "label": "PROBLEM",
+      "title": "A critical step was unclear and caused drop-off.",
+      "body": "Members stalled when instructions and confirmation states were ambiguous.",
+      "nav": true
+    },
+    {
+      "id": "solution",
+      "label": "SOLUTION",
+      "title": "Clearer guidance and confirmation across the activation path.",
+      "body": "Redesigned key screens and messaging to reduce ambiguity.",
+      "nav": true
+    },
+    {
+      "id": "outcome",
+      "label": "OUTCOME",
+      "title": "Shipped improvements to the activation journey.",
+      "body": "Reduced friction on the primary activation path.",
+      "nav": true
+    }
+  ]
+}

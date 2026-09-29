@@ -1,0 +1,53 @@
+{
+  "slug": "clarifying-progress-indication",
+  "title": "Clarifying progress indication",
+  "summary": "Concept work clarifying progress indication in The Pill Club onboarding.",
+  "year": "2021",
+  "client": "The Pill Club",
+  "status": "Concept",
+  "thumbnailTone": "orange-50",
+  "thumbnailImage": "/assets/thumb-checklist.png",
+  "heroImages": ["/assets/thumb-checklist.png"],
+  "pills": [
+    { "label": "The Pill Club", "tone": "pink" },
+    { "label": "Concept", "tone": "green" },
+    { "label": "2021", "tone": "blue" }
+  ],
+  "meta": {
+    "tools": "Figma",
+    "team": "1 Designer",
+    "duration": "2021"
+  },
+  "featuredOrder": 3,
+  "cardHeight": "tall",
+  "sections": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "title": "Making multi-step eligibility progress easier to understand.",
+      "body": "Explored clearer progress indication for questionnaire flows.",
+      "nav": true
+    },
+    {
+      "id": "problem",
+      "label": "PROBLEM",
+      "title": "Users lost orientation mid-funnel.",
+      "body": "Long branching questionnaires made it hard to know how far along they were.",
+      "nav": true
+    },
+    {
+      "id": "solution",
+      "label": "SOLUTION",
+      "title": "Visible step structure and calmer interstitial pacing.",
+      "body": "Concepts that surface section progress without adding cognitive load.",
+      "nav": true
+    },
+    {
+      "id": "outcome",
+      "label": "OUTCOME",
+      "title": "Patterns carried into related funnel work.",
+      "body": "Informed later shipped dermatology funnel patterns.",
+      "nav": true
+    }
+  ]
+}

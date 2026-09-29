@@ -1,0 +1,69 @@
+{
+  "slug": "defining-a-new-product-offering",
+  "title": "Defining a new product offering",
+  "summary": "Expanding The Pill Club offerings to dermatology with a medically compliant, low-friction eligibility experience.",
+  "year": "2021",
+  "client": "The Pill Club",
+  "status": "Shipped",
+  "thumbnailTone": "mint-50",
+  "thumbnailImage": "/assets/thumb-pillclub.png",
+  "heroImages": [
+    "/assets/thumb-checklist.png",
+    "/assets/thumb-checklist.png",
+    "/assets/thumb-checklist.png"
+  ],
+  "pills": [
+    { "label": "The Pill Club", "tone": "pink" },
+    { "label": "Shipped", "tone": "green" }
+  ],
+  "meta": {
+    "tools": "Figma, Jira, Zeplin, Photoshop, Fullstory",
+    "team": "1 Designer, 2 PMs",
+    "duration": "3 weeks, 2021"
+  },
+  "featuredOrder": 2,
+  "cardHeight": "tall",
+  "sections": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "title": "How might we expand The Pill Club offerings to dermatology?",
+      "body": "Delivered high‑fidelity screens aligned with the design system to simplify complex information, while creating empathetic, accessible interstitials that reduced cognitive load and guided users through the experience.",
+      "nav": true
+    },
+    {
+      "id": "problem",
+      "label": "PROBLEM",
+      "title": "Users were confused by the flow in early testing of the new onboarding funnel.",
+      "quote": "The birth control funnel had a 27% drop‑off for eligibility questions our goal was to reduce this for dermatology.",
+      "bodyAfter": "To launch the new dermatology offering, we needed a medically compliant, low‑friction eligibility questionnaire. Early tests showed users were confused by branching logic and unclear medical terminology, risking drop‑off and misclassification.",
+      "nav": true
+    },
+    {
+      "id": "solution",
+      "label": "Solution",
+      "title": "Defined dermatology funnel wireframes and interstitial page visuals for the dermatology product.",
+      "mediaBlocks": [
+        { "caption": "Introductory interstitial" },
+        { "caption": "Questionnaire structure" },
+        { "caption": "Separating questionaire sections" }
+      ],
+      "quote": "Engineering adopted the new funnel into the design system within 5 sprints.",
+      "nav": true
+    },
+    {
+      "id": "process",
+      "label": "PROCESS",
+      "title": "Balancing interface design with imagery exploration.",
+      "body": "Brainstormed visual scenarios for interstitial pages and built low‑fi iconography examples in Figma. Brand required illustration styles to match existing birth control assets. Collaborated with the brand team to refine visual communication, then advanced to Adobe Creative Suite to create higher‑fidelity illustrations aligned with The Pill Club’s identity.",
+      "nav": false
+    },
+    {
+      "id": "outcome",
+      "label": "OUTCOME",
+      "title": "Reflection and Next Steps",
+      "body": "This project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
+      "nav": true
+    }
+  ]
+}

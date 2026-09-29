@@ -1,0 +1,53 @@
+{
+  "slug": "reimagining-the-app-experience",
+  "title": "Reimagining the app experience",
+  "summary": "Concept exploration for Boost Mobile’s next-generation app experience.",
+  "year": "2026",
+  "client": "Boost Mobile",
+  "status": "Concept",
+  "thumbnailTone": "purple-50",
+  "thumbnailImage": "/assets/thumb-boost-app.png",
+  "heroImages": ["/assets/thumb-boost-app.png"],
+  "pills": [
+    { "label": "Boost Mobile", "tone": "orange" },
+    { "label": "Concept", "tone": "green" },
+    { "label": "2026", "tone": "blue" }
+  ],
+  "meta": {
+    "tools": "Figma, Prototyping",
+    "team": "1 Designer",
+    "duration": "2026"
+  },
+  "featuredOrder": 1,
+  "cardHeight": "short",
+  "sections": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "title": "Reimagining how Boost members manage their mobile experience.",
+      "body": "Concept work exploring a clearer, more personal app shell for everyday account tasks.",
+      "nav": true
+    },
+    {
+      "id": "problem",
+      "label": "PROBLEM",
+      "title": "Core flows felt fragmented across legacy screens.",
+      "body": "Members struggled to find billing, plan, and device actions in one coherent journey.",
+      "nav": true
+    },
+    {
+      "id": "solution",
+      "label": "SOLUTION",
+      "title": "A unified home experience with clearer hierarchy and faster paths to action.",
+      "body": "Proposed information architecture and high-fidelity concepts for the primary app shell.",
+      "nav": true
+    },
+    {
+      "id": "outcome",
+      "label": "OUTCOME",
+      "title": "Direction for future product exploration.",
+      "body": "Established a visual and interaction direction for continued concept validation.",
+      "nav": true
+    }
+  ]
+}

@@ -20,20 +20,19 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
       : [study.thumbnailImage];
 
   return (
-    <div className="mx-auto flex w-full max-w-[1512px] flex-col gap-10 px-6 pb-24 pt-6 md:flex-row md:gap-16 md:px-[66px] md:pt-8">
+    <div className="page-shell flex flex-col gap-8 pb-16 pt-4 sm:gap-10 sm:pb-24 sm:pt-6 lg:flex-row lg:gap-16 lg:pt-8">
       <aside className="hidden w-[125px] shrink-0 lg:block">
-        <CaseStudyNav sections={study.sections} />
+        <CaseStudyNav sections={study.sections} variant="sidebar" />
       </aside>
 
-      <div className="min-w-0 flex-1 md:max-w-[960px]">
-        {/* Mobile back + section jump */}
-        <div className="mb-8 lg:hidden">
-          <CaseStudyNav sections={study.sections} />
+      <div className="min-w-0 flex-1 lg:max-w-[960px]">
+        <div className="mb-6 sm:mb-8 lg:hidden">
+          <CaseStudyNav sections={study.sections} variant="mobile" />
         </div>
 
-        <header className="mb-14 flex flex-col gap-14 md:mb-[56px]">
+        <header className="mb-10 flex flex-col gap-10 sm:mb-14 sm:gap-14 md:mb-[56px]">
           <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-2 sm:gap-4">
               {study.pills
                 .filter((p) => !/^\d{4}$/.test(p.label))
                 .map((pill) => (
@@ -41,13 +40,13 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                 ))}
             </div>
 
-            <div className="flex flex-col gap-8 md:gap-[45px]">
-              <h1 className="font-display text-[40px] font-bold leading-normal text-text-primary md:text-[64px]">
+            <div className="flex flex-col gap-6 sm:gap-8 md:gap-[45px]">
+              <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-normal text-text-primary">
                 {study.title}
               </h1>
 
               <div
-                className="relative flex h-[220px] w-full items-end justify-center gap-4 overflow-hidden rounded-[var(--radius-card)] px-4 pt-8 md:h-[368px] md:gap-6 md:px-10"
+                className="relative flex h-[180px] w-full items-end justify-center gap-3 overflow-hidden rounded-[var(--radius-card-sm)] px-3 pt-6 sm:h-[220px] sm:gap-4 sm:rounded-[var(--radius-card)] sm:px-4 sm:pt-8 md:h-[368px] md:gap-6 md:px-10"
                 style={{
                   backgroundColor: tokenBg(
                     study.heroTone ?? study.thumbnailTone,
@@ -64,7 +63,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                       alt=""
                       fill
                       className="object-contain object-bottom"
-                      sizes="255px"
+                      sizes="(max-width: 768px) 28vw, 255px"
                       priority={i === 0}
                     />
                   </div>
@@ -73,7 +72,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 font-mono text-base font-normal leading-[30px] text-text-accent md:flex-row md:gap-[140px]">
+          <div className="flex flex-col gap-6 font-mono text-sm font-normal leading-relaxed text-text-accent sm:gap-8 sm:text-base sm:leading-[30px] md:flex-row md:gap-12 lg:gap-[140px]">
             <MetaBlock label="TOOLS" value={study.meta.tools} className="md:w-[218px]" />
             <MetaBlock label="TEAM" value={study.meta.team} className="md:w-[177px]" />
             <MetaBlock

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 interface CaseStudyNavProps {
   sections: CaseStudySection[];
+  variant?: "sidebar" | "mobile";
 }
 
 export function navLabel(section: CaseStudySection): string {
@@ -21,13 +22,60 @@ export function navLabel(section: CaseStudySection): string {
   return raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
 }
 
-export function CaseStudyNav({ sections }: CaseStudyNavProps) {
+export function CaseStudyNav({
+  sections,
+  variant = "sidebar",
+}: CaseStudyNavProps) {
   const navSections = useMemo(
     () => sections.filter((s) => s.nav !== false),
     [sections],
   );
   const ids = useMemo(() => navSections.map((s) => s.id), [navSections]);
   const activeId = useScrollSpy(ids);
+
+  if (variant === "mobile") {
+    return (
+      <nav aria-label="Case study sections" className="flex flex-col gap-4">
+        <Link
+          href="/"
+          className="inline-flex w-fit items-center gap-2.5 font-mono text-base font-semibold text-text-muted hover:text-text-primary sm:text-lg"
+        >
+          <svg width="10" height="18" viewBox="0 0 12 22" fill="none" aria-hidden>
+            <path
+              d="M10 1L2 11L10 21"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          back
+        </Link>
+
+        <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {navSections.map((section) => {
+            const isActive = activeId === section.id;
+            return (
+              <li key={section.id} className="shrink-0">
+                <a
+                  href={`#${section.id}`}
+                  className={cn(
+                    "inline-flex rounded-[var(--radius-nav)] border border-text-secondary/40 px-3 py-1.5 font-mono text-sm leading-normal transition-colors",
+                    isActive
+                      ? "border-text-secondary bg-text-secondary font-bold text-bg-base"
+                      : "font-light text-text-primary hover:border-text-secondary",
+                  )}
+                  aria-current={isActive ? "location" : undefined}
+                >
+                  {navLabel(section)}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    );
+  }
 
   return (
     <nav

@@ -48,10 +48,14 @@
 
   /* Layout */
   --page-max: 1343px;
+  --page-shell: 1512px;
+  --page-gutter: 1.5rem; /* 24px — mobile */
   --radius-card: 49px;
+  --radius-card-sm: 28px;
   --radius-pill: 24px;
   --radius-nav: 8px;
   --radius-media: 40px;
+  --radius-media-sm: 24px;
 
   /* shadcn bridge → Figma semantics */
   --background: var(--bg-base);
@@ -86,6 +90,18 @@
   --chart-3: var(--blue-100);
   --chart-4: var(--pink-50);
   --chart-5: var(--mint-50);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-gutter: 2.5rem; /* 40px — tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 66px; /* desktop — Figma */
+  }
 }
 
 @theme inline {
@@ -160,10 +176,26 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-mono-ui);
+    overflow-x: clip;
+  }
+}
+
+@layer utilities {
+  .page-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--page-shell);
+    padding-inline: var(--page-gutter);
+  }
+
+  .page-content {
+    width: 100%;
+    max-width: var(--page-max);
   }
 }

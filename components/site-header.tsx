@@ -34,14 +34,14 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
         </svg>
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-[1512px] items-start justify-between px-6 pb-6 pt-8 md:px-[66px] md:pt-[53px]">
+      <div className="page-shell relative flex items-start justify-between pb-6 pt-8 md:pt-[53px]">
         <Link href="/" className="relative z-10 shrink-0" aria-label="Ellis Aguilar home">
-          <LogoMark className="size-[88px] md:size-[140px]" />
+          <LogoMark className="size-16 sm:size-[88px] md:size-[140px]" />
         </Link>
 
         <nav
           aria-label="Primary"
-          className="relative z-10 mt-4 flex flex-wrap items-center justify-end gap-2 md:mt-[64px] md:gap-[26px]"
+          className="relative z-10 mt-2 flex max-w-[65%] flex-wrap items-center justify-end gap-1.5 sm:mt-4 sm:max-w-none sm:gap-2 md:mt-[64px] md:gap-[26px]"
         >
           {NAV.map((item) => {
             const isActive = item.match === active;
@@ -50,7 +50,7 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "inline-flex items-center justify-center rounded-[var(--radius-nav)] border-2 border-text-secondary px-3 py-1 font-mono text-sm font-light text-text-secondary md:px-5 md:text-2xl",
+                  "inline-flex items-center justify-center rounded-[var(--radius-nav)] border-2 border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary sm:px-3 sm:text-sm md:px-5 md:text-2xl",
                   isActive && "bg-text-secondary text-bg-base",
                 )}
               >

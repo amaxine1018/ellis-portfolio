@@ -11,7 +11,7 @@
 */
 :root {
   /* Primitives */
-  --cream-50: #fff9eb;
+  --cream-50: #fffcf5;
   --brown-800: #55280c;
   --orange-200: #dc5400;
   --orange-100: #f48642;
@@ -22,8 +22,10 @@
   --pink-50: #ff828e;
   --mint-50: #70d89d;
   --gold-200: #fdd052;
+  --yellow-50: #feff9c;
   --green-200: #4fb054;
   --blue-100: #809ee9;
+  --blue-50: #c3d4ff;
   --navy-800: #03036f;
 
   /* Semantics */
@@ -124,8 +126,10 @@
   --color-pink-50: var(--pink-50);
   --color-mint-50: var(--mint-50);
   --color-gold-200: var(--gold-200);
+  --color-yellow-50: var(--yellow-50);
   --color-green-200: var(--green-200);
   --color-blue-100: var(--blue-100);
+  --color-blue-50: var(--blue-50);
   --color-navy-800: var(--navy-800);
   --font-sans: var(--font-mono-ui);
   --font-display: var(--font-display);

@@ -20,12 +20,12 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
       : [study.thumbnailImage];
 
   return (
-    <div className="page-shell flex flex-col gap-8 pb-16 pt-4 sm:gap-10 sm:pb-24 sm:pt-6 lg:flex-row lg:gap-16 lg:pt-8">
-      <aside className="hidden w-[125px] shrink-0 lg:block">
+    <div className="page-shell flex flex-col gap-8 pb-16 sm:gap-10 sm:pb-24 lg:flex-row lg:items-start lg:gap-[170px]">
+      <aside className="hidden w-[125px] shrink-0 pt-[120px] lg:block lg:self-stretch">
         <CaseStudyNav sections={study.sections} variant="sidebar" />
       </aside>
 
-      <div className="min-w-0 flex-1 lg:max-w-[960px]">
+      <div className="min-w-0 flex-1 pt-4 sm:pt-6 lg:max-w-[960px] lg:pt-8">
         <div className="mb-6 sm:mb-8 lg:hidden">
           <CaseStudyNav sections={study.sections} variant="mobile" />
         </div>

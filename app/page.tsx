@@ -18,16 +18,18 @@ export default async function HomePage() {
       <main className="page-shell flex flex-1 flex-col items-center pb-8">
         <div className="page-content flex flex-col items-center gap-12 sm:gap-16 md:gap-[70px]">
           {/* Hero */}
-          <section className="flex w-full flex-col items-center gap-10 md:gap-12 lg:gap-[69px]">
-            <div className="flex w-full flex-col items-center gap-8 md:gap-10 lg:flex-row lg:items-center lg:justify-between">
-              <h1 className="w-full max-w-[872px] font-display text-[clamp(2rem,5vw+0.5rem,4rem)] font-bold leading-normal text-text-primary">
-                Hello, I&apos;m Ellis, a{" "}
-                <span className="line-through decoration-solid">
-                  product designer
-                </span>{" "}
-                <span className="text-text-accent">builder</span> using AI to
-                drive innovation
-              </h1>
+          <section className="flex w-full flex-col items-center gap-8 md:gap-10">
+            <div className="flex w-full flex-col items-center gap-8 md:gap-10 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex w-full max-w-[872px] items-center lg:py-[101px]">
+                <h1 className="w-full font-display text-[clamp(2rem,5vw+0.5rem,4rem)] font-bold leading-normal text-text-primary">
+                  Hello, I&apos;m Ellis, a{" "}
+                  <span className="line-through decoration-solid">
+                    product designer
+                  </span>{" "}
+                  <span className="text-text-accent">builder</span> using AI to
+                  drive innovation
+                </h1>
+              </div>
               <HeroSketch />
             </div>
 

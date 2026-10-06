@@ -28,7 +28,8 @@ export type TokenColor =
   | "pink-50"
   | "orange-100"
   | "green-200"
-  | "blue-100";
+  | "blue-100"
+  | "blue-50";
 
 export interface CaseStudyMediaBlock {
   caption: string;

@@ -16,32 +16,59 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ active = "home" }: SiteHeaderProps) {
   return (
-    <header className="relative z-20">
-      {/* Purple top wave — Figma node Top */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[168px] overflow-hidden md:h-[252px]">
+    <header className="relative z-20 w-full [container-type:inline-size]">
+      {/* Curved lobe keeps its aspect ratio; the flat right band stretches to the viewport. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0"
+        style={{ height: "min(181.831px, calc(100cqw * 181.831 / 1512))" }}
+      >
         <svg
-          className="block h-full w-full"
-          viewBox="0 0 1512 252"
+          className="absolute top-0 left-0 h-full"
+          style={{ width: "min(276px, calc(100cqw * 276 / 1512))" }}
+          viewBox="0 0 276 181.831"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
+          preserveAspectRatio="xMinYMin meet"
           aria-hidden
         >
           <path
-            d="M207.5 231C80.5 303.5 0 166 0 166V0H1512V69H340C223 69 334.5 158.5 207.5 231Z"
+            d="M154.5 171.5C80.5 203.163 0 159 0 80.5V0H276V47.5C185.5 47.5 228.5 139.837 154.5 171.5Z"
             fill="var(--purple-50)"
           />
         </svg>
+        <svg
+          className="absolute top-0"
+          style={{
+            left: "min(275px, calc(100cqw * 275 / 1512))",
+            width: "calc(100% - min(275px, calc(100cqw * 275 / 1512)))",
+            height: "min(47.5px, calc(100cqw * 47.5 / 1512))",
+          }}
+          viewBox="0 0 100 47.5"
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <rect width="100" height="47.5" fill="var(--purple-50)" />
+        </svg>
       </div>
 
-      <div className="page-shell relative flex items-start justify-between pb-6 pt-8 md:pt-[53px]">
-        <Link href="/" className="relative z-10 shrink-0" aria-label="Ellis Aguilar home">
-          <LogoMark className="size-16 sm:size-[88px] md:size-[140px]" />
-        </Link>
+      <Link
+        href="/"
+        className="absolute z-10 block"
+        style={{
+          top: "min(37px, calc(100cqw * 37 / 1512))",
+          left: "min(55px, calc(100cqw * 55 / 1512))",
+          width: "min(102px, calc(100cqw * 102 / 1512))",
+          height: "min(102px, calc(100cqw * 102 / 1512))",
+        }}
+        aria-label="Ellis Aguilar home"
+      >
+        <LogoMark className="size-full" />
+      </Link>
 
+      <div className="relative mx-auto flex h-[112px] w-full max-w-[1512px] items-start justify-end px-6 sm:h-[140px] sm:px-10 md:h-[164px] lg:h-[188px] lg:px-0">
         <nav
           aria-label="Primary"
-          className="relative z-10 mt-2 flex max-w-[65%] flex-wrap items-center justify-end gap-1.5 sm:mt-4 sm:max-w-none sm:gap-2 md:mt-[64px] md:gap-[26px]"
+          className="relative z-10 mt-12 flex flex-wrap items-center justify-end gap-1.5 sm:mt-14 sm:gap-2 md:mt-[72px] lg:mr-[50px] lg:mt-[83px] lg:gap-[26px]"
         >
           {NAV.map((item) => {
             const isActive = item.match === active;

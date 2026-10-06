@@ -19,8 +19,7 @@ type Point = { x: number; y: number };
 type Stroke = { points: Point[]; bornAt: number };
 
 /**
- * Hero sketch — Figma Sketch 96:38 / Portrait 42:123 / sharpie 117:26
- * Portrait→Sharpie gap 8px; sharpie 415.5×58.5 flush on ledge.
+ * Hero sketch — Figma Sketch 96:38. The flat square post-it is the drawing surface.
  * Interactive: pick up sharpie → draw on sketch → strokes fade after 10s.
  */
 export function HeroSketch() {
@@ -168,9 +167,11 @@ export function HeroSketch() {
   const pointerToLocal = (e: ReactPointerEvent<HTMLCanvasElement>): Point => {
     const canvas = canvasRef.current!;
     const rect = canvas.getBoundingClientRect();
+    const cssW = canvas.width / dprRef.current;
+    const cssH = canvas.height / dprRef.current;
     return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: rect.width === 0 ? 0 : ((e.clientX - rect.left) / rect.width) * cssW,
+      y: rect.height === 0 ? 0 : ((e.clientY - rect.top) / rect.height) * cssH,
     };
   };
 
@@ -215,60 +216,76 @@ export function HeroSketch() {
   };
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[min(100%,455px)] flex-col items-center gap-2">
-      {/* Sticky note / portrait — sketch inset so it only sits on the yellow post-it */}
-      <div
-        ref={postItRef}
-        className="relative isolate h-[280px] w-full sm:h-[320px] md:h-[450px]"
-      >
-        <Image
-          src="/assets/portrait-v2.png"
-          alt=""
-          fill
-          className="object-cover object-top"
-          sizes="(max-width: 640px) 90vw, 455px"
-          priority
-        />
-        {/* Yellow post-it region ≈ Figma padding box; sketch sized to stay inside it */}
-        <div className="absolute inset-0 flex items-start justify-center px-[18%] pt-[16%] sm:px-[20%] sm:pt-[18%] md:justify-start md:px-0 md:pb-[56px] md:pl-[92px] md:pr-[140px] md:pt-[88px]">
+    <div className="relative mx-auto flex w-full max-w-[455px] flex-col items-center gap-[31px]">
+      {/* Sticky note — Figma 152:589, scaled down only when the column is narrower */}
+      <div className="w-full max-w-[332.819px] [container-type:inline-size]">
+        <div
+          ref={postItRef}
+          className="relative"
+          style={{ height: "calc(324 / 332.819 * 100cqw)" }}
+        >
           <div
-            ref={sketchBoxRef}
-            className="relative aspect-square w-full max-w-[180px] sm:max-w-[210px] md:max-w-none md:size-[290px]"
+            className="absolute top-0 left-0 h-[324px] w-[332.819px] origin-top-left"
+            style={{ transform: "scale(calc(100cqw / 332.819px))" }}
           >
-            <Image
-              src="/assets/sketch-v4.png"
-              alt="Ink sketch portrait of Ellis"
-              fill
-              className="object-cover object-[center_20%]"
-              sizes="(max-width: 768px) 210px, 290px"
-              priority
+            <img
+              src="/assets/sticky-shadow.svg"
+              alt=""
+              width={306}
+              height={324}
+              className="absolute top-0 left-0"
             />
-            <canvas
-              ref={canvasRef}
-              aria-hidden
-              className={`absolute inset-0 z-10 size-full ${
-                isSharpieActive
-                  ? "pointer-events-auto touch-none"
-                  : "pointer-events-none"
-              }`}
-              style={
-                isSharpieActive
-                  ? {
-                      cursor: `url('${CURSOR_URL}') ${CURSOR_HOTSPOT}, auto`,
-                    }
-                  : undefined
-              }
-              onPointerDown={onPointerDown}
-              onPointerMove={onPointerMove}
-              onPointerUp={endStroke}
-              onPointerCancel={endStroke}
-            />
+            {/* Flat square post-it is the drawing surface */}
+            <div className="absolute top-0 left-[13.86px] flex size-[318.962px] items-center justify-center">
+              <div
+                ref={sketchBoxRef}
+                className="relative size-[315.9px] bg-yellow-50"
+              >
+                <img
+                  src="/assets/sticky-marks.svg"
+                  alt=""
+                  width={291}
+                  height={47}
+                  className="pointer-events-none absolute top-[241px] left-[12px]"
+                />
+                <div className="pointer-events-none absolute top-[28.5px] left-[34.8px] h-[243px] w-[244px]">
+                  <Image
+                    src="/assets/headshot-sketch.png"
+                    alt="Ink sketch portrait of Ellis"
+                    fill
+                    className="object-cover mix-blend-darken"
+                    sizes="244px"
+                    priority
+                  />
+                </div>
+                <canvas
+                  ref={canvasRef}
+                  aria-hidden
+                  className={`absolute inset-0 z-10 size-full ${
+                    isSharpieActive
+                      ? "pointer-events-auto touch-none"
+                      : "pointer-events-none"
+                  }`}
+                  style={
+                    isSharpieActive
+                      ? {
+                          cursor: `url('${CURSOR_URL}') ${CURSOR_HOTSPOT}, auto`,
+                        }
+                      : undefined
+                  }
+                  onPointerDown={onPointerDown}
+                  onPointerMove={onPointerMove}
+                  onPointerUp={endStroke}
+                  onPointerCancel={endStroke}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Sharpie on ledge — no blend modes; keep grey shadow from Figma export */}
-      <div className="relative -mt-1 flex w-full max-w-[441px] flex-col items-center gap-0">
+      <div className="relative flex w-full max-w-[441px] flex-col items-center gap-0">
         <button
           ref={sharpieBtnRef}
           type="button"

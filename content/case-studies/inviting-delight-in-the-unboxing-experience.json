@@ -1,0 +1,53 @@
+{
+  "slug": "inviting-delight-in-the-unboxing-experience",
+  "title": "Inviting delight in the unboxing experience",
+  "summary": "Concept work bringing delight into the Procter & Gamble unboxing experience.",
+  "year": "2025",
+  "client": "Procter & Gamble",
+  "status": "Concept",
+  "thumbnailTone": "blue-50",
+  "thumbnailImage": "/assets/thumbs/thumb-unboxing.png",
+  "heroImages": ["/assets/thumbs/thumb-unboxing.png"],
+  "pills": [
+    { "label": "Procter & Gamble", "tone": "navy" },
+    { "label": "Concept", "tone": "green" },
+    { "label": "2025", "tone": "blue" }
+  ],
+  "meta": {
+    "tools": "Figma",
+    "team": "1 Designer",
+    "duration": "2025"
+  },
+  "featuredOrder": 2,
+  "cardHeight": "tall",
+  "sections": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "title": "How might we invite delight into the unboxing moment?",
+      "body": "Explored packaging and first-open experiences that feel considered, brand-forward, and easy to navigate.",
+      "nav": true
+    },
+    {
+      "id": "problem",
+      "label": "PROBLEM",
+      "title": "Unboxing felt transactional instead of memorable.",
+      "body": "The first physical touchpoint with the product carried little emotional payoff or guided discovery.",
+      "nav": true
+    },
+    {
+      "id": "solution",
+      "label": "SOLUTION",
+      "title": "A sequenced unboxing narrative with tactile delight.",
+      "body": "Concepted layers, reveals, and micro-moments that make opening the package feel intentional.",
+      "nav": true
+    },
+    {
+      "id": "outcome",
+      "label": "OUTCOME",
+      "title": "A direction ready for stakeholder review.",
+      "body": "Delivered concept explorations and a clear story for how delight can live in the unboxing flow.",
+      "nav": true
+    }
+  ]
+}

@@ -6,8 +6,8 @@
   "client": "Boost Mobile",
   "status": "Shipped",
   "thumbnailTone": "gold-200",
-  "thumbnailImage": "/assets/thumb-checklist.png",
-  "heroImages": ["/assets/thumb-checklist.png"],
+  "thumbnailImage": "/assets/thumbs/thumb-activation.png",
+  "heroImages": ["/assets/thumbs/thumb-activation.png"],
   "pills": [
     { "label": "Boost Mobile", "tone": "orange" },
     { "label": "Shipped", "tone": "green" },
@@ -18,7 +18,7 @@
     "team": "Design + Product",
     "duration": "2026"
   },
-  "featuredOrder": 4,
+  "featuredOrder": 1,
   "cardHeight": "short",
   "sections": [
     {

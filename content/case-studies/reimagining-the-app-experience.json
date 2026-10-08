@@ -1,52 +1,131 @@
 {
   "slug": "reimagining-the-app-experience",
   "title": "Reimagining the app experience",
-  "summary": "Concept exploration for Boost Mobile’s next-generation app experience.",
+  "summary": "Concept exploration for a Boost Mobile app that treats multi-line accounts as a first-class experience.",
   "year": "2026",
   "client": "Boost Mobile",
   "status": "Concept",
   "thumbnailTone": "purple-50",
   "thumbnailImage": "/assets/thumb-boost-app.png",
-  "heroImages": ["/assets/thumb-boost-app.png"],
+  "thumbnailMotion": "boost-intro",
+  "heroLayout": "boost-intro",
+  "heroImages": ["/assets/case-studies/reimagining/hero.png"],
   "pills": [
     { "label": "Boost Mobile", "tone": "orange" },
-    { "label": "Concept", "tone": "green" },
-    { "label": "2026", "tone": "blue" }
+    { "label": "Concept", "tone": "green" }
   ],
   "meta": {
-    "tools": "Figma, Prototyping",
-    "team": "1 Designer",
-    "duration": "2026"
+    "tools": "Figma, Claude Code, Google Stitch, UserZoom, Figma Make",
+    "team": "1 Designer, 1 Researcher",
+    "duration": "10 weeks, 2026"
   },
-  "featuredOrder": 1,
+  "featuredOrder": 0,
   "cardHeight": "short",
   "sections": [
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "Reimagining how Boost members manage their mobile experience.",
-      "body": "Concept work exploring a clearer, more personal app shell for everyday account tasks.",
+      "title": "How might we improve core usability metrics while engaging multi-line users?",
+      "quote": "43% of users have multi-line accounts",
+      "bodyAfter": "Something i realized early on, our current app is centered around the single line user with multi line as an afterthought. While we do serve many single line users, a significant number of accounts has more than one line. And yet our services don't account for features managing and engaging these types of users. this is the opportunity",
       "nav": true
     },
     {
       "id": "problem",
       "label": "PROBLEM",
-      "title": "Core flows felt fragmented across legacy screens.",
-      "body": "Members struggled to find billing, plan, and device actions in one coherent journey.",
+      "title": "Users drop off before completing key tasks or understanding when a submission is successful.",
+      "extraTitle": "The current app is static and strictly utilitarian.",
       "nav": true
     },
     {
       "id": "solution",
       "label": "SOLUTION",
-      "title": "A unified home experience with clearer hierarchy and faster paths to action.",
-      "body": "Proposed information architecture and high-fidelity concepts for the primary app shell.",
+      "title": "The Boost Mobile bubble concept.",
+      "mediaLayout": "portrait",
+      "mediaBlocks": [
+        {
+          "caption": "Boost as a feeling.",
+          "image": "/assets/case-studies/reimagining/phone-feeling.png"
+        },
+        {
+          "caption": "The bubble imagery.",
+          "image": "/assets/case-studies/reimagining/phone-bubble.png"
+        },
+        {
+          "caption": "Shopping in app.",
+          "image": "/assets/case-studies/reimagining/phone-shopping.png"
+        },
+        {
+          "caption": "Rewards beyond utility",
+          "image": "/assets/case-studies/reimagining/phone-rewards.png"
+        }
+      ],
       "nav": true
+    },
+    {
+      "id": "testing",
+      "label": "TESTING",
+      "title": "Progress components for onboarding and account management",
+      "nav": false,
+      "statRows": [
+        [
+          {
+            "title": "Add a line",
+            "value": "56%",
+            "detail": "Task Completion Rate (TCR)",
+            "tone": "alert"
+          },
+          {
+            "title": "Add a bolt-on",
+            "value": "76%",
+            "detail": "Task Completion Rate (TCR)",
+            "tone": "alert"
+          },
+          {
+            "title": "Check Data",
+            "value": "2.7",
+            "detail": "Customer Effort Score (CES)",
+            "tone": "caution"
+          }
+        ],
+        [
+          {
+            "title": "Add a line",
+            "value": "86.5%",
+            "detail": "Task Completion Rate (TCR)",
+            "tone": "positive"
+          },
+          {
+            "title": "Add a bolt-on",
+            "value": "80%",
+            "detail": "Task Completion Rate (TCR)",
+            "tone": "positive"
+          },
+          {
+            "title": "Check Data",
+            "value": "1.9",
+            "detail": "Customer Effort Score (CES)",
+            "tone": "positive"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "process",
+      "label": "PROCESS",
+      "title": "Brainstorming form factors and exploring within the design system.",
+      "mediaLayout": "stack",
+      "images": [
+        "/assets/case-studies/reimagining/process-1.png",
+        "/assets/case-studies/reimagining/process-2.png"
+      ],
+      "nav": false
     },
     {
       "id": "outcome",
       "label": "OUTCOME",
-      "title": "Direction for future product exploration.",
-      "body": "Established a visual and interaction direction for continued concept validation.",
+      "title": "Reflection and Next Steps",
+      "body": "Handoff UXR benchmarking for future app planning\nFurther analyze usability testing data\n\nInvolve key stakeholders\nFurther build other flows like change plan, shopping in app, etc",
       "nav": true
     }
   ]

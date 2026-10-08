@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BoostThumb } from "@/components/landing/boost-thumb";
 import { Pill } from "@/components/ui/pill";
 import type { CaseStudy } from "@/lib/case-studies";
 import { tokenBg } from "@/lib/case-studies";
@@ -11,6 +12,7 @@ interface WorkCardProps {
 
 export function WorkCard({ study }: WorkCardProps) {
   const tall = study.cardHeight === "tall";
+  const boostMotion = study.thumbnailMotion === "boost-intro";
 
   return (
     <Link
@@ -21,28 +23,52 @@ export function WorkCard({ study }: WorkCardProps) {
           ? "min-h-[420px] sm:min-h-[480px] md:min-h-[573px]"
           : "min-h-[360px] sm:min-h-[400px] md:min-h-[459px]",
       )}
-      style={{ backgroundColor: tokenBg(study.thumbnailTone) }}
+      style={{
+        backgroundColor: boostMotion
+          ? undefined
+          : tokenBg(study.thumbnailTone),
+      }}
     >
-      <p className="relative z-10 max-w-[90%] font-mono text-lg font-light leading-normal text-text-secondary sm:text-xl md:text-[32px]">
+      {boostMotion ? (
+        <div className="pointer-events-none absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-[1.02]">
+          <BoostThumb />
+        </div>
+      ) : null}
+
+      <p
+        className={cn(
+          "relative z-10 max-w-[90%] font-mono text-lg font-medium leading-normal sm:text-xl md:text-[32px]",
+          boostMotion ? "text-white" : "text-text-secondary",
+        )}
+      >
         {study.title}
       </p>
 
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 flex justify-center",
-          tall ? "h-[55%] sm:h-[70%]" : "h-[50%] sm:h-[65%]",
-        )}
-      >
-        <div className="relative h-full w-[50%] max-w-[280px] sm:w-[55%] sm:max-w-[320px]">
-          <Image
-            src={study.thumbnailImage}
-            alt=""
-            fill
-            className="object-contain object-bottom transition-transform duration-300 group-hover:scale-[1.02]"
-            sizes="(max-width: 640px) 55vw, (max-width: 768px) 40vw, 320px"
-          />
+      {!boostMotion ? (
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-x-0 bottom-0 flex justify-center",
+            tall ? "h-[55%] sm:h-[70%]" : "h-[50%] sm:h-[65%]",
+          )}
+        >
+          <div
+            className={cn(
+              "relative h-full transition-transform duration-300 group-hover:scale-[1.02]",
+              tall
+                ? "w-[70%] max-w-[395px] sm:w-[75%]"
+                : "w-[55%] max-w-[320px] sm:w-[60%]",
+            )}
+          >
+            <Image
+              src={study.thumbnailImage}
+              alt=""
+              fill
+              className="object-contain object-bottom"
+              sizes="(max-width: 640px) 70vw, (max-width: 768px) 45vw, 395px"
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-28 sm:gap-3 sm:pt-36 md:gap-6">
         {study.pills.map((pill) => (

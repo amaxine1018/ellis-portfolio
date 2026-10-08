@@ -5,37 +5,45 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Figma Semantics + primitives — mapped from el-portfolio
-  fileKey b7pAyutl687lo5886wooVp (variables on landing 37:13 / case study 59:87).
-  Components must reference these CSS variables (or Tailwind theme aliases), never raw hex.
+  Figma color variables — el-portfolio (b7pAyutl687lo5886wooVp)
+  Sources: landing 37:13, case study 59:87, boost modules 128:275.
+  Components must use these CSS variables (or Tailwind theme aliases), never raw hex.
 */
 :root {
-  /* Primitives */
+  /* Primitives (Figma) */
   --cream-50: #fffcf5;
   --brown-800: #55280c;
   --orange-200: #dc5400;
   --orange-100: #f48642;
-  --orange-50: #f3b087;
+  --orange-50: #f3b087; /* retained for legacy card tones; not in active landing vars */
   --grey-50: #d8d4ca;
   --grey-100: #a0a0a0;
   --purple-50: #ead9ff;
   --pink-50: #ff828e;
   --mint-50: #70d89d;
   --gold-200: #fdd052;
-  --yellow-50: #feff9c;
+  --yellow-50: #feff9c; /* post-it fill on landing (raw fill in Figma) */
   --green-200: #4fb054;
   --blue-100: #809ee9;
   --blue-50: #c3d4ff;
   --navy-800: #03036f;
 
-  /* Semantics */
-  --background-base: var(--cream-50);
+  /* Boost testing modules (128:275 Color 4 + icon fills) */
+  --boost-alert: #ff5600;
+  --boost-caution: #ffa600;
+  --boost-positive: #61b058;
+  --shadow-stat: 0px 8px 10.789px rgba(27, 27, 27, 0.16);
+
+  /* Semantics (Figma) */
+  --background-base: #fffcf5; /* same as cream-50 */
   --bg-base: var(--background-base);
-  --text-primary: var(--brown-800);
-  --text-secondary: var(--navy-800);
-  --text-accent: var(--orange-200);
+  --text-primary: #55280c; /* = brown-800 */
+  --text-secondary: #03036f; /* = navy-800 */
+  --text-accent: #03036f; /* Figma case study binding (= navy-800) */
   --text-inverse: #ffffff;
   --text-muted: var(--grey-100);
+  /* Orange callouts (builder, quotes, hovers) — primitive orange-200 */
+  --text-highlight: var(--orange-200);
 
   /* Typography (Figma: Averia Sans Libre + Azeret Mono) */
   --font-display: var(--font-averia), "Averia Sans Libre", sans-serif;
@@ -72,7 +80,7 @@
   --secondary-foreground: var(--text-secondary);
   --muted: var(--grey-50);
   --muted-foreground: var(--text-muted);
-  --accent: var(--text-accent);
+  --accent: var(--orange-200);
   --accent-foreground: var(--text-inverse);
   --destructive: #dc2626;
   --border: var(--text-secondary);
@@ -113,6 +121,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-accent: var(--text-accent);
+  --color-text-highlight: var(--text-highlight);
   --color-text-inverse: var(--text-inverse);
   --color-text-muted: var(--text-muted);
   --color-cream-50: var(--cream-50);
@@ -131,6 +140,9 @@
   --color-blue-100: var(--blue-100);
   --color-blue-50: var(--blue-50);
   --color-navy-800: var(--navy-800);
+  --color-boost-alert: var(--boost-alert);
+  --color-boost-caution: var(--boost-caution);
+  --color-boost-positive: var(--boost-positive);
   --font-sans: var(--font-mono-ui);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono-ui);

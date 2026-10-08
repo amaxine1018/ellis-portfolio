@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BoostThumb } from "@/components/landing/boost-thumb";
 import { Pill } from "@/components/ui/pill";
 import type { CaseStudy } from "@/lib/case-studies/types";
 import { tokenBg } from "@/lib/case-studies";
@@ -40,35 +41,58 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                 ))}
             </div>
 
-            <div className="flex flex-col gap-6 sm:gap-8 md:gap-[45px]">
+            <div
+              className={
+                study.heroLayout === "phones"
+                  ? "flex flex-col gap-6 sm:gap-8 md:gap-[45px]"
+                  : "flex flex-col gap-6 sm:gap-8 md:gap-[30px]"
+              }
+            >
               <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-normal text-text-primary">
                 {study.title}
               </h1>
 
-              <div
-                className="relative flex h-[180px] w-full items-end justify-center gap-3 overflow-hidden rounded-[var(--radius-card-sm)] px-3 pt-6 sm:h-[220px] sm:gap-4 sm:rounded-[var(--radius-card)] sm:px-4 sm:pt-8 md:h-[368px] md:gap-6 md:px-10"
-                style={{
-                  backgroundColor: tokenBg(
-                    study.heroTone ?? study.thumbnailTone,
-                  ),
-                }}
-              >
-                {heroImages.slice(0, 3).map((src, i) => (
-                  <div
-                    key={`${src}-${i}`}
-                    className="relative h-[85%] w-[28%] max-w-[255px]"
-                  >
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      className="object-contain object-bottom"
-                      sizes="(max-width: 768px) 28vw, 255px"
-                      priority={i === 0}
-                    />
-                  </div>
-                ))}
-              </div>
+              {study.heroLayout === "boost-intro" ? (
+                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
+                  <BoostThumb />
+                </div>
+              ) : study.heroLayout === "frame" ? (
+                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
+                  <Image
+                    src={heroImages[0]}
+                    alt=""
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 960px"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div
+                  className="relative flex h-[180px] w-full items-end justify-center gap-3 overflow-hidden rounded-[var(--radius-card-sm)] px-3 pt-6 sm:h-[220px] sm:gap-4 sm:rounded-[var(--radius-card)] sm:px-4 sm:pt-8 md:h-[368px] md:gap-6 md:px-10"
+                  style={{
+                    backgroundColor: tokenBg(
+                      study.heroTone ?? study.thumbnailTone,
+                    ),
+                  }}
+                >
+                  {heroImages.slice(0, 3).map((src, i) => (
+                    <div
+                      key={`${src}-${i}`}
+                      className="relative h-[85%] w-[28%] max-w-[255px]"
+                    >
+                      <Image
+                        src={src}
+                        alt=""
+                        fill
+                        className="object-contain object-bottom"
+                        sizes="(max-width: 768px) 28vw, 255px"
+                        priority={i === 0}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

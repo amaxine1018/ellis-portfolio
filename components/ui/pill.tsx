@@ -7,7 +7,8 @@ export type PillTone =
   | "blue"
   | "mint"
   | "gold"
-  | "purple";
+  | "purple"
+  | "navy";
 
 const TONE_CLASS: Record<PillTone, string> = {
   orange: "bg-orange-100",
@@ -17,6 +18,7 @@ const TONE_CLASS: Record<PillTone, string> = {
   mint: "bg-mint-50",
   gold: "bg-gold-200",
   purple: "bg-purple-50",
+  navy: "bg-navy-800",
 };
 
 interface PillProps {

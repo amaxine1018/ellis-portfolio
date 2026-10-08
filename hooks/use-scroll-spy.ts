@@ -20,22 +20,17 @@ export function useScrollSpy(sectionIds: string[]): string | null {
     const update = () => {
       const marker = window.innerHeight * 0.35;
       let containing: string | null = null;
-      let closest = ids[0];
-      let closestDist = Number.POSITIVE_INFINITY;
+      let passed: string | null = null;
 
       for (const id of ids) {
         const el = document.getElementById(id);
         if (!el) continue;
         const rect = el.getBoundingClientRect();
         if (rect.top <= marker && rect.bottom > marker) containing = id;
-        const dist = Math.abs(rect.top - marker);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = id;
-        }
+        if (rect.top <= marker) passed = id;
       }
 
-      const current = containing ?? closest;
+      const current = containing ?? passed ?? ids[0];
       setActiveId((prev) => (prev === current ? prev : current));
     };
 

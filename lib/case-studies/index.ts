@@ -10,6 +10,8 @@ export type {
   CaseStudyMediaBlock,
   CaseStudyPill,
   CaseStudySection,
+  CaseStudyStat,
+  CaseStudyStatTone,
   PillTone,
   TokenColor,
 } from "./types";

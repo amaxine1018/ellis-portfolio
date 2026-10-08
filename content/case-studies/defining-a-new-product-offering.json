@@ -7,22 +7,23 @@
   "status": "Shipped",
   "thumbnailTone": "mint-50",
   "heroTone": "gold-200",
-  "thumbnailImage": "/assets/thumb-pillclub.png",
+  "thumbnailImage": "/assets/thumbs/thumb-pillclub.png",
   "heroImages": [
-    "/assets/thumb-checklist.png",
-    "/assets/thumb-checklist.png",
-    "/assets/thumb-checklist.png"
+    "/assets/thumbs/thumb-pillclub.png",
+    "/assets/thumbs/thumb-pillclub.png",
+    "/assets/thumbs/thumb-pillclub.png"
   ],
   "pills": [
     { "label": "The Pill Club", "tone": "pink" },
-    { "label": "Shipped", "tone": "green" }
+    { "label": "Shipped", "tone": "green" },
+    { "label": "2021", "tone": "blue" }
   ],
   "meta": {
     "tools": "Figma, Jira, Zeplin, Photoshop, Fullstory",
     "team": "1 Designer, 2 PMs",
     "duration": "3 weeks, 2021"
   },
-  "featuredOrder": 2,
+  "featuredOrder": 3,
   "cardHeight": "tall",
   "sections": [
     {

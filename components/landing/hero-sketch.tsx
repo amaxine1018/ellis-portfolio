@@ -10,13 +10,30 @@ import {
 } from "react";
 
 const STROKE_TTL_MS = 10_000;
-const LINE_WIDTH_CSS = 8;
+const MIN_W = 4;
+const MAX_W = 10;
+const SPEED_FOR_MIN = 1.5;
+const MIN_POINT_DIST = 1.5;
+const MAX_POINTS_PER_STROKE = 800;
+const MAX_STROKES = 60;
 /** Temporary cursor: tip at bottom-left of 63×72 PNG */
 const CURSOR_HOTSPOT = "0 72";
 const CURSOR_URL = `/assets/small-sharpie.png`;
 
-type Point = { x: number; y: number };
-type Stroke = { points: Point[]; bornAt: number };
+type Point = { x: number; y: number; w: number };
+type Stroke = { points: Point[]; bornAt: number; maxW: number };
+type LastPoint = { x: number; y: number; t: number; w: number };
+
+function clamp(n: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, n));
+}
+
+function widthFromSpeed(speed: number, prevW: number): number {
+  const t = clamp(speed / SPEED_FOR_MIN, 0, 1);
+  const target = MAX_W - (MAX_W - MIN_W) * t;
+  const w = prevW * 0.7 + target * 0.3;
+  return Number.isFinite(w) ? w : prevW;
+}
 
 /**
  * Hero sketch — Figma Sketch 96:38. The flat square post-it is the drawing surface.
@@ -33,6 +50,7 @@ export function HeroSketch() {
   const strokesRef = useRef<Stroke[]>([]);
   const drawingRef = useRef(false);
   const activeStrokeRef = useRef<Stroke | null>(null);
+  const lastPointRef = useRef<LastPoint | null>(null);
   const rafRef = useRef<number | null>(null);
   const dprRef = useRef(1);
 
@@ -56,22 +74,62 @@ export function HeroSketch() {
       if (age >= STROKE_TTL_MS) continue;
       alive.push(stroke);
 
-      const opacity = 1 - age / STROKE_TTL_MS;
+      const fade = 1 - age / STROKE_TTL_MS;
       const pts = stroke.points;
       if (pts.length === 0) continue;
 
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
-      ctx.lineWidth = LINE_WIDTH_CSS;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) {
-        ctx.lineTo(pts[i].x, pts[i].y);
-      }
+
+      // Tap / single point: fringe + core dots
       if (pts.length === 1) {
-        ctx.lineTo(pts[0].x + 0.01, pts[0].y);
+        const p = pts[0];
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(17, 17, 17, ${0.18 * fade})`;
+        ctx.arc(p.x, p.y, (stroke.maxW + 3) / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(17, 17, 17, ${fade})`;
+        ctx.arc(p.x, p.y, MAX_W / 2, 0, Math.PI * 2);
+        ctx.fill();
+        continue;
       }
+
+      // Fringe (ink bleed): one constant-width path
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(17, 17, 17, ${0.18 * fade})`;
+      ctx.lineWidth = stroke.maxW + 3;
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length - 2; i++) {
+        const midX = (pts[i].x + pts[i + 1].x) / 2;
+        const midY = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, midX, midY);
+      }
+      const last = pts[pts.length - 1];
+      const prev = pts[pts.length - 2];
+      ctx.quadraticCurveTo(prev.x, prev.y, last.x, last.y);
+      ctx.stroke();
+
+      // Core: per-segment variable width
+      let startX = pts[0].x;
+      let startY = pts[0].y;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const midX = (pts[i].x + pts[i + 1].x) / 2;
+        const midY = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(17, 17, 17, ${fade})`;
+        ctx.lineWidth = pts[i].w;
+        ctx.moveTo(startX, startY);
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, midX, midY);
+        ctx.stroke();
+        startX = midX;
+        startY = midY;
+      }
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(17, 17, 17, ${fade})`;
+      ctx.lineWidth = last.w;
+      ctx.moveTo(startX, startY);
+      ctx.quadraticCurveTo(prev.x, prev.y, last.x, last.y);
       ctx.stroke();
     }
     strokesRef.current = alive;
@@ -164,7 +222,9 @@ export function HeroSketch() {
       document.removeEventListener("pointerdown", onPointerDown, true);
   }, [isSharpieActive]);
 
-  const pointerToLocal = (e: ReactPointerEvent<HTMLCanvasElement>): Point => {
+  const pointerToLocal = (
+    e: ReactPointerEvent<HTMLCanvasElement>,
+  ): { x: number; y: number } => {
     const canvas = canvasRef.current!;
     const rect = canvas.getBoundingClientRect();
     const cssW = canvas.width / dprRef.current;
@@ -184,26 +244,57 @@ export function HeroSketch() {
     canvas.setPointerCapture(e.pointerId);
     drawingRef.current = true;
 
+    const { x, y } = pointerToLocal(e);
+    const t = performance.now();
+    const point: Point = { x, y, w: MAX_W };
     const stroke: Stroke = {
-      points: [pointerToLocal(e)],
-      bornAt: performance.now(),
+      points: [point],
+      bornAt: t,
+      maxW: MAX_W,
     };
     activeStrokeRef.current = stroke;
-    strokesRef.current = [...strokesRef.current, stroke];
+    lastPointRef.current = { x, y, t, w: MAX_W };
+
+    const next = [...strokesRef.current, stroke];
+    if (next.length > MAX_STROKES) {
+      strokesRef.current = next.slice(next.length - MAX_STROKES);
+    } else {
+      strokesRef.current = next;
+    }
     startFadeLoop();
   };
 
   const onPointerMove = (e: ReactPointerEvent<HTMLCanvasElement>) => {
     if (!isSharpieActive || !drawingRef.current) return;
     const stroke = activeStrokeRef.current;
-    if (!stroke) return;
-    stroke.points.push(pointerToLocal(e));
+    const last = lastPointRef.current;
+    if (!stroke || !last) return;
+    if (stroke.points.length >= MAX_POINTS_PER_STROKE) return;
+
+    const { x, y } = pointerToLocal(e);
+    const dx = x - last.x;
+    const dy = y - last.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist < MIN_POINT_DIST) return;
+
+    const t = performance.now();
+    const dt = Math.max(t - last.t, 1);
+    const speed = dist / dt;
+    const w = widthFromSpeed(
+      Number.isFinite(speed) ? speed : 0,
+      last.w,
+    );
+
+    stroke.points.push({ x, y, w });
+    if (w > stroke.maxW) stroke.maxW = w;
+    lastPointRef.current = { x, y, t, w };
   };
 
   const endStroke = (e: ReactPointerEvent<HTMLCanvasElement>) => {
     if (!drawingRef.current) return;
     drawingRef.current = false;
     activeStrokeRef.current = null;
+    lastPointRef.current = null;
     try {
       canvasRef.current?.releasePointerCapture(e.pointerId);
     } catch {
@@ -250,12 +341,13 @@ export function HeroSketch() {
                 />
                 <div className="pointer-events-none absolute top-[28.5px] left-[34.8px] h-[243px] w-[244px]">
                   <Image
-                    src="/assets/headshot-sketch.png"
+                    src="/assets/headshot-sketch-v4.png"
                     alt="Ink sketch portrait of Ellis"
                     fill
-                    className="object-cover mix-blend-darken"
+                    className="object-cover"
                     sizes="244px"
                     priority
+                    unoptimized
                   />
                 </div>
                 <canvas
@@ -297,7 +389,7 @@ export function HeroSketch() {
           className="block w-full cursor-pointer border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary"
         >
           <Image
-            src="/assets/sharpie-v3.png"
+            src="/assets/sharpie-v4.png"
             alt=""
             width={416}
             height={59}

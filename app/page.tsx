@@ -1,5 +1,6 @@
 import { HeroSketch } from "@/components/landing/hero-sketch";
 import { WorkCard } from "@/components/landing/work-card";
+import { LoadingScreen } from "@/components/loading/loading-screen";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getAllCaseStudies } from "@/lib/case-studies";
@@ -14,6 +15,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <LoadingScreen />
       <SiteHeader active="home" />
       <main className="page-shell flex flex-1 flex-col items-center pb-8">
         <div className="page-content flex flex-col items-center gap-12 sm:gap-16 md:gap-[70px]">
@@ -26,7 +28,7 @@ export default async function HomePage() {
                   <span className="line-through decoration-solid">
                     product designer
                   </span>{" "}
-                  <span className="text-text-accent">builder</span> using AI to
+                  <span className="text-text-highlight">builder</span> using AI to
                   drive innovation
                 </h1>
               </div>
@@ -34,23 +36,16 @@ export default async function HomePage() {
             </div>
 
             <div className="flex flex-col items-center gap-3.5">
-              <p className="font-mono text-base font-semibold text-text-muted sm:text-lg md:text-2xl">
+              <p className="font-mono text-base font-semibold text-blue-100 sm:text-lg md:text-2xl">
                 scroll to see work
               </p>
-              <svg
-                width="31"
-                height="12"
-                viewBox="0 0 31 12"
-                fill="none"
+              <img
+                src="/assets/scroll-arrow.svg"
+                alt=""
+                width={34}
+                height={15}
                 aria-hidden
-              >
-                <path
-                  d="M1 1L15.5 10L30 1"
-                  stroke="var(--grey-100)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              />
             </div>
           </section>
 

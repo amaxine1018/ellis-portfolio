@@ -14,7 +14,7 @@ export function SiteFooter(_props: SiteFooterProps = {}) {
           Built by Ellis Aguilar 2026
         </p>
         <div className="flex flex-wrap items-center gap-3 font-mono text-sm font-light text-text-secondary sm:gap-4 sm:text-base md:text-2xl">
-          <Link href="#" className="hover:text-text-accent">
+          <Link href="#" className="hover:text-text-highlight">
             Resume
           </Link>
           <span className="size-1.5 rounded-full bg-text-secondary sm:size-2" aria-hidden />
@@ -22,7 +22,7 @@ export function SiteFooter(_props: SiteFooterProps = {}) {
             href="https://www.linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-text-accent"
+            className="hover:text-text-highlight"
           >
             LinkedIn
           </a>
@@ -31,7 +31,7 @@ export function SiteFooter(_props: SiteFooterProps = {}) {
             href="https://github.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-text-accent"
+            className="hover:text-text-highlight"
           >
             Github
           </a>

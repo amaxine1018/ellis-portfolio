@@ -11,7 +11,8 @@ export type PillTone =
   | "blue"
   | "mint"
   | "gold"
-  | "purple";
+  | "purple"
+  | "navy";
 
 export interface CaseStudyPill {
   label: string;
@@ -37,6 +38,16 @@ export interface CaseStudyMediaBlock {
   image?: string;
 }
 
+/** Metric module tones from the Boost testing cards */
+export type CaseStudyStatTone = "alert" | "caution" | "positive";
+
+export interface CaseStudyStat {
+  title: string;
+  value: string;
+  detail: string;
+  tone: CaseStudyStatTone;
+}
+
 export interface CaseStudySection {
   id: string;
   /** Uppercase label shown above the section title */
@@ -45,11 +56,19 @@ export interface CaseStudySection {
   body?: string;
   /** Accent quote with orange bar (Figma callout) */
   quote?: string;
+  /** Second headline, same style as title */
+  extraTitle?: string;
   /** Body after quote when both exist */
   bodyAfter?: string;
   mediaBlocks?: CaseStudyMediaBlock[];
+  /** Side-by-side phone rows vs stacked full-width images */
+  mediaLayout?: "landscape" | "portrait" | "stack";
   /** Full-width media under process-style sections */
   media?: string;
+  /** Additional full-width images, in order */
+  images?: string[];
+  /** Testing metric cards, one inner array per row */
+  statRows?: CaseStudyStat[][];
   /** Include in sticky sidebar (default true) */
   nav?: boolean;
 }
@@ -72,8 +91,12 @@ export interface CaseStudy {
   /** Case study hero band token (falls back to thumbnailTone) */
   heroTone?: TokenColor;
   thumbnailImage: string;
+  /** Animated thumbnail that replaces thumbnailImage on the landing card */
+  thumbnailMotion?: "boost-intro";
   /** Optional second/third hero phone images */
   heroImages?: string[];
+  /** phones: colored band with device shots. frame: single cropped image. boost-intro: looping Boost animation. */
+  heroLayout?: "phones" | "frame" | "boost-intro";
   pills: CaseStudyPill[];
   meta: CaseStudyMeta;
   sections: CaseStudySection[];

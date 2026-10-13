@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -9,6 +8,9 @@ export const metadata: Metadata = {
 /**
  * HTML wrapper so the resume tab uses the site favicon (app/icon.svg).
  * Opening the raw PDF directly cannot set a custom favicon.
+ *
+ * Exception to the site footer: this page does not render SiteFooter.
+ * The PDF fills the viewport instead.
  */
 export default function ResumePage() {
   return (
@@ -18,9 +20,6 @@ export default function ResumePage() {
         src="/Ellis-Aguilar-Design-Resume.pdf"
         className="min-h-0 w-full flex-1 border-0"
       />
-      <div className="page-shell">
-        <SiteFooter className="mt-6 sm:mt-8 md:mt-10" />
-      </div>
     </main>
   );
 }

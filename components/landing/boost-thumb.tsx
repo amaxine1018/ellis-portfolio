@@ -76,6 +76,19 @@ function useStageSize() {
 const mx = (px: number, w: number) => (px / FW) * w;
 const my = (px: number, h: number) => (px / FH) * h;
 
+/**
+ * Mount on the first keyframe, then play the rest.
+ * `initial={false}` skips this on a single production mount (dev Strict Mode
+ * remounts and happens to start it).
+ */
+function playLoop<K extends string>(frames: Record<K, number[]>) {
+  const initial = {} as Record<K, number>;
+  for (const key of Object.keys(frames) as K[]) {
+    initial[key] = frames[key][0];
+  }
+  return { initial, animate: frames };
+}
+
 export function BoostThumb() {
   const reduce = useReducedMotion();
   const { ref, size } = useStageSize();
@@ -106,6 +119,141 @@ export function BoostThumb() {
     repeatType: "loop" as const,
   };
 
+  const shadow = playLoop({
+    top: [
+      y(SHADOW_TOP_F1),
+      blueTopF2,
+      blueTopF2,
+      blueTopF2,
+      blueTopF2,
+      blueTopF2,
+      blueTopF2,
+      blueTopF2,
+      size.h + 40,
+      y(SHADOW_TOP_F1),
+      y(SHADOW_TOP_F1),
+      y(SHADOW_TOP_F1),
+    ],
+    width: [
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+    ],
+    height: [
+      y(SHADOW_H_F1),
+      blueH_F2, // same height as blue at center
+      blueH_F2,
+      blueH_F2,
+      blueH_F2,
+      blueH_F2,
+      blueH_F2,
+      blueH_F2,
+      y(SHADOW_H_F1),
+      y(SHADOW_H_F1),
+      y(SHADOW_H_F1),
+      y(SHADOW_H_F1),
+    ],
+    borderRadius: [
+      9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999,
+    ],
+    opacity: [1, 0.35, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+  });
+
+  const blue = playLoop({
+    top: [
+      y(BLUE_TOP_F1),
+      blueTopF2,
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F3),
+      y(BLUE_TOP_F1),
+      size.h * 0.88,
+      y(BLUE_TOP_F1),
+      y(BLUE_TOP_F1),
+    ],
+    width: [
+      blueW1,
+      blueW1,
+      blueW1,
+      x(602),
+      blueFull,
+      blueFull,
+      blueFull,
+      blueFull,
+      blueW1,
+      blueW1,
+      blueW1,
+      blueW1,
+    ],
+    height: [
+      y(BLUE_H_F1),
+      blueH_F2,
+      y(BLUE_H_F3),
+      y(BLUE_H_F3),
+      y(BLUE_H_F3),
+      y(BLUE_H_F3),
+      y(BLUE_H_F3),
+      y(BLUE_H_F3),
+      y(BLUE_H_F1),
+      y(BLUE_H_F1),
+      y(BLUE_H_F1),
+      y(BLUE_H_F1),
+    ],
+    borderRadius: [
+      9999,
+      9999,
+      9999,
+      x(165),
+      0,
+      0,
+      0,
+      0,
+      9999,
+      9999,
+      9999,
+      9999,
+    ],
+  });
+
+  const circle = playLoop({
+    top: [
+      circleTopF1,
+      circleTopF2,
+      circleTopHold,
+      circleTopHold,
+      circleTopHold,
+      circleTopHold,
+      circleTopHold,
+      circleTopHold,
+      circleTopF1,
+      size.h * 0.9,
+      circleTopF1,
+      circleTopF1,
+    ],
+    opacity: [1, 1, 1, 0.4, 0, 0, 0, 0, 0, 0, 1, 1],
+  });
+
+  const mark = playLoop({
+    opacity: [1, 1, 1, 0.2, 0, 0, 0, 0, 0, 0, 1, 1],
+  });
+
+  const flyer = playLoop({
+    scale: [1, 1, 1, 1.35, 2.4, 5.5, 9.5, 9.5, 1, 1, 1, 1],
+    opacity: [0, 0, 0, 0.85, 1, 1, 1, 0, 0, 0, 0, 0],
+  });
+
   return (
     <div
       ref={ref}
@@ -127,56 +275,8 @@ export function BoostThumb() {
           <motion.div
             className="absolute left-1/2 z-0 -translate-x-1/2 will-change-transform"
             style={{ background: SHADOW }}
-            initial={false}
-            animate={{
-              top: [
-                y(SHADOW_TOP_F1),
-                blueTopF2,
-                blueTopF2,
-                blueTopF2,
-                blueTopF2,
-                blueTopF2,
-                blueTopF2,
-                blueTopF2,
-                size.h + 40,
-                y(SHADOW_TOP_F1),
-                y(SHADOW_TOP_F1),
-                y(SHADOW_TOP_F1),
-              ],
-              width: [
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-              ],
-              height: [
-                y(SHADOW_H_F1),
-                blueH_F2, // same height as blue at center
-                blueH_F2,
-                blueH_F2,
-                blueH_F2,
-                blueH_F2,
-                blueH_F2,
-                blueH_F2,
-                y(SHADOW_H_F1),
-                y(SHADOW_H_F1),
-                y(SHADOW_H_F1),
-                y(SHADOW_H_F1),
-              ],
-              borderRadius: [
-                9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999,
-                9999, 9999,
-              ],
-              opacity: [1, 0.35, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-            }}
+            initial={shadow.initial}
+            animate={shadow.animate}
             transition={transition}
           />
 
@@ -184,65 +284,8 @@ export function BoostThumb() {
           <motion.div
             className="absolute left-1/2 z-[1] -translate-x-1/2 will-change-transform"
             style={{ background: BLUE }}
-            initial={false}
-            animate={{
-              top: [
-                y(BLUE_TOP_F1),
-                blueTopF2,
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F3),
-                y(BLUE_TOP_F1),
-                size.h * 0.88,
-                y(BLUE_TOP_F1),
-                y(BLUE_TOP_F1),
-              ],
-              width: [
-                blueW1,
-                blueW1,
-                blueW1,
-                x(602),
-                blueFull,
-                blueFull,
-                blueFull,
-                blueFull,
-                blueW1,
-                blueW1,
-                blueW1,
-                blueW1,
-              ],
-              height: [
-                y(BLUE_H_F1),
-                blueH_F2,
-                y(BLUE_H_F3),
-                y(BLUE_H_F3),
-                y(BLUE_H_F3),
-                y(BLUE_H_F3),
-                y(BLUE_H_F3),
-                y(BLUE_H_F3),
-                y(BLUE_H_F1),
-                y(BLUE_H_F1),
-                y(BLUE_H_F1),
-                y(BLUE_H_F1),
-              ],
-              borderRadius: [
-                9999,
-                9999,
-                9999,
-                x(165),
-                0,
-                0,
-                0,
-                0,
-                9999,
-                9999,
-                9999,
-                9999,
-              ],
-            }}
+            initial={blue.initial}
+            animate={blue.animate}
             transition={transition}
           />
 
@@ -250,24 +293,8 @@ export function BoostThumb() {
           <motion.div
             className="absolute left-1/2 z-[2] -translate-x-1/2 will-change-transform"
             style={{ width: circleSize, height: circleSize }}
-            initial={false}
-            animate={{
-              top: [
-                circleTopF1,
-                circleTopF2,
-                circleTopHold,
-                circleTopHold,
-                circleTopHold,
-                circleTopHold,
-                circleTopHold,
-                circleTopHold,
-                circleTopF1,
-                size.h * 0.9,
-                circleTopF1,
-                circleTopF1,
-              ],
-              opacity: [1, 1, 1, 0.4, 0, 0, 0, 0, 0, 0, 1, 1],
-            }}
+            initial={circle.initial}
+            animate={circle.animate}
             transition={transition}
           >
             <img
@@ -283,8 +310,8 @@ export function BoostThumb() {
               className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2"
               width={208}
               height={98}
-              initial={false}
-              animate={{ opacity: [1, 1, 1, 0.2, 0, 0, 0, 0, 0, 0, 1, 1] }}
+              initial={mark.initial}
+              animate={mark.animate}
               transition={transition}
             />
           </motion.div>
@@ -293,11 +320,8 @@ export function BoostThumb() {
           <motion.div
             className="pointer-events-none absolute left-1/2 top-1/2 z-[3] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center will-change-transform"
             style={{ width: circleSize, height: circleSize }}
-            initial={false}
-            animate={{
-              scale: [1, 1, 1, 1.35, 2.4, 5.5, 9.5, 9.5, 1, 1, 1, 1],
-              opacity: [0, 0, 0, 0.85, 1, 1, 1, 0, 0, 0, 0, 0],
-            }}
+            initial={flyer.initial}
+            animate={flyer.animate}
             transition={transition}
           >
             <img

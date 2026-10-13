@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export default function NotFound() {
@@ -20,6 +21,9 @@ export default function NotFound() {
           Back home
         </Link>
       </main>
+      <div className="page-shell">
+        <SiteFooter />
+      </div>
     </>
   );
 }

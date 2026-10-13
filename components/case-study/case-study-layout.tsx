@@ -3,6 +3,7 @@ import { BoostThumb } from "@/components/landing/boost-thumb";
 import { Pill } from "@/components/ui/pill";
 import type { CaseStudy } from "@/lib/case-studies/types";
 import { tokenBg } from "@/lib/case-studies";
+import { cn } from "@/lib/utils";
 import { CaseStudyNav } from "./case-study-nav";
 import { CaseStudySections } from "./case-study-sections";
 
@@ -21,17 +22,22 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
       : [study.thumbnailImage];
 
   return (
-    <div className="page-shell flex flex-col gap-8 pb-16 sm:gap-10 sm:pb-24 lg:flex-row lg:items-start lg:gap-[170px]">
-      <aside className="hidden w-[125px] shrink-0 pt-[120px] lg:block lg:self-stretch">
+    <div className="page-shell flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:gap-[170px]">
+      <aside className="hidden w-[125px] shrink-0 pt-[80px] lg:block lg:self-stretch">
         <CaseStudyNav sections={study.sections} variant="sidebar" />
       </aside>
 
-      <div className="min-w-0 flex-1 pt-4 sm:pt-6 lg:max-w-[960px] lg:pt-8">
+      <div className="min-w-0 flex-1 -mt-6 pt-0 sm:-mt-4 lg:max-w-[960px] lg:-mt-2">
         <div className="mb-6 sm:mb-8 lg:hidden">
           <CaseStudyNav sections={study.sections} variant="mobile" />
         </div>
 
-        <header className="mb-10 flex flex-col gap-10 sm:mb-14 sm:gap-14 md:mb-[56px]">
+        <header
+          className={cn(
+            "mb-10 flex flex-col gap-10 sm:mb-14 sm:gap-14",
+            study.introGap === "88" ? "md:mb-[88px]" : "md:mb-[56px]",
+          )}
+        >
           <div className="flex flex-col gap-4">
             <div className="flex flex-wrap gap-2 sm:gap-4">
               {study.pills
@@ -49,7 +55,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
               }
             >
               <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-normal text-text-primary">
-                {study.title}
+                {study.headline ?? study.title}
               </h1>
 
               {study.heroLayout === "boost-intro" ? (
@@ -57,15 +63,29 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                   <BoostThumb />
                 </div>
               ) : study.heroLayout === "frame" ? (
-                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
-                  <Image
+                <div className="relative aspect-[960/470] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
+                  <img
                     src={heroImages[0]}
                     alt=""
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 960px"
-                    priority
+                    className="absolute top-[-34.89%] left-[-0.01%] h-[158.72%] w-[100.01%] max-w-none"
                   />
+                </div>
+              ) : study.heroLayout === "mark" ? (
+                <div
+                  className="relative flex h-[180px] w-full items-center justify-center overflow-hidden rounded-[var(--radius-card-sm)] sm:h-[240px] sm:rounded-[var(--radius-card)] md:h-[368px]"
+                  style={{
+                    backgroundColor: tokenBg(
+                      study.heroTone ?? study.thumbnailTone,
+                    ),
+                  }}
+                >
+                  <div className="relative h-[47.01%] w-[41.15%] overflow-hidden">
+                    <img
+                      src={heroImages[0]}
+                      alt={`${study.client} logo`}
+                      className="absolute top-[-75.72%] left-[-38.02%] h-[271.1%] w-[178.07%] max-w-none"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div
@@ -96,14 +116,38 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 font-mono text-sm font-normal leading-relaxed text-text-accent sm:gap-8 sm:text-base sm:leading-[30px] md:flex-row md:gap-12 lg:gap-[140px]">
-            <MetaBlock label="TOOLS" value={study.meta.tools} className="md:w-[218px]" />
-            <MetaBlock label="TEAM" value={study.meta.team} className="md:w-[177px]" />
+          <div
+            className={cn(
+              "flex flex-col gap-6 font-mono text-sm font-normal leading-relaxed sm:gap-8 sm:text-base sm:leading-[30px] md:flex-row md:gap-12 lg:gap-[140px]",
+              study.metaTone === "primary"
+                ? "text-text-primary"
+                : "text-text-accent",
+            )}
+          >
             <MetaBlock
-              label="DURATION"
-              value={study.meta.duration}
-              className="md:w-[136px]"
+              label="TOOLS"
+              value={study.meta.tools}
+              className={study.meta.teamLabel ? "md:w-[263px]" : "md:w-[218px]"}
             />
+            {study.meta.teamLabel ? (
+              <MetaBlock
+                label="DURATION"
+                value={study.meta.duration}
+                className="md:w-[159px]"
+              />
+            ) : null}
+            <MetaBlock
+              label={study.meta.teamLabel ?? "TEAM"}
+              value={study.meta.team}
+              className="md:w-[177px]"
+            />
+            {study.meta.teamLabel ? null : (
+              <MetaBlock
+                label="DURATION"
+                value={study.meta.duration}
+                className="md:w-[136px]"
+              />
+            )}
           </div>
         </header>
 
@@ -124,7 +168,7 @@ function MetaBlock({
 }) {
   return (
     <div className={`flex flex-col gap-1 ${className ?? ""}`}>
-      <p>{label}</p>
+      <p className="font-bold">{label}</p>
       <p>{value}</p>
     </div>
   );

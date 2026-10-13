@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CaseStudyLayout } from "@/components/case-study/case-study-layout";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getCaseStudy, getCaseStudySlugs } from "@/lib/case-studies";
 
@@ -20,7 +21,7 @@ export async function generateMetadata({
   const study = await getCaseStudy(slug);
   if (!study) return { title: "Case study" };
   return {
-    title: study.title,
+    title: study.headline ?? study.title,
     description: study.summary,
   };
 }
@@ -39,6 +40,9 @@ export default async function WorkCaseStudyPage({ params }: WorkPageProps) {
       <SiteHeader active="work" />
       <main className="flex flex-1 flex-col">
         <CaseStudyLayout study={study} />
+        <div className="page-shell">
+          <SiteFooter />
+        </div>
       </main>
     </>
   );

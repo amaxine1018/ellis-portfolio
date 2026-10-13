@@ -1,18 +1,16 @@
 {
   "slug": "defining-a-new-product-offering",
   "title": "Defining a new product offering",
-  "summary": "Expanding The Pill Club offerings to dermatology with a medically compliant, low-friction eligibility experience.",
+  "summary": "Production-ready wireframes, interaction states, and visual assets for The Pill Club’s dermatology launch.",
   "year": "2021",
   "client": "The Pill Club",
   "status": "Shipped",
   "thumbnailTone": "mint-50",
   "heroTone": "gold-200",
   "thumbnailImage": "/assets/thumbs/thumb-pillclub.png",
-  "heroImages": [
-    "/assets/thumbs/thumb-pillclub.png",
-    "/assets/thumbs/thumb-pillclub.png",
-    "/assets/thumbs/thumb-pillclub.png"
-  ],
+  "thumbnailLayout": "device",
+  "heroLayout": "frame",
+  "heroImages": ["/assets/case-studies/pillclub/hero.png"],
   "pills": [
     { "label": "The Pill Club", "tone": "pink" },
     { "label": "Shipped", "tone": "green" },
@@ -23,48 +21,93 @@
     "team": "1 Designer, 2 PMs",
     "duration": "3 weeks, 2021"
   },
-  "featuredOrder": 3,
+  "featuredOrder": 1,
   "cardHeight": "tall",
   "sections": [
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "How might we expand The Pill Club offerings to dermatology?",
+      "title": "Delivered production-ready wireframes, interaction states, and visual assets, for the launch of a new product line.",
       "body": "Delivered high‑fidelity screens aligned with the design system to simplify complex information, while creating empathetic, accessible interstitials that reduced cognitive load and guided users through the experience.",
       "nav": true
     },
     {
-      "id": "problem",
-      "label": "PROBLEM",
-      "title": "Users were confused by the flow in early testing of the new onboarding funnel.",
-      "quote": "The birth control funnel had a 27% drop‑off for eligibility questions our goal was to reduce this for dermatology.",
-      "bodyAfter": "To launch the new dermatology offering, we needed a medically compliant, low‑friction eligibility questionnaire. Early tests showed users were confused by branching logic and unclear medical terminology, risking drop‑off and misclassification.",
+      "id": "challenge",
+      "label": "CHALLENGE",
+      "title": "Turning raw logic into an intuitive interface.",
+      "body": "The product team defined the copy and branching logic for a new dermatology onboarding experience. My challenge was to translate this complex matrix into a seamless, user-friendly interface. I needed to design an intuitive questionnaire flow that accommodated various interaction states (like single-select vs. multi-select) while maintaining the brand's visual identity through strategic interstitial pages.",
       "nav": true
     },
     {
       "id": "solution",
-      "label": "Solution",
-      "title": "Defined dermatology funnel wireframes and interstitial page visuals for the dermatology product.",
-      "mediaBlocks": [
-        { "caption": "Introductory interstitial" },
-        { "caption": "Questionnaire structure" },
-        { "caption": "Separating questionaire sections" }
+      "label": "SOLUTION",
+      "title": "Structuring the questionnaire with interaction design.",
+      "body": "I built out the complete user flow in Figma, ensuring every branch of the logic tree was accounted for. A key focus was designing clear, accessible input methods such as single select, multi select, and modal pop-ups to keep the core interface uncluttered during complex data entry.",
+      "mediaLayout": "row",
+      "images": [
+        "/assets/case-studies/pillclub/questionnaire-1.png",
+        "/assets/case-studies/pillclub/questionnaire-2.png",
+        "/assets/case-studies/pillclub/questionnaire-3.png"
       ],
-      "quote": "Engineering adopted the new funnel into the design system within 5 sprints.",
       "nav": true
+    },
+    {
+      "id": "pacing",
+      "label": "SOLUTION",
+      "title": "Pacing the experience with visual branding.",
+      "body": "To prevent user fatigue during a lengthy medical questionnaire, I designed key interstitial screens to act as emotional pauses. Using Photoshop, I assembled and integrated brand assets to create a welcoming introductory screen and reassuring transitional pages that aligned with the established design system.",
+      "mediaLayout": "portrait",
+      "mediaBlocks": [
+        {
+          "caption": "Introductory interstitial.",
+          "body": "We begin the onboarding funnel with a visual pause to prepare users for the time commitment and value of the product.",
+          "image": "/assets/case-studies/pillclub/interstitial-intro.png",
+          "width": 318,
+          "aspect": "318 / 633"
+        },
+        {
+          "caption": "Allowing an emotional pause.",
+          "body": "Pacing a lengthy, personal intake flow with intentional visual breaks eases the cognitive burden of answering sensitive medical questions.",
+          "image": "/assets/case-studies/pillclub/interstitial-pause.png",
+          "width": 317,
+          "aspect": "317 / 633"
+        }
+      ],
+      "nav": false
     },
     {
       "id": "process",
       "label": "PROCESS",
       "title": "Balancing interface design with imagery exploration.",
       "body": "Brainstormed visual scenarios for interstitial pages and built low‑fi iconography examples in Figma. Brand required illustration styles to match existing birth control assets. Collaborated with the brand team to refine visual communication, then advanced to Adobe Creative Suite to create higher‑fidelity illustrations aligned with The Pill Club’s identity.",
-      "nav": false
+      "mediaLayout": "stack",
+      "mediaSpacing": "compact",
+      "roundedImages": true,
+      "images": [
+        {
+          "src": "/assets/case-studies/pillclub/process-1.png",
+          "width": 1137,
+          "height": 644
+        },
+        {
+          "src": "/assets/case-studies/pillclub/process-2.png",
+          "width": 1133,
+          "height": 703
+        },
+        {
+          "src": "/assets/case-studies/pillclub/process-3.png",
+          "width": 1130,
+          "height": 447
+        }
+      ],
+      "nav": true
     },
     {
       "id": "outcome",
       "label": "OUTCOME",
-      "title": "Reflection and Next Steps",
-      "body": "This project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
+      "title": "Handoff and launch!",
+      "quote": "Engineering adopted the new funnel into the design system within 5 sprints.",
+      "bodyAfter": "Rather than leaving the complex branching logic open to interpretation, I structured the Figma file to act as a definitive blueprint for engineering: Mapping the complete decision tree using dedicated flow connectors. Built the core UI components using rigorous Auto Layout rules for responsive scaling. Bound semantic color variables and strict typography styles across the text layers.\n\nThis project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
       "nav": true
     }
   ]

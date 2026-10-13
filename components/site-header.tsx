@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/", label: "Home", match: "home" },
   { href: "/#work", label: "Work", match: "work" },
-  { href: "/#studio", label: "Studio", match: "studio" },
-  { href: "/#about", label: "About", match: "about" },
+  { href: "/studio", label: "Studio", match: "studio" },
+  { href: "/about", label: "About", match: "about" },
 ] as const;
 
 export type SiteNavActive = "home" | "work" | "studio" | "about";

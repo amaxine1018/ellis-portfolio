@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { Radio_Canada_Big } from "next/font/google";
+import type { ReactNode } from "react";
+import { BenchmarkCharts } from "@/components/case-study/benchmark-charts";
 import type {
+  CaseStudyImage,
   CaseStudyMediaBlock,
   CaseStudySection,
   CaseStudyStat,
@@ -47,7 +50,12 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
         );
         const quoteInline = Boolean(section.quote && !quoteAfterMedia);
         const portrait = section.mediaLayout === "portrait";
-        const stacked = section.mediaLayout === "stack" || Boolean(section.images?.length);
+        const row = section.mediaLayout === "row";
+        const split = section.mediaLayout === "split";
+        const stacked =
+          !row &&
+          !split &&
+          (section.mediaLayout === "stack" || Boolean(section.images?.length));
 
         return (
           <section
@@ -64,7 +72,11 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                 id={`${section.id}-heading`}
                 className="font-display text-[clamp(1.5rem,2vw+0.75rem,2.5rem)] font-bold leading-normal text-text-primary"
               >
-                {section.title}
+                {section.titleLink ? (
+                  <TitleWithLink title={section.title} link={section.titleLink} />
+                ) : (
+                  section.title
+                )}
               </h2>
 
               {section.extraTitle ? (
@@ -73,18 +85,31 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                 </p>
               ) : null}
 
-              {section.body ? (
-                <p className="whitespace-pre-line font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]">
-                  {section.body}
-                </p>
+              {section.body || section.bullets?.length ? (
+                <div
+                  className={cn(
+                    "font-mono text-base leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]",
+                    section.bodyWeight === "regular" ? "font-normal" : "font-light",
+                  )}
+                >
+                  {section.body ? <RichText text={section.body} /> : null}
+                  {section.bullets?.length ? (
+                    <ul className="mt-[30px] list-disc pl-[30px]">
+                      {section.bullets.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
               ) : null}
 
               {quoteInline ? <Quote text={section.quote!} /> : null}
 
               {section.bodyAfter ? (
-                <p className="font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]">
-                  {section.bodyAfter}
-                </p>
+                <RichText
+                  text={section.bodyAfter}
+                  className="font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]"
+                />
               ) : null}
 
               {!portrait && section.mediaBlocks?.length ? (
@@ -133,17 +158,46 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
               </div>
             ) : null}
 
+            {row && section.images?.length ? (
+              <div className="mt-8 flex flex-col items-start gap-8 sm:mt-12 sm:flex-row sm:gap-12">
+                {section.images.map((image) => {
+                  const src = imageSrc(image);
+                  return (
+                    <div
+                      key={src}
+                      className="relative aspect-[278/554] w-full max-w-[279px] overflow-hidden"
+                    >
+                      <Image
+                        src={src}
+                        alt=""
+                        fill
+                        className="object-cover object-center"
+                        sizes="279px"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
+
+            {section.charts?.length ? (
+              <BenchmarkCharts
+                legend={section.legend ?? []}
+                charts={section.charts}
+              />
+            ) : null}
+
+            {split && section.images?.length ? (
+              <SplitImages images={section.images} />
+            ) : null}
+
             {stacked && section.images?.length ? (
-              <div className="mt-10 flex flex-col gap-12 sm:mt-16 sm:gap-16">
-                {section.images.map((src) => (
-                  <Image
-                    key={src}
-                    src={src}
-                    alt=""
-                    width={906}
-                    height={595}
-                    className="h-auto w-full"
-                    sizes="(max-width: 1024px) 100vw, 906px"
+              <div className={stackSpacing(section.mediaSpacing)}>
+                {section.images.map((image) => (
+                  <StackedImage
+                    key={imageSrc(image)}
+                    image={image}
+                    rounded={Boolean(section.roundedImages)}
                   />
                 ))}
               </div>
@@ -183,26 +237,206 @@ function LandscapeBlocks({ blocks }: { blocks: CaseStudyMediaBlock[] }) {
   );
 }
 
+function imageSrc(image: CaseStudyImage): string {
+  return typeof image === "string" ? image : image.src;
+}
+
+function stackSpacing(spacing: CaseStudySection["mediaSpacing"]): string {
+  if (spacing === "compact") return "mt-6 flex flex-col gap-6";
+  if (spacing === "medium") return "mt-8 flex flex-col gap-8 sm:mt-12 sm:gap-12";
+  return "mt-10 flex flex-col gap-12 sm:mt-16 sm:gap-16";
+}
+
+function StackedImage({
+  image,
+  rounded,
+}: {
+  image: CaseStudyImage;
+  rounded: boolean;
+}) {
+  const src = imageSrc(image);
+  const asset = typeof image === "string" ? null : image;
+  const radius = rounded
+    ? "rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]"
+    : "";
+
+  if (asset?.frame) {
+    return (
+      <div
+        className={cn("relative w-full overflow-hidden", radius)}
+        style={{ aspectRatio: asset.frame }}
+      >
+        <img
+          src={src}
+          alt={asset.alt ?? ""}
+          className="absolute left-0 w-full max-w-none"
+          style={{
+            height: asset.crop?.height ?? "100%",
+            top: asset.crop?.top ?? "0%",
+          }}
+        />
+      </div>
+    );
+  }
+
+  const size = imageSize(image);
+  return (
+    <Image
+      src={src}
+      alt={asset?.alt ?? ""}
+      width={size.width}
+      height={size.height}
+      className={cn("h-auto w-full", radius)}
+      sizes="(max-width: 1024px) 100vw, 943px"
+    />
+  );
+}
+
+function TitleWithLink({
+  title,
+  link,
+}: {
+  title: string;
+  link: NonNullable<CaseStudySection["titleLink"]>;
+}) {
+  const phraseAt = link.phrase ? title.indexOf(link.phrase) : -1;
+  if (link.phrase && phraseAt >= 0) {
+    return (
+      <>
+        {title.slice(0, phraseAt)}
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-navy-800 underline decoration-1 underline-offset-[0.15em]"
+        >
+          {link.phrase}
+        </a>
+        {title.slice(phraseAt + link.phrase.length)}
+      </>
+    );
+  }
+
+  return (
+    <>
+      <span className="block">{title}</span>
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        {link.label}
+      </a>
+    </>
+  );
+}
+
+function imageSize(image: CaseStudyImage): { width: number; height: number } {
+  if (typeof image === "string") return { width: 906, height: 595 };
+  return { width: image.width, height: image.height };
+}
+
+function SplitImages({ images }: { images: CaseStudyImage[] }) {
+  return (
+    <div className="mt-10 flex flex-col gap-6 sm:mt-16 sm:flex-row sm:gap-16">
+      {images.map((image) => {
+        const src = imageSrc(image);
+        const asset = typeof image === "string" ? null : image;
+        return (
+          <div
+            key={src}
+            className="relative w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:min-w-0 sm:rounded-[var(--radius-media)]"
+            style={{
+              aspectRatio: asset?.frame ?? "1 / 1",
+              flexGrow: asset?.width ?? 1,
+              flexBasis: 0,
+            }}
+          >
+            <div
+              className="absolute left-0 w-full"
+              style={{
+                top: asset?.crop?.top ?? "0%",
+                height: asset?.crop?.height ?? "100%",
+              }}
+            >
+              <Image
+                src={src}
+                alt={asset?.alt ?? ""}
+                fill
+                className="object-cover"
+                style={{ objectPosition: asset?.position ?? "center" }}
+                sizes="(max-width: 640px) 100vw, 480px"
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function RichText({ text, className }: { text: string; className?: string }) {
+  return <p className={cn("whitespace-pre-line", className)}>{richChildren(text)}</p>;
+}
+
+function richChildren(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-bold">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
 function PortraitBlock({ block }: { block: CaseStudyMediaBlock }) {
+  const width = block.width ?? 305;
+
   return (
     <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-12">
-      <div className="w-full max-w-[305px] shrink-0">
+      <div className="w-full shrink-0" style={{ maxWidth: width }}>
         {block.image ? (
-          <Image
-            src={block.image}
-            alt=""
-            width={305}
-            height={625}
-            className="h-auto w-full"
-            sizes="305px"
-          />
+          block.aspect ? (
+            <div
+              className="relative w-full overflow-hidden"
+              style={{ aspectRatio: block.aspect }}
+            >
+              <Image
+                src={block.image}
+                alt=""
+                fill
+                className="object-cover object-center"
+                sizes={`${width}px`}
+              />
+            </div>
+          ) : (
+            <Image
+              src={block.image}
+              alt=""
+              width={width}
+              height={Math.round(width * (625 / 305))}
+              className="h-auto w-full"
+              sizes={`${width}px`}
+            />
+          )
         ) : (
           <div className="aspect-[305/625] w-full bg-grey-50" />
         )}
       </div>
-      <p className="font-display text-[clamp(1.5rem,2vw+0.5rem,2.25rem)] font-bold leading-normal text-text-primary">
-        {block.caption}
-      </p>
+      <div className="flex min-w-0 flex-1 flex-col gap-4">
+        <p className="font-display text-[clamp(1.5rem,2vw+0.5rem,2.25rem)] font-bold leading-normal text-text-primary">
+          {block.caption}
+        </p>
+        {block.body ? (
+          <p className="font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]">
+            {block.body}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }

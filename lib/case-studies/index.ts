@@ -7,6 +7,8 @@ const CONTENT_DIR = path.join(process.cwd(), "content", "case-studies");
 export type {
   CaseStudy,
   CaseStudyMeta,
+  CaseStudyImage,
+  CaseStudyImageAsset,
   CaseStudyMediaBlock,
   CaseStudyPill,
   CaseStudySection,

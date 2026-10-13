@@ -24,19 +24,18 @@ export default async function HomePage() {
             <div className="flex w-full flex-col items-center gap-8 md:gap-10 lg:flex-row lg:items-start lg:justify-between">
               <div className="flex w-full max-w-[872px] items-center lg:py-[101px]">
                 <h1 className="w-full font-display text-[clamp(2rem,5vw+0.5rem,4rem)] font-bold leading-normal text-text-primary">
-                  Hello, I&apos;m Ellis, a{" "}
+                  Hello, I&apos;m Ellis, a research-driven product{" "}
                   <span className="line-through decoration-solid">
-                    product designer
+                    designer
                   </span>{" "}
-                  <span className="text-text-highlight">builder</span> using AI to
-                  drive innovation
+                  <span className="text-text-highlight">builder</span>.
                 </h1>
               </div>
               <HeroSketch />
             </div>
 
             <div className="flex flex-col items-center gap-3.5">
-              <p className="font-mono text-base font-semibold text-blue-100 sm:text-lg md:text-2xl">
+              <p className="font-mono text-base font-semibold text-orange-100 sm:text-lg md:text-2xl">
                 scroll to see work
               </p>
               <img
@@ -49,7 +48,7 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* Work thumbnails — Figma staggered 2-col */}
+          {/* Work thumbnails — two columns, tops aligned */}
           <section
             id="work"
             aria-label="Selected work"
@@ -60,7 +59,7 @@ export default async function HomePage() {
                 <WorkCard key={study.slug} study={study} />
               ))}
             </div>
-            <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 md:pt-16 lg:gap-[95px] lg:pt-24">
+            <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-[95px]">
               {right.map((study) => (
                 <WorkCard key={study.slug} study={study} />
               ))}

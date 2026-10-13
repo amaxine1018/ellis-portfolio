@@ -1,22 +1,29 @@
 {
   "slug": "inviting-delight-in-the-unboxing-experience",
-  "title": "Inviting delight in the unboxing experience",
-  "summary": "Concept work bringing delight into the Procter & Gamble unboxing experience.",
+  "title": "Packaging innovation for skincare brand",
+  "headline": "Strategic packaging innovation",
+  "summary": "Research and physical prototyping for P&G e-commerce skincare packaging that meets SIOC shipping requirements and real user needs.",
   "year": "2025",
   "client": "Procter & Gamble",
   "status": "Concept",
   "thumbnailTone": "blue-50",
+  "heroTone": "blue-25",
   "thumbnailImage": "/assets/thumbs/thumb-unboxing.png",
-  "heroImages": ["/assets/thumbs/thumb-unboxing.png"],
+  "thumbnailLayout": "logo",
+  "heroLayout": "mark",
+  "heroImages": ["/assets/case-studies/pg/hero.png"],
+  "metaTone": "primary",
+  "introGap": "88",
   "pills": [
     { "label": "Procter & Gamble", "tone": "navy" },
     { "label": "Concept", "tone": "green" },
     { "label": "2025", "tone": "blue" }
   ],
   "meta": {
-    "tools": "Figma",
-    "team": "1 Designer",
-    "duration": "2025"
+    "tools": "Adobe Illustrator, Laser cutting, SolidWorks",
+    "team": "5 designers and researchers",
+    "teamLabel": "TEAM",
+    "duration": "10 weeks, 2025"
   },
   "featuredOrder": 2,
   "cardHeight": "tall",
@@ -24,29 +31,107 @@
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "How might we invite delight into the unboxing moment?",
-      "body": "Explored packaging and first-open experiences that feel considered, brand-forward, and easy to navigate.",
+      "title": "Leveraging generative research and physical prototyping to redefine the consumer unboxing experience.",
+      "quote": "This project is protected by a 5-year Non-disclosure agreement.",
+      "bodyAfter": "Our team partnered with P&G to research, evaluate, and redesign e-commerce skincare packaging that meets both SIOC (Ships in Own Container) shipping requirements and real user needs.\n\nTo ground our design decisions in user behavior, we conducted **three rounds of user research** across in-home contextual visits and on-site sessions with 10 participants --> uncovering behavioral patterns, sensory preferences, and unmet functional needs that existing packaging failed to address.\n\nQualitative findings were synthesized into user profiles, task analyses, and **usability requirements** that drove iterative prototyping and evaluation. Each design decision was traceable back to a specific user need or identified risk area in the current product experience.",
       "nav": true
     },
     {
-      "id": "problem",
-      "label": "PROBLEM",
-      "title": "Unboxing felt transactional instead of memorable.",
-      "body": "The first physical touchpoint with the product carried little emotional payoff or guided discovery.",
+      "id": "process",
+      "label": "PROCESS",
+      "title": "Structure of human centered design process.",
+      "mediaSpacing": "compact",
+      "images": [
+        {
+          "src": "/assets/case-studies/pg/process.png",
+          "width": 1000,
+          "height": 466,
+          "alt": "Human-centered design process from client kickoff through final pitch, with three rounds of user research"
+        }
+      ],
+      "nav": false
+    },
+    {
+      "id": "empathize",
+      "label": "EMPATHIZE",
+      "title": "Synthesizing consumer behavior.",
+      "body": "Using in-home contextual visits, we observed participants interacting with their current skincare products and packaging in their natural environment. These methods supported us in capturing behavioral patterns, workarounds, and points of friction that self-reported surveys would have missed.\n\nData from **10 participants** was synthesized into user profiles, a consumer journey map, and a set of core tensions that revealed gaps between users' mental models and the packaging's actual behavior. These insights were translated into **\"jobs to be done\"** statements that anchored our How Might We questions and were iteratively refined as new data emerged in all three research rounds.",
+      "mediaSpacing": "medium",
+      "roundedImages": true,
+      "images": [
+        {
+          "src": "/assets/case-studies/pg/empathize.png",
+          "width": 1000,
+          "height": 667,
+          "frame": "943 / 564",
+          "crop": { "height": "111.52%", "top": "-7.09%" },
+          "alt": "Team synthesizing research findings together"
+        }
+      ],
       "nav": true
     },
     {
-      "id": "solution",
-      "label": "SOLUTION",
-      "title": "A sequenced unboxing narrative with tactile delight.",
-      "body": "Concepted layers, reveals, and micro-moments that make opening the package feel intentional.",
+      "id": "define",
+      "label": "DEFINE",
+      "title": "Mapping user mental models.",
+      "body": "Comparing P&G's existing product line against the behavioral needs and failure points uncovered in research, we identified a focused opportunity: an outer SIOC with a custom inner filler designed to reduce damage-related user frustration and elevate the unboxing experience.\n\nTo validate and prioritize design directions, we conducted two rounds of structured on-site sessions using card sorting, preference ranking, and mix-and-match exercises with **12 prototype concepts**. We applied formative evaluation methods to understand how users interacted with and interpreted different packaging configurations before committing to a direction.\n\nThese three rounds of research culminated in a final set of functional and usability requirements, each directly tied to an observed **user need** or identified risk in the existing experience.",
+      "mediaSpacing": "medium",
+      "roundedImages": true,
+      "images": [
+        {
+          "src": "/assets/case-studies/pg/define.png",
+          "width": 1500,
+          "height": 1287,
+          "frame": "948 / 690",
+          "crop": { "height": "117.88%", "top": "-0.03%" },
+          "alt": "Packaging prototypes arranged for comparison"
+        }
+      ],
+      "nav": true
+    },
+    {
+      "id": "ideate",
+      "label": "IDEATE & PROTOTYPE",
+      "navLabel": "Ideate",
+      "title": "Defining the strategic blueprint.",
+      "body": "With finalized usability **product requirements** in hand, the team moved into rapid ideation using brainstorming and individual solo-storming. We generated 5 distinct design concepts, each taking a different approach to the outer SIOC and inner filler interaction. Concepts were evaluated against our requirements matrix before being brought into physical form through laser cutting and 2D/3D modeling.",
+      "roundedImages": true,
+      "images": [
+        {
+          "src": "/assets/case-studies/pg/ideate.png",
+          "width": 1500,
+          "height": 835,
+          "frame": "942 / 456",
+          "crop": { "height": "115%", "top": "-0.04%" },
+          "alt": "Sketches and physical packaging models"
+        }
+      ],
+      "nav": true
+    },
+    {
+      "id": "test",
+      "label": "ITERATE & TEST",
+      "navLabel": "Test",
+      "title": "Rapid physical prototyping.",
+      "body": "Over two weeks, we rapidly iterated on opening mechanisms, material choices, and structural features. We conducted internal evaluations within our 27-person cohort and faculty reviewers to assess usability, preference, and perceived quality.\n\nPreference data and qualitative feedback narrowed the field to 3 finalist designs, which were **presented to P&G stakeholders** for review against manufacturability and brand standards. A final design was selected and refined through color, material, and finish decisions.",
+      "roundedImages": true,
+      "images": [
+        {
+          "src": "/assets/case-studies/pg/test.png",
+          "width": 1162,
+          "height": 666,
+          "frame": "942 / 540",
+          "alt": "Final packaging prototypes lined up for review"
+        }
+      ],
       "nav": true
     },
     {
       "id": "outcome",
       "label": "OUTCOME",
-      "title": "A direction ready for stakeholder review.",
-      "body": "Delivered concept explorations and a clear story for how delight can live in the unboxing flow.",
+      "title": "Reflections and next steps.",
+      "bodyWeight": "regular",
+      "body": "Every opening mechanism and structural choice communicates something to the user. When those signals don't match user expectations, frustration or product damage follows.\n\nConducting three rounds of research taught me how much user needs shift when you move from observation to co-evaluation. The card sorting sessions in particular surfaced priorities that participants couldn't have articulated in a traditional interview. This shaped how I think about choosing the right evaluation method for the right phase of design while cementing the need for testing as a process.\n\nIf I were to continue this work, I'd want to move toward summative testing by measuring whether users can successfully complete the unboxing task of the final prototype without damage or confusion, rather than relying solely on preference data. I'd also want to involve more users with limited dexterity, to better account for accessibility in the packaging interaction.",
       "nav": true
     }
   ]

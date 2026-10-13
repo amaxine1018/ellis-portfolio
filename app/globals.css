@@ -6,13 +6,13 @@
 
 /*
   Figma color variables — el-portfolio (b7pAyutl687lo5886wooVp)
-  Sources: landing 37:13, case study 59:87, boost modules 128:275.
+  Sources: landing 37:13, about 190:60, studio 190:179 (brown-800 #2b1c12).
   Components must use these CSS variables (or Tailwind theme aliases), never raw hex.
 */
 :root {
   /* Primitives (Figma) */
   --cream-50: #fffcf5;
-  --brown-800: #55280c;
+  --brown-800: #2b1c12;
   --orange-200: #dc5400;
   --orange-100: #f48642;
   --orange-50: #f3b087; /* retained for legacy card tones; not in active landing vars */
@@ -26,6 +26,7 @@
   --green-200: #4fb054;
   --blue-100: #809ee9;
   --blue-50: #c3d4ff;
+  --blue-25: #cce6ff; /* P&G case study hero, frame 259:1080 */
   --navy-800: #03036f;
 
   /* Boost testing modules (128:275 Color 4 + icon fills) */
@@ -37,7 +38,7 @@
   /* Semantics (Figma) */
   --background-base: #fffcf5; /* same as cream-50 */
   --bg-base: var(--background-base);
-  --text-primary: #55280c; /* = brown-800 */
+  --text-primary: #2b1c12; /* = brown-800 */
   --text-secondary: #03036f; /* = navy-800 */
   --text-accent: #03036f; /* Figma case study binding (= navy-800) */
   --text-inverse: #ffffff;
@@ -139,6 +140,7 @@
   --color-green-200: var(--green-200);
   --color-blue-100: var(--blue-100);
   --color-blue-50: var(--blue-50);
+  --color-blue-25: var(--blue-25);
   --color-navy-800: var(--navy-800);
   --color-boost-alert: var(--boost-alert);
   --color-boost-caution: var(--boost-caution);

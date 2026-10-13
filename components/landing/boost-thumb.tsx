@@ -49,8 +49,9 @@ const BLUE_TOP_F3 = -415;
 const BLUE_H_F1 = 616;
 const BLUE_H_F2 = 1089;
 const BLUE_H_F3 = 1762;
-const SHADOW_TOP_F1 = 373;
-const SHADOW_H_F1 = 631;
+// Lower than the blue cap, and long enough that the bottom radius sits below the frame.
+const SHADOW_TOP_F1 = 430;
+const SHADOW_H_F1 = 970;
 
 type Size = { w: number; h: number };
 

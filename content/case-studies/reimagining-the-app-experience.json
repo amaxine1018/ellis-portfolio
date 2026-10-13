@@ -1,7 +1,7 @@
 {
   "slug": "reimagining-the-app-experience",
   "title": "Reimagining the app experience",
-  "summary": "Concept exploration for a Boost Mobile app that treats multi-line accounts as a first-class experience.",
+  "summary": "Driving app engagement through interactive prototyping for Boost Mobile.",
   "year": "2026",
   "client": "Boost Mobile",
   "status": "Concept",
@@ -12,11 +12,13 @@
   "heroImages": ["/assets/case-studies/reimagining/hero.png"],
   "pills": [
     { "label": "Boost Mobile", "tone": "orange" },
-    { "label": "Concept", "tone": "green" }
+    { "label": "Concept", "tone": "green" },
+    { "label": "2026", "tone": "blue" }
   ],
   "meta": {
-    "tools": "Figma, Claude Code, Google Stitch, UserZoom, Figma Make",
-    "team": "1 Designer, 1 Researcher",
+    "tools": "Figma, Claude Code, Google Stitch, UserZoom",
+    "team": "Lead Designer",
+    "teamLabel": "MY ROLE",
     "duration": "10 weeks, 2026"
   },
   "featuredOrder": 0,
@@ -25,39 +27,48 @@
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "How might we improve core usability metrics while engaging multi-line users?",
-      "quote": "43% of users have multi-line accounts",
-      "bodyAfter": "Something i realized early on, our current app is centered around the single line user with multi line as an afterthought. While we do serve many single line users, a significant number of accounts has more than one line. And yet our services don't account for features managing and engaging these types of users. this is the opportunity",
+      "title": "Driving app engagement through interactive prototyping.",
+      "body": "As the lead designer and researcher, I benchmarked core usability metrics, developed a coded prototype featuring new reward systems, and successfully pitched the validated UX to Account Executives to drive future revenue goals.\n\nThis work focused on strengthening comprehension, reinforcing feedback loops, and introducing a more expressive interaction model that aligns with Boost’s brand.",
       "nav": true
     },
     {
       "id": "problem",
       "label": "PROBLEM",
-      "title": "Users drop off before completing key tasks or understanding when a submission is successful.",
-      "extraTitle": "The current app is static and strictly utilitarian.",
+      "title": "Fixing broken feedback loops in a static, utility‑only app.",
+      "body": "User research revealed a consistent gap: people struggled to understand where they were in a flow, what action to take next, and whether their submissions were successful. These breakdowns in clarity and feedback led to **high drop‑off rates** and stalled sessions across essential tasks.",
       "nav": true
     },
     {
       "id": "solution",
       "label": "SOLUTION",
-      "title": "The Boost Mobile bubble concept.",
+      "title": "Prototyping in Code for high-fidelity validation. Play with it here.",
+      "titleLink": {
+        "href": "https://bubblefinal.vercel.app/",
+        "label": "https://bubblefinal.vercel.app/",
+        "phrase": "here"
+      },
+      "body": "To accurately test the impact of animations and interactive rewards, static screens weren't enough. I designed the core features in Figma and utilized **Figma MCP** and **Claude Code** to rapidly build a functional, interactive prototype. This allowed me to test real micro-interactions through unmoderated usability testing in UserZoom.",
       "mediaLayout": "portrait",
       "mediaBlocks": [
         {
           "caption": "Boost as a feeling.",
-          "image": "/assets/case-studies/reimagining/phone-feeling.png"
+          "body": "The bubble interaction model introduces a sense of momentum and delight without compromising clarity, increasing engagement across utility flows.",
+          "image": "/assets/case-studies/reimagining/solution-feeling.png"
         },
         {
-          "caption": "The bubble imagery.",
-          "image": "/assets/case-studies/reimagining/phone-bubble.png"
+          "caption": "Simple data add interaction.",
+          "body": "A reorganized layout and clearer hierarchy reduce cognitive load, helping users quickly find and understand their data usage.",
+          "image": "/assets/case-studies/reimagining/solution-data.png"
         },
         {
-          "caption": "Shopping in app.",
-          "image": "/assets/case-studies/reimagining/phone-shopping.png"
+          "caption": "Guided task flow",
+          "body": "Inline prompts and contextual cues clarify what to do next, improving comprehension for users who previously stalled mid-task.",
+          "image": "/assets/case-studies/reimagining/solution-guided.png"
         },
         {
-          "caption": "Rewards beyond utility",
-          "image": "/assets/case-studies/reimagining/phone-rewards.png"
+          "caption": "Engagement layer.",
+          "body": "Monetization teams consistently surfaced our gap in offering relevant perks to customers. Further gamifying an interaction in app gave users a reason to return beyond monthly payment.",
+          "image": "/assets/case-studies/reimagining/solution-engagement.png"
         }
       ],
       "nav": true
@@ -65,67 +76,70 @@
     {
       "id": "testing",
       "label": "TESTING",
-      "title": "Progress components for onboarding and account management",
-      "nav": false,
-      "statRows": [
-        [
-          {
-            "title": "Add a line",
-            "value": "56%",
-            "detail": "Task Completion Rate (TCR)",
-            "tone": "alert"
-          },
-          {
-            "title": "Add a bolt-on",
-            "value": "76%",
-            "detail": "Task Completion Rate (TCR)",
-            "tone": "alert"
-          },
-          {
-            "title": "Check Data",
-            "value": "2.7",
-            "detail": "Customer Effort Score (CES)",
-            "tone": "caution"
-          }
-        ],
-        [
-          {
-            "title": "Add a line",
-            "value": "86.5%",
-            "detail": "Task Completion Rate (TCR)",
-            "tone": "positive"
-          },
-          {
-            "title": "Add a bolt-on",
-            "value": "80%",
-            "detail": "Task Completion Rate (TCR)",
-            "tone": "positive"
-          },
-          {
-            "title": "Check Data",
-            "value": "1.9",
-            "detail": "Customer Effort Score (CES)",
-            "tone": "positive"
-          }
-        ]
+      "title": "Research surfaced what drove drop‑off, Boost Bubble closed them with measurable impact.",
+      "body": "The unmoderated testing proved our hypothesis: the interactive, animated concept significantly improved completion rate and CES scores for key tasks. I leveraged these validated metrics and the coded prototype to pitch the new features directly to Account Executives.",
+      "nav": true,
+      "legend": [
+        { "series": "v1", "label": "v1 benchmark" },
+        { "series": "v2", "label": "v2 benchmark" }
+      ],
+      "charts": [
+        {
+          "title": "Task Completion Rate",
+          "wash": "top",
+          "points": [
+            { "series": "v2", "label": "87%", "top": 24, "left": 71 },
+            { "series": "v2", "label": "80%", "top": 46, "left": 25 },
+            { "series": "v1", "label": "76%", "top": 65, "left": 25 },
+            { "series": "v1", "label": "56%", "top": 81, "left": 71 }
+          ],
+          "categories": [
+            { "label": "Add a bolt-on", "left": 27 },
+            { "label": "Add a Line", "left": 74 }
+          ]
+        },
+        {
+          "title": "Customer Effort Score",
+          "wash": "bottom",
+          "points": [
+            { "series": "v1", "label": "2.7", "top": 55, "left": 47 },
+            { "series": "v2", "label": "1.9", "top": 73, "left": 47 }
+          ],
+          "categories": [{ "label": "Check Data", "left": 50 }]
+        }
       ]
     },
     {
       "id": "process",
       "label": "PROCESS",
-      "title": "Brainstorming form factors and exploring within the design system.",
-      "mediaLayout": "stack",
+      "title": "Brainstorming form factors and visual concepts.",
+      "body": "I moved from paper rapid paper prototyping to visualizing through\n**Figma Make**, pitching 3 early concepts, and iterating on a final direction.",
+      "mediaLayout": "split",
       "images": [
-        "/assets/case-studies/reimagining/process-1.png",
-        "/assets/case-studies/reimagining/process-2.png"
+        {
+          "src": "/assets/case-studies/reimagining/process-brainstorm.jpg",
+          "width": 457,
+          "height": 465,
+          "frame": "457 / 465",
+          "crop": { "height": "130.99%", "top": "-30.99%" },
+          "alt": "Ellis arranging interface sketches on a whiteboard"
+        },
+        {
+          "src": "/assets/case-studies/reimagining/process-visual.jpg",
+          "width": 407,
+          "height": 465,
+          "frame": "407 / 465",
+          "crop": { "height": "116.88%", "top": "-5.67%" },
+          "alt": "Notebook of interface concept sketches"
+        }
       ],
       "nav": false
     },
     {
       "id": "outcome",
       "label": "OUTCOME",
-      "title": "Reflection and Next Steps",
-      "body": "Handoff UXR benchmarking for future app planning\nFurther analyze usability testing data\n\nInvolve key stakeholders\nFurther build other flows like change plan, shopping in app, etc",
+      "title": "From product strategy to prototype.",
+      "body": "**Measurable Usability Gains**: Established baseline usability scores for key app journeys, ultimately driving a 18% increase in completion rate and a .8 point improvement in CES after testing the new design interventions.\n\n**Advanced Technical Prototyping**: Transitioned from static Fig, ma explorations to a fully functional coded prototype using Figma MCP and Claude Code. This enabled accurate, unmoderated UserZoom testing of complex micro-interactions, animations, and a native rewards system that static screens could not support.\n\n**Cross-Functional Business Alignment**: Synthesized the validated usability data and interactive prototype into a strategic presentation for 4 Account Executives, successfully demonstrating how targeted UX investments drive user engagement and support future business goals.",
       "nav": true
     }
   ]

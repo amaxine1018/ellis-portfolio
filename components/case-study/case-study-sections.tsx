@@ -43,7 +43,7 @@ interface CaseStudySectionsProps {
 
 export function CaseStudySections({ sections }: CaseStudySectionsProps) {
   return (
-    <div className="flex flex-col gap-16 sm:gap-20 md:gap-24">
+    <div className="flex flex-col gap-16 sm:gap-20 md:gap-[106px]">
       {sections.map((section) => {
         const quoteAfterMedia = Boolean(
           section.mediaBlocks?.length && section.quote,
@@ -64,8 +64,8 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
             className="scroll-mt-24 sm:scroll-mt-28"
             aria-labelledby={`${section.id}-heading`}
           >
-            <div className="flex flex-col gap-5 sm:gap-6">
-              <p className="font-mono text-base font-light text-text-primary sm:text-xl">
+            <div className="flex flex-col gap-6">
+              <p className="font-mono text-xl font-light text-text-primary opacity-50">
                 {section.label}
               </p>
               <h2

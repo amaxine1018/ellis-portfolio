@@ -6,7 +6,7 @@
   "client": "The Pill Club",
   "status": "Shipped",
   "thumbnailTone": "mint-50",
-  "heroTone": "gold-200",
+  "heroTone": "mint-50",
   "thumbnailImage": "/assets/thumbs/thumb-pillclub.png",
   "thumbnailLayout": "device",
   "heroLayout": "frame",
@@ -86,18 +86,18 @@
       "images": [
         {
           "src": "/assets/case-studies/pillclub/process-1.png",
-          "width": 1137,
-          "height": 644
+          "width": 943,
+          "height": 534
         },
         {
           "src": "/assets/case-studies/pillclub/process-2.png",
-          "width": 1133,
-          "height": 703
+          "width": 943,
+          "height": 585
         },
         {
           "src": "/assets/case-studies/pillclub/process-3.png",
-          "width": 1130,
-          "height": 447
+          "width": 943,
+          "height": 373
         }
       ],
       "nav": true

@@ -63,12 +63,21 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                   <BoostThumb />
                 </div>
               ) : study.heroLayout === "frame" ? (
-                <div className="relative aspect-[960/470] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
-                  <img
-                    src={heroImages[0]}
-                    alt=""
-                    className="absolute top-[-34.89%] left-[-0.01%] h-[158.72%] w-[100.01%] max-w-none"
-                  />
+                <div
+                  className="relative aspect-[960/342] w-full overflow-hidden rounded-[var(--radius-card-sm)] sm:rounded-[var(--radius-card)]"
+                  style={{
+                    backgroundColor: tokenBg(
+                      study.heroTone ?? study.thumbnailTone,
+                    ),
+                  }}
+                >
+                  <div className="absolute top-[6.433%] left-[37.708%] h-[93.567%] w-[24.479%]">
+                    <img
+                      src={heroImages[0]}
+                      alt=""
+                      className="h-full w-full"
+                    />
+                  </div>
                 </div>
               ) : study.heroLayout === "mark" ? (
                 <div

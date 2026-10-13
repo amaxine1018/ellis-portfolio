@@ -33,7 +33,7 @@ export function WorkCard({ study }: WorkCardProps) {
       {comingSoon ? null : (
         <p
           className={cn(
-            "relative z-10 max-w-[90%] font-mono text-lg font-medium leading-normal sm:text-xl md:text-[32px]",
+            "relative z-10 max-w-[90%] font-mono text-lg font-medium leading-normal sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px]",
             boostMotion ? "text-white" : "text-text-secondary",
           )}
         >
@@ -90,7 +90,7 @@ export function WorkCard({ study }: WorkCardProps) {
 
       <div
         className={cn(
-          "relative z-10 mt-auto flex flex-wrap gap-2 pt-28 sm:gap-3 sm:pt-36 md:gap-6",
+          "relative z-10 mt-auto flex flex-wrap gap-1.5 pt-2 sm:gap-2 sm:pt-4 md:pt-2 lg:gap-4 lg:pt-10 xl:gap-6 xl:pt-36",
           comingSoon && "opacity-25",
         )}
       >

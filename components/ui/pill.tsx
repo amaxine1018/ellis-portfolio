@@ -31,7 +31,7 @@ export function Pill({ label, tone, className }: PillProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center rounded-[var(--radius-pill)] px-4 py-1 font-mono text-[20px] font-bold leading-normal text-text-inverse",
+        "inline-flex items-center justify-center rounded-[var(--radius-pill)] px-2 py-0.5 font-mono text-xs font-bold leading-normal text-text-inverse sm:px-2.5 sm:text-sm md:px-3 md:py-1 md:text-base lg:px-3.5 lg:text-lg xl:px-4 xl:text-2xl",
         TONE_CLASS[tone],
         className,
       )}

@@ -40,8 +40,9 @@ export function CaseStudyNav({
       <nav aria-label="Back to work" className="flex flex-col gap-4">
         <Link
           href="/"
-          className="inline-flex w-fit items-center gap-2.5 font-mono text-base font-semibold text-text-muted hover:text-text-primary sm:text-lg"
+          className="relative z-30 inline-flex w-fit touch-manipulation items-center gap-2.5 font-mono text-base font-semibold text-text-muted hover:text-text-primary sm:text-lg"
         >
+          <span aria-hidden className="absolute -inset-x-4 -top-1 -bottom-4" />
           <svg width="10" height="18" viewBox="0 0 12 22" fill="none" aria-hidden>
             <path
               d="M10 1L2 11L10 21"

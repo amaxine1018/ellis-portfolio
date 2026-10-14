@@ -110,7 +110,11 @@ export function WorkCard({ study }: WorkCardProps) {
   }
 
   return (
-    <Link href={`/work/${study.slug}`} className={className} style={style}>
+    <Link
+      href={`/work/${study.slug}`}
+      className={cn(className, "z-10 cursor-pointer touch-manipulation")}
+      style={style}
+    >
       {card}
     </Link>
   );

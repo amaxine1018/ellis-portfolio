@@ -43,7 +43,7 @@ interface CaseStudySectionsProps {
 
 export function CaseStudySections({ sections }: CaseStudySectionsProps) {
   return (
-    <div className="flex flex-col gap-16 sm:gap-20 md:gap-[106px]">
+    <div className="flex flex-col gap-16 sm:gap-20 lg:max-w-[943px] lg:gap-[120px]">
       {sections.map((section) => {
         const quoteAfterMedia = Boolean(
           section.mediaBlocks?.length && section.quote,
@@ -56,6 +56,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
           !row &&
           !split &&
           (section.mediaLayout === "stack" || Boolean(section.images?.length));
+        const bodyWithMedia = row && Boolean(section.body);
 
         return (
           <section
@@ -85,18 +86,20 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                 </p>
               ) : null}
 
-              {section.body || section.bullets?.length ? (
+              {!bodyWithMedia && (section.body || section.bullets?.length) ? (
                 <div
                   className={cn(
-                    "font-mono text-base leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]",
-                    section.bodyWeight === "regular" ? "font-normal" : "font-light",
+                    "font-body text-base leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]",
+                    section.bodyWeight === "light" ? "font-light" : "font-normal",
                   )}
                 >
                   {section.body ? <RichText text={section.body} /> : null}
                   {section.bullets?.length ? (
-                    <ul className="mt-[30px] list-disc pl-[30px]">
+                    <ul className="mt-[30px] list-disc">
                       {section.bullets.map((item) => (
-                        <li key={item}>{item}</li>
+                        <li key={item} className="ms-[30px]">
+                          {item}
+                        </li>
                       ))}
                     </ul>
                   ) : null}
@@ -108,7 +111,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
               {section.bodyAfter ? (
                 <RichText
                   text={section.bodyAfter}
-                  className="font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]"
+                  className="font-body text-base font-normal leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]"
                 />
               ) : null}
 
@@ -159,7 +162,14 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
             ) : null}
 
             {row && section.images?.length ? (
-              <div className="mt-8 flex flex-col items-start gap-8 sm:mt-12 sm:flex-row sm:gap-12">
+              <div className="mt-8 flex flex-col gap-8 sm:mt-12 sm:gap-12">
+                {bodyWithMedia && section.body ? (
+                  <RichText
+                    text={section.body}
+                    className="font-body text-base font-normal leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]"
+                  />
+                ) : null}
+                <div className="flex flex-col items-start gap-8 sm:flex-row sm:gap-12">
                 {section.images.map((image) => {
                   const src = imageSrc(image);
                   return (
@@ -177,6 +187,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                     </div>
                   );
                 })}
+                </div>
               </div>
             ) : null}
 
@@ -377,7 +388,58 @@ function SplitImages({ images }: { images: CaseStudyImage[] }) {
 }
 
 function RichText({ text, className }: { text: string; className?: string }) {
-  return <p className={cn("whitespace-pre-line", className)}>{richChildren(text)}</p>;
+  return <div className={className}>{richBlocks(text)}</div>;
+}
+
+function richBlocks(text: string): ReactNode[] {
+  const lines = text.split("\n");
+  const blocks: ReactNode[] = [];
+  let index = 0;
+
+  while (index < lines.length) {
+    if (lines[index].trim() === "") {
+      blocks.push(<span key={`gap-${index}`} className="block h-[1lh]" aria-hidden />);
+      index += 1;
+      continue;
+    }
+
+    if (lines[index].startsWith("- ")) {
+      const items: string[] = [];
+      const start = index;
+      while (index < lines.length && lines[index].startsWith("- ")) {
+        items.push(lines[index].slice(2));
+        index += 1;
+      }
+      blocks.push(
+        <ul key={`list-${start}`} className="list-disc">
+          {items.map((item) => (
+            <li key={item} className="ms-[30px] leading-[30px]">
+              {richChildren(item)}
+            </li>
+          ))}
+        </ul>,
+      );
+      continue;
+    }
+
+    const paragraph: string[] = [];
+    const start = index;
+    while (
+      index < lines.length &&
+      lines[index].trim() !== "" &&
+      !lines[index].startsWith("- ")
+    ) {
+      paragraph.push(lines[index]);
+      index += 1;
+    }
+    blocks.push(
+      <p key={`p-${start}`} className="whitespace-pre-line">
+        {richChildren(paragraph.join("\n"))}
+      </p>,
+    );
+  }
+
+  return blocks;
 }
 
 function richChildren(text: string): ReactNode[] {
@@ -432,7 +494,7 @@ function PortraitBlock({ block }: { block: CaseStudyMediaBlock }) {
           {block.caption}
         </p>
         {block.body ? (
-          <p className="font-mono text-base font-light leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]">
+          <p className="font-body text-base font-normal leading-relaxed text-text-primary sm:text-xl sm:leading-[30px]">
             {block.body}
           </p>
         ) : null}

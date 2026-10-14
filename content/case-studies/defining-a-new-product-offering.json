@@ -10,6 +10,7 @@
   "thumbnailImage": "/assets/thumbs/thumb-pillclub.png",
   "thumbnailLayout": "device",
   "heroLayout": "frame",
+  "metaTone": "primary",
   "heroImages": ["/assets/case-studies/pillclub/hero.png"],
   "pills": [
     { "label": "The Pill Club", "tone": "pink" },
@@ -107,7 +108,7 @@
       "label": "OUTCOME",
       "title": "Handoff and launch!",
       "quote": "Engineering adopted the new funnel into the design system within 5 sprints.",
-      "bodyAfter": "Rather than leaving the complex branching logic open to interpretation, I structured the Figma file to act as a definitive blueprint for engineering: Mapping the complete decision tree using dedicated flow connectors. Built the core UI components using rigorous Auto Layout rules for responsive scaling. Bound semantic color variables and strict typography styles across the text layers.\n\nThis project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
+      "bodyAfter": "Rather than leaving the complex branching logic open to interpretation, I structured the Figma file to act as a definitive blueprint for engineering:\n\n- Mapping the complete decision tree using dedicated flow connectors.\n- Built the core UI components using rigorous Auto Layout rules for responsive scaling.\n- Bound semantic color variables and strict typography styles across the text layers.\n\nThis project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
       "nav": true
     }
   ]

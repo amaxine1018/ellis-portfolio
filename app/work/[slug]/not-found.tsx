@@ -10,7 +10,7 @@ export default function NotFound() {
         <h1 className="font-display text-3xl font-bold text-text-primary">
           Case study not found
         </h1>
-        <p className="font-mono text-base text-text-muted">
+        <p className="font-body text-base font-normal text-text-muted">
           That slug doesn&apos;t match anything in{" "}
           <code className="text-text-primary">content/case-studies/</code>.
         </p>

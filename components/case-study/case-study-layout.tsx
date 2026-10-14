@@ -22,24 +22,24 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
       : [study.thumbnailImage];
 
   return (
-    <div className="page-shell flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:gap-[170px]">
-      <aside className="hidden w-[125px] shrink-0 pt-[80px] lg:block lg:self-stretch">
+    <div className="page-shell flex flex-col gap-8 sm:gap-10 lg:mt-[3px] lg:flex-row lg:items-start lg:gap-[171px]">
+      <aside className="hidden w-[142px] shrink-0 lg:block lg:self-stretch lg:pt-[131px]">
         <CaseStudyNav sections={study.sections} variant="sidebar" />
       </aside>
 
-      <div className="min-w-0 flex-1 -mt-6 pt-0 sm:-mt-4 lg:max-w-[960px] lg:-mt-2">
+      <div className="min-w-0 flex-1 lg:max-w-[960px]">
         <div className="mb-6 sm:mb-8 lg:hidden">
           <CaseStudyNav sections={study.sections} variant="mobile" />
         </div>
 
         <header
           className={cn(
-            "mb-10 flex flex-col gap-10 sm:mb-14 sm:gap-14",
-            study.introGap === "88" ? "md:mb-[88px]" : "md:mb-[56px]",
+            "mb-10 flex flex-col gap-10 sm:mb-14 lg:mb-[72px] lg:gap-[46px]",
+            study.introGap === "88" && "lg:mb-[88px]",
           )}
         >
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-2 sm:gap-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap gap-4">
               {study.pills
                 .filter((p) => !/^\d{4}$/.test(p.label))
                 .map((pill) => (
@@ -127,7 +127,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
 
           <div
             className={cn(
-              "flex flex-col gap-6 font-mono text-sm font-normal leading-relaxed sm:gap-8 sm:text-base sm:leading-[30px] md:flex-row md:gap-12 lg:gap-[140px]",
+              "flex flex-col gap-6 text-base leading-[30px] sm:gap-8 md:flex-row md:gap-12 lg:gap-[140px]",
               study.metaTone === "primary"
                 ? "text-text-primary"
                 : "text-text-accent",
@@ -177,8 +177,8 @@ function MetaBlock({
 }) {
   return (
     <div className={`flex flex-col gap-1 ${className ?? ""}`}>
-      <p className="font-bold">{label}</p>
-      <p>{value}</p>
+      <p className="font-mono font-bold">{label}</p>
+      <p className="font-body font-normal">{value}</p>
     </div>
   );
 }

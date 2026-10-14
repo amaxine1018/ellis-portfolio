@@ -46,9 +46,10 @@
   /* Orange callouts (builder, quotes, hovers) — primitive orange-200 */
   --text-highlight: var(--orange-200);
 
-  /* Typography (Figma: Averia Sans Libre + Azeret Mono) */
+  /* Typography (Figma: Averia Sans Libre, Azeret Mono, Montserrat variable body) */
   --font-display: var(--font-averia), "Averia Sans Libre", sans-serif;
   --font-mono-ui: var(--font-azeret), "Azeret Mono", monospace;
+  --font-body: var(--font-montserrat), "Montserrat", sans-serif;
   --text-hero: 64px;
   --text-section-title: 40px;
   --text-card-title: 32px;
@@ -145,7 +146,8 @@
   --color-boost-alert: var(--boost-alert);
   --color-boost-caution: var(--boost-caution);
   --color-boost-positive: var(--boost-positive);
-  --font-sans: var(--font-mono-ui);
+  --font-sans: var(--font-body);
+  --font-body: var(--font-body);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono-ui);
   --font-heading: var(--font-display);
@@ -199,7 +201,7 @@
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    font-family: var(--font-mono-ui);
+    font-family: var(--font-body);
     overflow-x: clip;
   }
 }

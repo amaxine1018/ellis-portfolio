@@ -40,7 +40,7 @@ export default function AboutPage() {
               >
                 About Me
               </h1>
-              <div className="font-mono text-base font-normal leading-[30px] text-text-secondary">
+              <div className="font-body text-base font-normal leading-[30px] text-text-secondary">
                 <p className="whitespace-pre-line">
                   <span className="font-bold">Ellis Aguilar</span>
                   {` is a hands-on designer and systems thinker currently advancing integrated product design at Northwestern’s Segal Design Institute. With a B.A. in Media Arts and Sciences from Wellesley College, they bring together a background in fine arts and computer science to explore how design can drive meaningful social change.

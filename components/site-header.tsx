@@ -23,14 +23,14 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
   return (
     <header
       data-site-header
-      className="relative z-20 w-full [container-type:inline-size]"
+      className="pointer-events-none relative z-20 w-full [container-type:inline-size]"
     >
       <HeaderShape />
 
       <Link
         href="/"
         data-site-logo
-        className="absolute z-10 block"
+        className="pointer-events-auto absolute z-10 block touch-manipulation"
         style={{
           top: fluid(LOGO_SLOT.top),
           left: fluid(LOGO_SLOT.left),
@@ -54,10 +54,14 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "inline-flex items-center justify-center rounded-[var(--radius-nav)] border-2 border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary sm:px-3 sm:text-sm md:px-5 md:text-xl",
+                  "pointer-events-auto relative inline-flex items-center justify-center rounded-[var(--radius-nav)] border-2 border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
                   isActive && "bg-text-secondary text-bg-base",
                 )}
               >
+                <span
+                  aria-hidden
+                  className="absolute -inset-y-2.5 -inset-x-1 sm:-inset-y-2"
+                />
                 {item.label}
               </Link>
             );

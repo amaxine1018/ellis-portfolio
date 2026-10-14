@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Averia_Sans_Libre, Azeret_Mono } from "next/font/google";
+import { Averia_Sans_Libre, Azeret_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 
 const averia = Averia_Sans_Libre({
@@ -15,6 +15,12 @@ const azeret = Azeret_Mono({
   style: ["normal", "italic"],
 });
 
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: "variable",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Ellis Aguilar",
@@ -28,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${averia.variable} ${azeret.variable} h-full antialiased`}
+      className={`${averia.variable} ${azeret.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg-base text-text-primary">
         {children}

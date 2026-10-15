@@ -8,6 +8,11 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import {
+  ClickToDrawPill,
+  DRAW_HINTS_ENABLED,
+  DrawOnMeBubble,
+} from "@/components/landing/draw-hints";
 
 const STROKE_TTL_MS = 10_000;
 const MIN_W = 4;
@@ -41,6 +46,11 @@ function widthFromSpeed(speed: number, prevW: number): number {
  */
 export function HeroSketch() {
   const [isSharpieActive, setIsSharpieActive] = useState(false);
+  const [pillCursor, setPillCursor] = useState<{ x: number; y: number } | null>(
+    null,
+  );
+  const [bubbleDismissed, setBubbleDismissed] = useState(false);
+  const [mouseSession, setMouseSession] = useState(false);
 
   const postItRef = useRef<HTMLDivElement>(null);
   const sharpieBtnRef = useRef<HTMLButtonElement>(null);
@@ -193,6 +203,13 @@ export function HeroSketch() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isSharpieActive) {
+      setBubbleDismissed(false);
+      setMouseSession(false);
+    }
+  }, [isSharpieActive]);
+
   // Body cursor while sharpie is active (restored on deactivate + unmount)
   useEffect(() => {
     if (!isSharpieActive) return;
@@ -243,6 +260,7 @@ export function HeroSketch() {
 
     canvas.setPointerCapture(e.pointerId);
     drawingRef.current = true;
+    if (DRAW_HINTS_ENABLED) setBubbleDismissed(true);
 
     const { x, y } = pointerToLocal(e);
     const t = performance.now();
@@ -304,6 +322,24 @@ export function HeroSketch() {
 
   const toggleSharpie = () => {
     setIsSharpieActive((v) => !v);
+  };
+
+  const showPillCursor =
+    DRAW_HINTS_ENABLED && !isSharpieActive && pillCursor != null;
+
+  const trackPillCursor = (e: ReactPointerEvent) => {
+    if (
+      !DRAW_HINTS_ENABLED ||
+      isSharpieActive ||
+      e.pointerType !== "mouse"
+    ) {
+      return;
+    }
+    setPillCursor({ x: e.clientX, y: e.clientY });
+  };
+
+  const rememberPointer = (e: ReactPointerEvent<HTMLButtonElement>) => {
+    setMouseSession(e.pointerType === "mouse");
   };
 
   return (
@@ -372,6 +408,14 @@ export function HeroSketch() {
                 />
               </div>
             </div>
+            <DrawOnMeBubble
+              visible={
+                DRAW_HINTS_ENABLED &&
+                mouseSession &&
+                isSharpieActive &&
+                !bubbleDismissed
+              }
+            />
           </div>
         </div>
       </div>
@@ -385,8 +429,14 @@ export function HeroSketch() {
           aria-label={
             isSharpieActive ? "Put the sharpie down" : "Pick up the sharpie"
           }
+          onPointerEnter={trackPillCursor}
+          onPointerMove={trackPillCursor}
+          onPointerLeave={() => setPillCursor(null)}
+          onPointerDown={rememberPointer}
           onClick={toggleSharpie}
-          className="block w-full cursor-pointer border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary"
+          className={`block w-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary ${
+            showPillCursor ? "cursor-none" : "cursor-pointer"
+          }`}
         >
           <Image
             src="/assets/sharpie-v4.png"
@@ -399,6 +449,10 @@ export function HeroSketch() {
             sizes="(max-width: 640px) 90vw, 441px"
           />
         </button>
+        <ClickToDrawPill
+          x={showPillCursor && pillCursor ? pillCursor.x : null}
+          y={showPillCursor && pillCursor ? pillCursor.y : null}
+        />
         <div className="flex w-full flex-col items-start">
           <div
             className="h-10 w-full"

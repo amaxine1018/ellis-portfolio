@@ -12,6 +12,8 @@ import {
   ClickToDrawPill,
   DRAW_HINTS_ENABLED,
   DrawOnMeBubble,
+  SHARPIE_NUDGE_CLASS,
+  SharpieNudgeStyle,
 } from "@/components/landing/draw-hints";
 
 const STROKE_TTL_MS = 10_000;
@@ -46,11 +48,11 @@ function widthFromSpeed(speed: number, prevW: number): number {
  */
 export function HeroSketch() {
   const [isSharpieActive, setIsSharpieActive] = useState(false);
+  const [playNudge, setPlayNudge] = useState(DRAW_HINTS_ENABLED);
   const [pillCursor, setPillCursor] = useState<{ x: number; y: number } | null>(
     null,
   );
   const [bubbleDismissed, setBubbleDismissed] = useState(false);
-  const [mouseSession, setMouseSession] = useState(false);
 
   const postItRef = useRef<HTMLDivElement>(null);
   const sharpieBtnRef = useRef<HTMLButtonElement>(null);
@@ -206,8 +208,9 @@ export function HeroSketch() {
   useEffect(() => {
     if (!isSharpieActive) {
       setBubbleDismissed(false);
-      setMouseSession(false);
+      return;
     }
+    setPlayNudge(false);
   }, [isSharpieActive]);
 
   // Body cursor while sharpie is active (restored on deactivate + unmount)
@@ -338,12 +341,9 @@ export function HeroSketch() {
     setPillCursor({ x: e.clientX, y: e.clientY });
   };
 
-  const rememberPointer = (e: ReactPointerEvent<HTMLButtonElement>) => {
-    setMouseSession(e.pointerType === "mouse");
-  };
-
   return (
     <div className="relative mx-auto flex w-full max-w-[455px] flex-col items-center gap-[31px]">
+      <SharpieNudgeStyle />
       {/* Sticky note — Figma 152:589, scaled down only when the column is narrower */}
       <div className="w-full max-w-[332.819px] [container-type:inline-size]">
         <div
@@ -408,15 +408,12 @@ export function HeroSketch() {
                 />
               </div>
             </div>
-            <DrawOnMeBubble
-              visible={
-                DRAW_HINTS_ENABLED &&
-                mouseSession &&
-                isSharpieActive &&
-                !bubbleDismissed
-              }
-            />
           </div>
+          <DrawOnMeBubble
+            visible={
+              DRAW_HINTS_ENABLED && isSharpieActive && !bubbleDismissed
+            }
+          />
         </div>
       </div>
 
@@ -432,7 +429,6 @@ export function HeroSketch() {
           onPointerEnter={trackPillCursor}
           onPointerMove={trackPillCursor}
           onPointerLeave={() => setPillCursor(null)}
-          onPointerDown={rememberPointer}
           onClick={toggleSharpie}
           className={`block w-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary ${
             showPillCursor ? "cursor-none" : "cursor-pointer"
@@ -444,8 +440,9 @@ export function HeroSketch() {
             width={416}
             height={59}
             className={`block h-auto w-full transition-opacity duration-150 ${
-              isSharpieActive ? "invisible opacity-0" : "visible opacity-100"
-            }`}
+              playNudge ? SHARPIE_NUDGE_CLASS : ""
+            } ${isSharpieActive ? "invisible opacity-0" : "visible opacity-100"}`}
+            onAnimationEnd={() => setPlayNudge(false)}
             sizes="(max-width: 640px) 90vw, 441px"
           />
         </button>

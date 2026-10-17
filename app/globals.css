@@ -146,7 +146,7 @@
   --color-boost-alert: var(--boost-alert);
   --color-boost-caution: var(--boost-caution);
   --color-boost-positive: var(--boost-positive);
-  --font-sans: var(--font-body);
+  --font-sans: var(--font-mono-ui);
   --font-body: var(--font-body);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono-ui);
@@ -201,7 +201,7 @@
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    font-family: var(--font-body);
+    font-family: var(--font-mono-ui);
     overflow-x: clip;
   }
 }

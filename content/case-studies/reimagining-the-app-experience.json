@@ -113,7 +113,7 @@
       "id": "process",
       "label": "PROCESS",
       "title": "Brainstorming form factors and visual concepts.",
-      "body": "I moved from paper rapid paper prototyping to visualizing through\n**Figma Make**, pitching 3 early concepts, and iterating on a final direction.",
+      "body": "I moved from rapid paper prototyping to visualizing through\n**Figma Make**, pitching 3 early concepts, and iterating on a final direction.",
       "mediaLayout": "split",
       "images": [
         {
@@ -139,7 +139,7 @@
       "id": "outcome",
       "label": "OUTCOME",
       "title": "From product strategy to prototype.",
-      "body": "**Measurable Usability Gains**: Established baseline usability scores for key app journeys, ultimately driving a 18% increase in completion rate and a .8 point improvement in CES after testing the new design interventions.\n\n**Advanced Technical Prototyping**: Transitioned from static Fig, ma explorations to a fully functional coded prototype using Figma MCP and Claude Code. This enabled accurate, unmoderated UserZoom testing of complex micro-interactions, animations, and a native rewards system that static screens could not support.\n\n**Cross-Functional Business Alignment**: Synthesized the validated usability data and interactive prototype into a strategic presentation for 4 Account Executives, successfully demonstrating how targeted UX investments drive user engagement and support future business goals.",
+      "body": "**Measurable Usability Gains**: Established baseline usability scores for key app journeys, ultimately driving an 18% increase in completion rate and a .8 point improvement in CES after testing the new design interventions.\n\n**Advanced Technical Prototyping**: Transitioned from static Figma explorations to a fully functional coded prototype using Figma MCP and Claude Code. This enabled accurate, unmoderated UserZoom testing of complex micro-interactions, animations, and a native rewards system that static screens could not support.\n\n**Cross-Functional Business Alignment**: Synthesized the validated usability data and interactive prototype into a strategic presentation for 4 Account Executives, successfully demonstrating how targeted UX investments drive user engagement and support future business goals.",
       "nav": true
     }
   ]

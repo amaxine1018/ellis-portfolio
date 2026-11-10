@@ -149,7 +149,7 @@ export function StudioMosaic() {
           role="dialog"
           aria-modal="true"
           aria-label={active.alt}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 sm:p-10"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-text-primary/75 p-4 sm:p-10"
           onClick={() => setActive(null)}
         >
           {/* Original file, not the compressed grid thumbnail. */}

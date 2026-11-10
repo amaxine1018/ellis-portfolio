@@ -3,6 +3,7 @@ import { WorkCard } from "@/components/landing/work-card";
 import { LoadingScreen } from "@/components/loading/loading-screen";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { TokenMask } from "@/components/ui/token-mask";
 import { getAllCaseStudies } from "@/lib/case-studies";
 
 /**
@@ -35,15 +36,13 @@ export default async function HomePage() {
             </div>
 
             <div className="flex flex-col items-center gap-3.5">
-              <p className="font-mono text-base font-semibold text-orange-100 sm:text-lg md:text-2xl">
+              <p className="font-mono text-base font-semibold text-orange-200 sm:text-lg md:text-2xl">
                 scroll to see work
               </p>
-              <img
+              <TokenMask
                 src="/assets/scroll-arrow.svg"
-                alt=""
-                width={34}
-                height={15}
-                aria-hidden
+                token="--orange-200"
+                style={{ width: 34, height: 15 }}
               />
             </div>
           </section>

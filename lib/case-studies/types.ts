@@ -27,7 +27,6 @@ export type TokenColor =
   | "gold-200"
   | "grey-50"
   | "pink-50"
-  | "orange-100"
   | "green-200"
   | "blue-100"
   | "blue-50"

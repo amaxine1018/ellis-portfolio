@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { TokenMask } from "@/components/ui/token-mask";
 
 /**
  * Full-bleed Boost intro loop — Figma frames 180:252 → 181:530 (1746×932).
@@ -11,6 +12,9 @@ import { useEffect, useRef, useState } from "react";
  */
 
 const ASSETS = "/assets/thumbs/boost";
+const MARK_SRC = `${ASSETS}/boost-mark.svg`;
+/** Intrinsic size of boost-mark.svg (208.491 × 97.5151). */
+const MARK_ASPECT = "208.491 / 97.5151";
 
 const FW = 1746;
 const FH = 932;
@@ -18,8 +22,9 @@ const CIRCLE = 244;
 const BLUE_NARROW = 302;
 const PAD = (BLUE_NARROW - CIRCLE) / 2; // 29
 
-const ORANGE = "var(--orange-200)";
-const SHADOW = "#a24212";
+const ORANGE = "var(--boost-alert)";
+/** Arc behind the pill: boost-alert shaded toward brown-800 (~1.6:1 separation from the card). */
+const SHADOW = "color-mix(in srgb, var(--boost-alert) 70%, var(--brown-800))";
 const BLUE = "var(--blue-50)";
 
 /** Smooth ease-in-out — softer than the previous stepped curve */
@@ -297,23 +302,24 @@ export function BoostThumb() {
             animate={circle.animate}
             transition={transition}
           >
-            <img
-              src={`${ASSETS}/logo-circle.svg`}
-              alt=""
-              className="absolute inset-0 size-full"
-              width={244}
-              height={244}
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full"
+              style={{ background: ORANGE }}
             />
-            <motion.img
-              src={`${ASSETS}/boost-mark.svg`}
-              alt=""
+            <motion.div
               className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2"
-              width={208}
-              height={98}
+              style={{ aspectRatio: MARK_ASPECT }}
               initial={mark.initial}
               animate={mark.animate}
               transition={transition}
-            />
+            >
+              <TokenMask
+                src={MARK_SRC}
+                token="--text-inverse"
+                className="size-full"
+              />
+            </motion.div>
           </motion.div>
 
           {/* Flyer mark — scales up as blue widens (starts at widen, not after) */}
@@ -324,12 +330,11 @@ export function BoostThumb() {
             animate={flyer.animate}
             transition={transition}
           >
-            <img
-              src={`${ASSETS}/boost-mark.svg`}
-              alt=""
+            <TokenMask
+              src={MARK_SRC}
+              token="--text-inverse"
               className="w-[85%]"
-              width={208}
-              height={98}
+              style={{ aspectRatio: MARK_ASPECT }}
             />
           </motion.div>
         </>
@@ -367,19 +372,16 @@ function StaticPose({
         className="absolute left-1/2 z-[2] -translate-x-1/2"
         style={{ top: circleTop, width: circleSize, height: circleSize }}
       >
-        <img
-          src={`${ASSETS}/logo-circle.svg`}
-          alt=""
-          className="absolute inset-0 size-full"
-          width={244}
-          height={244}
+        <span
+          aria-hidden
+          className="absolute inset-0 rounded-full"
+          style={{ background: ORANGE }}
         />
-        <img
-          src={`${ASSETS}/boost-mark.svg`}
-          alt=""
+        <TokenMask
+          src={MARK_SRC}
+          token="--text-inverse"
           className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2"
-          width={208}
-          height={98}
+          style={{ aspectRatio: MARK_ASPECT }}
         />
       </div>
     </>

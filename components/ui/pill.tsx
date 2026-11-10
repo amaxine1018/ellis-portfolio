@@ -11,7 +11,7 @@ export type PillTone =
   | "navy";
 
 const TONE_CLASS: Record<PillTone, string> = {
-  orange: "bg-orange-100",
+  orange: "bg-orange-200",
   pink: "bg-pink-50",
   green: "bg-green-200",
   blue: "bg-blue-100",
@@ -31,7 +31,7 @@ export function Pill({ label, tone, className }: PillProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center rounded-[var(--radius-pill)] px-2 py-0.5 font-mono text-xs font-bold leading-normal text-text-inverse sm:px-2.5 sm:text-sm md:px-3 md:py-1 md:text-base lg:px-3.5 lg:text-lg xl:px-4 xl:text-2xl",
+        "inline-flex items-center justify-center rounded-[var(--radius-pill)] px-3.5 py-0.5 font-mono text-[11px] font-bold leading-normal text-text-inverse sm:px-4 sm:text-xs md:px-[18px] md:text-[13px] lg:px-5 lg:text-sm xl:text-lg",
         TONE_CLASS[tone],
         className,
       )}

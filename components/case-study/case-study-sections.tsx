@@ -9,6 +9,7 @@ import type {
   CaseStudyStat,
   CaseStudyStatTone,
 } from "@/lib/case-studies/types";
+import { TokenMask } from "@/components/ui/token-mask";
 import { cn } from "@/lib/utils";
 
 const radioCanada = Radio_Canada_Big({
@@ -18,22 +19,34 @@ const radioCanada = Radio_Canada_Big({
 
 const STAT_TONE: Record<
   CaseStudyStatTone,
-  { border: string; value: string; icon: string }
+  {
+    border: string;
+    value: string;
+    icon: string;
+    iconToken: string;
+    iconSize: { width: number; height: number };
+  }
 > = {
   alert: {
     border: "border-boost-alert",
     value: "text-boost-alert",
     icon: "/assets/case-studies/reimagining/icon-warning-orange.svg",
+    iconToken: "--boost-alert",
+    iconSize: { width: 48, height: 48 },
   },
   caution: {
     border: "border-boost-caution",
     value: "text-boost-caution",
     icon: "/assets/case-studies/reimagining/icon-warning-amber.svg",
+    iconToken: "--boost-caution",
+    iconSize: { width: 48, height: 48 },
   },
   positive: {
     border: "border-boost-positive",
     value: "text-boost-positive",
     icon: "/assets/case-studies/reimagining/icon-check.svg",
+    iconToken: "--boost-positive",
+    iconSize: { width: 39, height: 45 },
   },
 };
 
@@ -66,7 +79,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
             aria-labelledby={`${section.id}-heading`}
           >
             <div className="flex flex-col gap-6">
-              <p className="font-mono text-xl font-light text-text-primary opacity-50">
+              <p className="font-mono text-xl font-light text-text-muted">
                 {section.label}
               </p>
               <h2
@@ -510,12 +523,12 @@ function StatCard({ stat }: { stat: CaseStudyStat }) {
     <article
       className={cn(
         radioCanada.className,
-        "@container flex flex-col items-center gap-4 rounded-[20px] border-[8px] bg-white px-4 py-8 text-center sm:gap-6 sm:border-[10px] sm:px-6 sm:py-10",
+        "@container flex flex-col items-center gap-4 rounded-[20px] border-[8px] bg-text-inverse px-4 py-8 text-center sm:gap-6 sm:border-[10px] sm:px-6 sm:py-10",
         tone.border,
       )}
       style={{ boxShadow: "var(--shadow-stat)" }}
     >
-      <p className="text-[clamp(1.5rem,11cqi,2.5rem)] font-bold leading-none tracking-[-0.02em] text-black">
+      <p className="text-[clamp(1.5rem,11cqi,2.5rem)] font-bold leading-none tracking-[-0.02em] text-text-primary">
         {stat.title}
       </p>
       <div className="flex items-end justify-center gap-2.5">
@@ -527,9 +540,14 @@ function StatCard({ stat }: { stat: CaseStudyStat }) {
         >
           {stat.value}
         </p>
-        <img src={tone.icon} alt="" className="mb-0.5 shrink-0" />
+        <TokenMask
+          src={tone.icon}
+          token={tone.iconToken}
+          className="mb-0.5 shrink-0"
+          style={tone.iconSize}
+        />
       </div>
-      <p className="text-[clamp(0.875rem,5cqi,1.5rem)] leading-none tracking-[-0.02em] text-black">
+      <p className="text-[clamp(0.875rem,5cqi,1.5rem)] leading-none tracking-[-0.02em] text-text-primary">
         {stat.detail}
       </p>
     </article>

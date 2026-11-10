@@ -13,26 +13,25 @@
   /* Primitives (Figma) */
   --cream-50: #fffcf5;
   --brown-800: #2b1c12;
-  --orange-200: #dc5400;
-  --orange-100: #f48642;
+  --orange-200: #c94d00; /* 4.5:1 on cream; single orange (orange-100 removed) */
   --orange-50: #f3b087; /* retained for legacy card tones; not in active landing vars */
   --grey-50: #d8d4ca;
-  --grey-100: #a0a0a0;
+  --grey-100: #747474; /* 4.5:1 on cream */
   --purple-50: #ead9ff;
-  --pink-50: #ff828e;
+  --pink-50: #ff5768;
   --mint-50: #70d89d;
   --gold-200: #fdd052;
   --yellow-50: #feff9c; /* post-it fill on landing (raw fill in Figma) */
-  --green-200: #4fb054;
-  --blue-100: #809ee9;
+  --green-200: #4aa54f;
+  --blue-100: #6e90e6;
   --blue-50: #c3d4ff;
   --blue-25: #cce6ff; /* P&G case study hero, frame 259:1080 */
   --navy-800: #03036f;
 
   /* Boost testing modules (128:275 Color 4 + icon fills) */
   --boost-alert: #ff5600;
-  --boost-caution: #ffa600;
-  --boost-positive: #61b058;
+  --boost-caution: #a16900; /* 4.5:1 on cream */
+  --boost-positive: #45823e; /* 4.5:1 on cream */
   --shadow-stat: 0px 8px 10.789px rgba(27, 27, 27, 0.16);
 
   /* Semantics (Figma) */
@@ -97,7 +96,7 @@
   --sidebar-accent-foreground: var(--text-secondary);
   --sidebar-border: var(--grey-50);
   --sidebar-ring: var(--text-secondary);
-  --chart-1: var(--orange-100);
+  --chart-1: var(--orange-200);
   --chart-2: var(--green-200);
   --chart-3: var(--blue-100);
   --chart-4: var(--pink-50);
@@ -129,7 +128,6 @@
   --color-cream-50: var(--cream-50);
   --color-brown-800: var(--brown-800);
   --color-orange-200: var(--orange-200);
-  --color-orange-100: var(--orange-100);
   --color-orange-50: var(--orange-50);
   --color-grey-50: var(--grey-50);
   --color-grey-100: var(--grey-100);

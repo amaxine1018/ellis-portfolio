@@ -5,6 +5,7 @@ import type { CaseStudy } from "@/lib/case-studies/types";
 import { tokenBg } from "@/lib/case-studies";
 import { cn } from "@/lib/utils";
 import { CaseStudyNav } from "./case-study-nav";
+import { HeroCursorLink } from "./hero-cursor-link";
 import { CaseStudySections } from "./case-study-sections";
 
 interface CaseStudyLayoutProps {
@@ -20,6 +21,9 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
     study.heroImages && study.heroImages.length > 0
       ? study.heroImages
       : [study.thumbnailImage];
+
+  // The prototype link lives on the section that introduces it.
+  const prototypeHref = study.sections.find((s) => s.titleLink)?.titleLink?.href;
 
   return (
     <div className="page-shell flex flex-col gap-8 sm:gap-10 lg:mt-[3px] lg:flex-row lg:items-start lg:gap-[171px]">
@@ -59,9 +63,23 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
               </h1>
 
               {study.heroLayout === "boost-intro" ? (
-                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
-                  <BoostThumb />
-                </div>
+                (() => {
+                  const hero = (
+                    <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
+                      <BoostThumb />
+                    </div>
+                  );
+                  return prototypeHref ? (
+                    <HeroCursorLink
+                      href={prototypeHref}
+                      label="Open prototype"
+                    >
+                      {hero}
+                    </HeroCursorLink>
+                  ) : (
+                    hero
+                  );
+                })()
               ) : study.heroLayout === "frame" ? (
                 <div
                   className="relative aspect-[960/342] w-full overflow-hidden rounded-[var(--radius-card-sm)] sm:rounded-[var(--radius-card)]"

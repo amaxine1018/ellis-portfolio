@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Pill } from "@/components/ui/pill";
 
 /**
  * Test hint UI for the hero sketch.
@@ -102,10 +103,10 @@ export function ClickToDrawPill({
   return createPortal(
     <span
       aria-hidden
-      className="pointer-events-none fixed z-50 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-orange-100 px-4 py-1 font-mono text-xl font-bold leading-none text-text-inverse"
+      className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
       style={{ left: x, top: y }}
     >
-      Click to draw
+      <Pill label="Click to draw" tone="orange" />
     </span>,
     document.body,
   );
@@ -188,7 +189,7 @@ export function DrawOnMeBubble({ visible }: { visible: boolean }) {
         height={113.1}
         className="absolute inset-0 h-full w-full max-w-none"
       />
-      <p className="absolute top-[29.54px] left-[43.61px] whitespace-nowrap font-mono text-xl font-light leading-none text-black">
+      <p className="absolute top-[29.54px] left-[43.61px] whitespace-nowrap font-mono text-xl font-light leading-none text-text-primary">
         Draw on me!
       </p>
     </div>

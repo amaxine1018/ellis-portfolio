@@ -34,7 +34,7 @@ export function WorkCard({ study }: WorkCardProps) {
         <p
           className={cn(
             "relative z-10 max-w-[90%] font-mono text-lg font-medium leading-normal sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px]",
-            boostMotion ? "text-white" : "text-text-secondary",
+            boostMotion ? "text-text-inverse" : "text-text-secondary",
           )}
         >
           {study.title}

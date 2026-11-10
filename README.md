@@ -53,7 +53,7 @@ Key mappings:
 | `text-secondary` / `navy-800` | `--text-secondary` |
 | `text-accent` / `orange-200` | `--text-accent` |
 | `text-inverse` | `--text-inverse` |
-| Pill / card tones | `--pink-50`, `--orange-100`, `--green-200`, `--blue-100`, `--purple-50`, `--mint-50`, `--gold-200`, … |
+| Pill / card tones | `--pink-50`, `--green-200`, `--blue-100`, `--purple-50`, `--mint-50`, `--gold-200`, … |
 
 Typography: **Averia Sans Libre** (display) + **Azeret Mono** (UI / body), loaded via `next/font/google`.
 

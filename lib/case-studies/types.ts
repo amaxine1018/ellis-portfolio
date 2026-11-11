@@ -110,6 +110,14 @@ export interface BenchmarkLegendItem {
   label: string;
 }
 
+export interface ThumbnailArt {
+  src: string;
+  /** Where the artwork sits on the tile, as % of the tile */
+  box: { left: number; top: number; width: number; height: number };
+  /** Overflow crop of the image inside the box, as % of the box. Defaults to fill. */
+  crop?: { left: number; top: number; width: number; height: number };
+}
+
 export interface CaseStudyMetric {
   label: string;
   /** Baseline value, shown in orange */
@@ -139,6 +147,8 @@ export interface CaseStudySection {
   mediaBlocks?: CaseStudyMediaBlock[];
   /** Side-by-side phone rows vs stacked full-width images */
   mediaLayout?: "landscape" | "portrait" | "stack" | "row" | "split";
+  /** Portrait blocks scroll sideways in a pinned carousel (automatic when every block is a video) */
+  horizontalScroll?: boolean;
   /** Full-width media under process-style sections */
   media?: string;
   /** Additional images, in order */
@@ -186,7 +196,9 @@ export interface CaseStudy {
   /** Case study hero band token (falls back to thumbnailTone) */
   heroTone?: TokenColor;
   thumbnailImage: string;
-  /** Animated thumbnail that replaces thumbnailImage on the landing card */
+  /** Artwork placed on the landing tile. Box and crop are percentages of the tile / box. */
+  thumbnailArt?: ThumbnailArt;
+  /** Animated tile that replaces the artwork on the landing page */
   thumbnailMotion?: "boost-intro";
   /**
    * Landing-card image treatment.
@@ -195,10 +207,8 @@ export interface CaseStudy {
   thumbnailLayout?: "logo" | "device" | "coming-soon";
   /** Optional second/third hero phone images */
   heroImages?: string[];
-  /** phones: colored band with device shots. frame: single cropped image. mark: centered logo crop. boost-intro: looping Boost animation. */
-  heroLayout?: "phones" | "frame" | "boost-intro" | "mark";
-  /** Meta row color. Defaults to accent (navy). */
-  metaTone?: "accent" | "primary";
+  /** phones: colored band with device shots. frame: single cropped image. mark: centered logo crop. boost-intro: looping Boost animation. contain: one image at its natural proportions on the hero color. */
+  heroLayout?: "phones" | "frame" | "boost-intro" | "mark" | "contain";
   /** Desktop space between the meta row and the first section. */
   introGap?: "56" | "88";
   pills: CaseStudyPill[];

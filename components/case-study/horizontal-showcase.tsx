@@ -7,6 +7,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { PhoneVideo } from "@/components/case-study/phone-video";
 import type { CaseStudyMediaBlock } from "@/lib/case-studies/types";
@@ -194,6 +195,9 @@ function Panel({
   progress: MotionValue<number>;
 }) {
   const width = block.width ?? 260;
+  // width ÷ height of the media: a phone recording, or the block's own crop
+  const [aw, ah] = (block.aspect ?? "").split("/").map((v) => parseFloat(v));
+  const ratio = aw && ah ? aw / ah : 1 / PHONE_RATIO;
   const start = index * (HOLD_VH + MOVE_VH);
   const end = start + HOLD_VH;
   const half = MOVE_VH / 2;
@@ -224,11 +228,24 @@ function Panel({
         className="shrink-0"
         // never taller than the viewport minus some breathing room
         style={{
-          width: `min(${width}px, calc((100svh - 10rem) / ${PHONE_RATIO}))`,
+          width: `min(${width}px, calc((100svh - 10rem) * ${ratio}))`,
         }}
       >
         {block.video ? (
           <PhoneVideo video={block.video} label={block.caption} />
+        ) : block.image ? (
+          <div
+            className="relative w-full"
+            style={{ aspectRatio: block.aspect ?? "1 / 1" }}
+          >
+            <Image
+              src={block.image}
+              alt={block.caption}
+              fill
+              className="object-contain"
+              sizes={`${width}px`}
+            />
+          </div>
         ) : null}
       </div>
       <div className="flex min-w-0 max-w-[26rem] flex-1 flex-col gap-4">

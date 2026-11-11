@@ -8,21 +8,30 @@
   "thumbnailTone": "mint-50",
   "heroTone": "mint-50",
   "thumbnailImage": "/assets/thumbs/thumb-pillclub.png",
-  "thumbnailLayout": "device",
   "heroLayout": "frame",
-  "metaTone": "primary",
-  "heroImages": ["/assets/case-studies/pillclub/hero.png"],
+  "heroImages": [
+    "/assets/case-studies/pillclub/hero.png"
+  ],
   "pills": [
-    { "label": "The Pill Club", "tone": "pink" },
-    { "label": "Shipped", "tone": "green" },
-    { "label": "2021", "tone": "blue" }
+    {
+      "label": "The Pill Club",
+      "tone": "pink"
+    },
+    {
+      "label": "Shipped",
+      "tone": "green"
+    },
+    {
+      "label": "2021",
+      "tone": "blue"
+    }
   ],
   "meta": {
     "tools": "Figma, Jira, Zeplin, Photoshop, Fullstory",
     "team": "1 Designer, 2 PMs",
     "duration": "3 weeks, 2021"
   },
-  "featuredOrder": 1,
+  "featuredOrder": 2,
   "cardHeight": "tall",
   "sections": [
     {
@@ -111,5 +120,20 @@
       "bodyAfter": "Rather than leaving the complex branching logic open to interpretation, I structured the Figma file to act as a definitive blueprint for engineering:\n\n- Mapping the complete decision tree using dedicated flow connectors.\n- Built the core UI components using rigorous Auto Layout rules for responsive scaling.\n- Bound semantic color variables and strict typography styles across the text layers.\n\nThis project reinforced the value of designing with both clinical accuracy and user clarity in mind. Working within medical constraints pushed me to simplify complex decision trees into an experience that felt approachable, trustworthy, and fast for users while still meeting the needs of dermatology providers. It also highlighted how essential cross‑functional alignment is when translating medical logic into UI patterns that engineers can implement reliably.\n\n\nIf I were to continue developing this feature, I’d focus on deeper usability testing with a broader range of skin concerns, refining the branching logic to reduce cognitive load, and exploring ways to surface provider‑level insights earlier in the flow. There’s also an opportunity to strengthen personalization and transparency so users better understand how their answers shape the recommendations they receive.",
       "nav": true
     }
-  ]
+  ],
+  "thumbnailArt": {
+    "src": "/assets/thumbs/thumb-pillclub.png",
+    "box": {
+      "left": 26.966,
+      "top": 10.105,
+      "width": 46.067,
+      "height": 89.895
+    },
+    "crop": {
+      "left": -114.34,
+      "top": -19.34,
+      "width": 327.92,
+      "height": 171.11
+    }
+  }
 }

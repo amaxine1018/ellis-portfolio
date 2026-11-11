@@ -7,13 +7,23 @@
   "status": "Concept",
   "thumbnailTone": "purple-50",
   "thumbnailImage": "/assets/thumb-boost-app.png",
-  "thumbnailMotion": "boost-intro",
   "heroLayout": "boost-intro",
-  "heroImages": ["/assets/case-studies/reimagining/hero.png"],
+  "heroImages": [
+    "/assets/case-studies/reimagining/hero.png"
+  ],
   "pills": [
-    { "label": "Boost Mobile", "tone": "orange" },
-    { "label": "Concept", "tone": "green" },
-    { "label": "2026", "tone": "blue" }
+    {
+      "label": "Boost Mobile",
+      "tone": "orange"
+    },
+    {
+      "label": "Concept",
+      "tone": "green"
+    },
+    {
+      "label": "2026",
+      "tone": "blue"
+    }
   ],
   "meta": {
     "tools": "Figma, Claude Code, Google Stitch, UserZoom",
@@ -100,12 +110,28 @@
       "body": "The bubble concept heavily leaned on clarifying completion and system status through repeated patterns. Usability testing proved our hypothesis: the interactive, animated concept significantly improved completion rate and CES scores for key tasks. I leveraged these validated metrics and the coded prototype to pitch the new features directly to Account Executives.",
       "nav": true,
       "legend": [
-        { "series": "v1", "label": "Base Metrics" },
-        { "series": "v2", "label": "Boost Bubble Metrics" }
+        {
+          "series": "v1",
+          "label": "Base Metrics"
+        },
+        {
+          "series": "v2",
+          "label": "Boost Bubble Metrics"
+        }
       ],
       "metrics": [
-        { "label": "Task Completion", "from": 66, "to": 84, "suffix": "%" },
-        { "label": "Customer Effort", "from": 2.7, "to": 1.9, "decimals": 1 }
+        {
+          "label": "Task Completion",
+          "from": 66,
+          "to": 84,
+          "suffix": "%"
+        },
+        {
+          "label": "Customer Effort",
+          "from": 2.7,
+          "to": 1.9,
+          "decimals": 1
+        }
       ]
     },
     {
@@ -136,7 +162,10 @@
           "width": 457,
           "height": 465,
           "frame": "457 / 465",
-          "crop": { "height": "130.99%", "top": "-30.99%" },
+          "crop": {
+            "height": "130.99%",
+            "top": "-30.99%"
+          },
           "alt": "Ellis arranging interface sketches on a whiteboard"
         },
         {
@@ -144,7 +173,10 @@
           "width": 407,
           "height": 465,
           "frame": "407 / 465",
-          "crop": { "height": "116.88%", "top": "-5.67%" },
+          "crop": {
+            "height": "116.88%",
+            "top": "-5.67%"
+          },
           "alt": "Notebook of interface concept sketches"
         }
       ],
@@ -157,5 +189,6 @@
       "body": "**Measurable Usability Gains**: Established baseline usability scores for key app journeys, ultimately driving an 18% increase in completion rate and a .8 point improvement in CES after testing the new design interventions.\n\n**Advanced Technical Prototyping**: Transitioned from static Figma explorations to a fully functional coded prototype using Figma MCP and Claude Code. This enabled accurate, unmoderated UserZoom testing of complex micro-interactions, animations, and a native rewards system that static screens could not support.\n\n**Cross-Functional Business Alignment**: Synthesized the validated usability data and interactive prototype into a strategic presentation for 4 Account Executives, successfully demonstrating how targeted UX investments drive user engagement and support future business goals.",
       "nav": true
     }
-  ]
+  ],
+  "thumbnailMotion": "boost-intro"
 }

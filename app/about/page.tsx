@@ -22,7 +22,7 @@ export default function AboutPage() {
             aria-labelledby="about-heading"
             className="flex w-full max-w-[1270px] flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-[124px]"
           >
-            <div className="relative aspect-square w-full max-w-[417px] shrink-0 overflow-hidden">
+            <div className="relative aspect-square w-full max-w-[417px] shrink-0 overflow-hidden rounded-[var(--radius-card)]">
               <Image
                 src="/assets/about/ellis-action-shot.png"
                 alt="Ellis Aguilar working at a whiteboard covered in sticky notes"
@@ -40,7 +40,7 @@ export default function AboutPage() {
               >
                 About Me
               </h1>
-              <div className="font-body text-base font-normal leading-[30px] text-text-secondary">
+              <div className="font-body text-base font-normal leading-[30px] text-text-primary">
                 <p className="whitespace-pre-line">
                   <span className="font-bold">Ellis Aguilar</span>
                   {` is a hands-on designer and systems thinker currently advancing integrated product design at Northwestern’s Segal Design Institute. With a B.A. in Media Arts and Sciences from Wellesley College, they bring together a background in fine arts and computer science to explore how design can drive meaningful social change.

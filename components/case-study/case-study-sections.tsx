@@ -141,6 +141,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
             </div>
 
             {portrait && section.mediaBlocks?.length ? (
+              section.horizontalScroll ||
               section.mediaBlocks.every((block) => block.video) ? (
                 <HorizontalShowcase
                   blocks={section.mediaBlocks}
@@ -320,6 +321,7 @@ function StackedImage({
       width={size.width}
       height={size.height}
       className={cn("h-auto w-full", radius)}
+      style={asset && asset.width < 900 ? { maxWidth: asset.width } : undefined}
       sizes="(max-width: 1024px) 100vw, 943px"
     />
   );

@@ -1,54 +1,119 @@
 {
   "slug": "solving-activation-blocker",
-  "title": "Solving activation blocker",
-  "summary": "Shipped work addressing an activation blocker for Boost Mobile.",
+  "title": "From Dead-End to Conversion",
+  "summary": "Redesigning the reactivation flow so returning Boost Mobile customers are guided back in instead of hitting a dead end.",
   "year": "2026",
   "client": "Boost Mobile",
   "status": "Shipped",
-  "thumbnailTone": "grey-50",
-  "thumbnailImage": "/assets/thumbs/thumb-activation.png",
-  "thumbnailLayout": "coming-soon",
-  "heroImages": ["/assets/thumbs/thumb-activation.png"],
+  "thumbnailTone": "gold-200",
+  "heroTone": "gold-200",
+  "thumbnailImage": "/assets/case-studies/dead-end/modal.png",
+  "heroLayout": "contain",
+  "heroImages": [
+    "/assets/thumbs/thumb-activation.png"
+  ],
   "pills": [
-    { "label": "Boost Mobile", "tone": "orange" },
-    { "label": "Shipped", "tone": "green" },
-    { "label": "2026", "tone": "blue" }
+    {
+      "label": "Boost Mobile",
+      "tone": "orange"
+    },
+    {
+      "label": "Shipped",
+      "tone": "green"
+    }
   ],
   "meta": {
-    "tools": "Figma, Analytics",
-    "team": "Design + Product",
-    "duration": "2026"
+    "tools": "Figma, Quantum Metric",
+    "team": "Product Designer",
+    "teamLabel": "MY ROLE",
+    "duration": "3 weeks, 2026"
   },
-  "featuredOrder": 3,
-  "cardHeight": "short",
+  "featuredOrder": 1,
+  "cardHeight": "tall",
   "sections": [
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "Removing friction at the moment of activation.",
-      "body": "Focused on the steps that blocked new members from completing activation.",
+      "title": "Resolving edge case friction using design system components.",
+      "body": "Returning users are highly valuable, yet our existing system treated them like strangers who took a wrong turn. When a previous user attempted to reactivate their service, they were met with a hard roadblock: a generic error message offering no next steps, no login redirect, and no explanation.",
       "nav": true
     },
     {
       "id": "problem",
       "label": "PROBLEM",
-      "title": "A critical step was unclear and caused drop-off.",
-      "body": "Members stalled when instructions and confirmation states were ambiguous.",
+      "title": "Deactivated users attempting to reactivate their account are met with a roadblock.",
+      "body": "This dead-end experience caused immediate friction, likely leading to high drop-off rates and abandonment. The goal was to redesign the reactivation flow to gracefully guide returning users back into the ecosystem, no matter their account status.",
       "nav": true
     },
     {
       "id": "solution",
       "label": "SOLUTION",
-      "title": "Clearer guidance and confirmation across the activation path.",
-      "body": "Redesigned key screens and messaging to reduce ambiguity.",
+      "title": "Different paths lead to different outcomes.",
+      "body": "The PM on this project provided 4 flows with distinct technical scenarios. I drove the direction on which design system component to implement given each context.",
+      "mediaLayout": "portrait",
+      "horizontalScroll": true,
+      "mediaBlocks": [
+        {
+          "caption": "Global notification",
+          "body": "Provide context to the user for their lack of eligibility.",
+          "image": "/assets/case-studies/dead-end/global-notification.png",
+          "width": 502,
+          "aspect": "502 / 304"
+        },
+        {
+          "caption": "Interstitial",
+          "body": "Some context requires a hard stop with an immediate opportunity for resolution.",
+          "image": "/assets/case-studies/dead-end/interstitial.png",
+          "width": 499,
+          "aspect": "499 / 304"
+        },
+        {
+          "caption": "Modal",
+          "body": "Give users an easy way out of the create account flow with a redirection.",
+          "image": "/assets/case-studies/dead-end/modal.png",
+          "width": 506,
+          "aspect": "506 / 304"
+        }
+      ],
+      "nav": true
+    },
+    {
+      "id": "process",
+      "label": "PROCESS",
+      "title": "Iteration through technical constraints.",
+      "body": "The PM and TPMs provided additional considerations for design through weekly sprints. The User flows iterated along with my product deliverables until reaching a final version.",
+      "mediaLayout": "stack",
+      "images": [
+        {
+          "src": "/assets/case-studies/dead-end/process-flows.png",
+          "width": 523,
+          "height": 380,
+          "alt": "User flow diagram for returning, existing and ineligible customers"
+        }
+      ],
       "nav": true
     },
     {
       "id": "outcome",
       "label": "OUTCOME",
-      "title": "Shipped improvements to the activation journey.",
-      "body": "Reduced friction on the primary activation path.",
+      "title": "Handoff & Implementation.",
+      "body": "By replacing a dead-end error with actionable, contextual pathways, the new flow transforms friction into retention. Users are no longer abandoned at the door; they are actively guided back inside. A generic \"Error 404\" or \"Action Failed\" does not help anyone. Telling the user why an action failed and how to fix it is the cornerstone of trust.\n\nTo eliminate ambiguity during implementation, I leveraged Figma Dev Mode to structure the final handoff. By meticulously connecting component states, spacing variables, and logic for each edge case directly within the dev interface, the engineering team was equipped with build-ready specs that accelerated deployment.",
       "nav": true
     }
-  ]
+  ],
+  "thumbnailArt": {
+    "src": "/assets/case-studies/dead-end/modal.png",
+    "box": {
+      "left": 9.003,
+      "top": 17.263,
+      "width": 82.154,
+      "height": 65.474
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "width": 100,
+      "height": 100.5
+    }
+  }
 }

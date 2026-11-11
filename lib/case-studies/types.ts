@@ -33,12 +33,22 @@ export type TokenColor =
   | "blue-50"
   | "blue-25";
 
+/** Looping prototype recording shown in a phone bezel. Recorded at 390:844. */
+export interface CaseStudyVideo {
+  mp4: string;
+  webm?: string;
+  /** Still frame for before playback and for reduced-motion users */
+  poster: string;
+}
+
 export interface CaseStudyMediaBlock {
   caption: string;
   /** Supporting line under the caption */
   body?: string;
   /** Optional image under /public; grey placeholder if omitted */
   image?: string;
+  /** Phone-framed recording; takes the place of `image` when set */
+  video?: CaseStudyVideo;
   /** Rendered frame width in px. Defaults to the portrait phone width. */
   width?: number;
   /** CSS aspect-ratio when the source image needs a crop, e.g. "318 / 633" */
@@ -100,6 +110,16 @@ export interface BenchmarkLegendItem {
   label: string;
 }
 
+export interface CaseStudyMetric {
+  label: string;
+  /** Baseline value, shown in orange */
+  from: number;
+  /** Validated value the count ends on, shown in green */
+  to: number;
+  decimals?: number;
+  suffix?: string;
+}
+
 export interface CaseStudySection {
   id: string;
   /** Uppercase label shown above the section title */
@@ -123,6 +143,8 @@ export interface CaseStudySection {
   media?: string;
   /** Additional images, in order */
   images?: CaseStudyImage[];
+  /** Split-layout row shown above `images` (tighter 29px gutter, 38px below) */
+  leadImages?: CaseStudyImage[];
   /** Gap between copy and stacked images. compact = 24px, medium = 48px, default = 64px */
   mediaSpacing?: "compact" | "medium";
   /** Round stacked image corners to the media radius */
@@ -132,6 +154,8 @@ export interface CaseStudySection {
   /** Benchmark dot charts (Boost testing) */
   legend?: BenchmarkLegendItem[];
   charts?: BenchmarkChart[];
+  /** Animated before/after numbers (Boost testing) */
+  metrics?: CaseStudyMetric[];
   /** Sidebar label when it differs from the section label, e.g. "Ideate" */
   navLabel?: string;
   /** Body copy weight. Defaults to light. */

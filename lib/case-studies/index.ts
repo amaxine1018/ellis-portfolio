@@ -18,6 +18,11 @@ export type {
   TokenColor,
 } from "./types";
 
+/** "coming-soon" entries are landing-page placeholders: a card, but no case study page. */
+function hasPage(study: CaseStudy): boolean {
+  return study.thumbnailLayout !== "coming-soon";
+}
+
 export async function getAllCaseStudies(): Promise<CaseStudy[]> {
   const files = await readdir(CONTENT_DIR);
   const studies = await Promise.all(
@@ -34,7 +39,8 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
 export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
   try {
     const raw = await readFile(path.join(CONTENT_DIR, `${slug}.json`), "utf8");
-    return JSON.parse(raw) as CaseStudy;
+    const study = JSON.parse(raw) as CaseStudy;
+    return hasPage(study) ? study : null;
   } catch {
     return null;
   }
@@ -42,7 +48,7 @@ export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
 
 export async function getCaseStudySlugs(): Promise<string[]> {
   const studies = await getAllCaseStudies();
-  return studies.map((study) => study.slug);
+  return studies.filter(hasPage).map((study) => study.slug);
 }
 
 export function tokenBg(token: string): string {

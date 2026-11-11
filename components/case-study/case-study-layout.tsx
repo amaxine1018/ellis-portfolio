@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { BoostThumb } from "@/components/landing/boost-thumb";
-import { Pill } from "@/components/ui/pill";
 import type { CaseStudy } from "@/lib/case-studies/types";
 import { tokenBg } from "@/lib/case-studies";
 import { cn } from "@/lib/utils";
@@ -38,28 +37,21 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
             study.introGap === "88" && "lg:mb-[88px]",
           )}
         >
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap gap-4">
-              {study.pills
-                .filter((p) => !/^\d{4}$/.test(p.label))
-                .map((pill) => (
-                  <Pill key={pill.label} label={pill.label} tone={pill.tone} />
-                ))}
-            </div>
+          <div className="flex flex-col gap-1">
+            <p className="font-mono text-base leading-normal text-navy-800 sm:text-xl">
+              <span className="font-semibold">{study.client}</span>{" "}
+              <span className="font-extralight">
+                / {study.status} {study.year}
+              </span>
+            </p>
 
-            <div
-              className={
-                study.heroLayout === "phones"
-                  ? "flex flex-col gap-6 sm:gap-8 md:gap-[45px]"
-                  : "flex flex-col gap-6 sm:gap-8 md:gap-[30px]"
-              }
-            >
-              <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-normal text-text-primary">
+            <div className="flex flex-col gap-[14px]">
+              <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-[1.1] text-text-primary">
                 {study.headline ?? study.title}
               </h1>
 
               {study.heroLayout === "boost-intro" ? (
-                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]">
+                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-card)]">
                   <BoostThumb />
                 </div>
               ) : study.heroLayout === "frame" ? (
@@ -78,6 +70,22 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
                       className="h-full w-full"
                     />
                   </div>
+                </div>
+              ) : study.heroLayout === "contain" ? (
+                <div
+                  className="relative flex h-[200px] w-full items-center justify-center overflow-hidden rounded-[var(--radius-card-sm)] p-6 sm:h-[260px] sm:rounded-[var(--radius-card)] md:h-[368px] md:p-10"
+                  style={{
+                    backgroundColor: tokenBg(
+                      study.heroTone ?? study.thumbnailTone,
+                    ),
+                  }}
+                >
+                  {/* natural proportions: scaled down to fit, never cropped or stretched */}
+                  <img
+                    src={heroImages[0]}
+                    alt=""
+                    className="h-auto max-h-full w-auto max-w-full object-contain"
+                  />
                 </div>
               ) : study.heroLayout === "mark" ? (
                 <div
@@ -125,14 +133,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
             </div>
           </div>
 
-          <div
-            className={cn(
-              "flex flex-col gap-6 text-base leading-[30px] sm:gap-8 md:flex-row md:gap-12 lg:gap-[140px]",
-              study.metaTone === "primary"
-                ? "text-text-primary"
-                : "text-text-accent",
-            )}
-          >
+          <div className="flex flex-col gap-6 text-base leading-[30px] text-text-primary sm:gap-8 md:flex-row md:gap-12 lg:gap-[140px]">
             <MetaBlock
               label="TOOLS"
               value={study.meta.tools}

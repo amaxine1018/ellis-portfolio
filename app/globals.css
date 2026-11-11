@@ -62,8 +62,8 @@
   --page-max: 1343px;
   --page-shell: 1512px;
   --page-gutter: 1.5rem; /* 24px — mobile */
-  --radius-card: 49px;
-  --radius-card-sm: 28px;
+  --radius-card: 10px;
+  --radius-card-sm: 10px;
   --radius-pill: 24px;
   --radius-nav: 8px;
   --radius-media: 40px;

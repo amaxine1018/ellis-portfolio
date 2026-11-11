@@ -45,3 +45,4 @@ agent-tools/
 tmp/
 .cursor/
 
+Claude outputs/

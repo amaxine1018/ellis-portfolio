@@ -22,6 +22,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ellis.build"),
   title: {
     default: "Ellis Aguilar",
     template: "%s · Ellis Aguilar",

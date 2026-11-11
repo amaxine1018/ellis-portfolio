@@ -33,12 +33,22 @@ export type TokenColor =
   | "blue-50"
   | "blue-25";
 
+/** Looping prototype recording shown in a phone bezel. Recorded at 390:844. */
+export interface CaseStudyVideo {
+  mp4: string;
+  webm?: string;
+  /** Still frame for before playback and for reduced-motion users */
+  poster: string;
+}
+
 export interface CaseStudyMediaBlock {
   caption: string;
   /** Supporting line under the caption */
   body?: string;
   /** Optional image under /public; grey placeholder if omitted */
   image?: string;
+  /** Phone-framed recording; takes the place of `image` when set */
+  video?: CaseStudyVideo;
   /** Rendered frame width in px. Defaults to the portrait phone width. */
   width?: number;
   /** CSS aspect-ratio when the source image needs a crop, e.g. "318 / 633" */
@@ -100,6 +110,24 @@ export interface BenchmarkLegendItem {
   label: string;
 }
 
+export interface ThumbnailArt {
+  src: string;
+  /** Where the artwork sits on the tile, as % of the tile */
+  box: { left: number; top: number; width: number; height: number };
+  /** Overflow crop of the image inside the box, as % of the box. Defaults to fill. */
+  crop?: { left: number; top: number; width: number; height: number };
+}
+
+export interface CaseStudyMetric {
+  label: string;
+  /** Baseline value, shown in orange */
+  from: number;
+  /** Validated value the count ends on, shown in green */
+  to: number;
+  decimals?: number;
+  suffix?: string;
+}
+
 export interface CaseStudySection {
   id: string;
   /** Uppercase label shown above the section title */
@@ -119,10 +147,14 @@ export interface CaseStudySection {
   mediaBlocks?: CaseStudyMediaBlock[];
   /** Side-by-side phone rows vs stacked full-width images */
   mediaLayout?: "landscape" | "portrait" | "stack" | "row" | "split";
+  /** Portrait blocks scroll sideways in a pinned carousel (automatic when every block is a video) */
+  horizontalScroll?: boolean;
   /** Full-width media under process-style sections */
   media?: string;
   /** Additional images, in order */
   images?: CaseStudyImage[];
+  /** Split-layout row shown above `images` (tighter 29px gutter, 38px below) */
+  leadImages?: CaseStudyImage[];
   /** Gap between copy and stacked images. compact = 24px, medium = 48px, default = 64px */
   mediaSpacing?: "compact" | "medium";
   /** Round stacked image corners to the media radius */
@@ -132,6 +164,8 @@ export interface CaseStudySection {
   /** Benchmark dot charts (Boost testing) */
   legend?: BenchmarkLegendItem[];
   charts?: BenchmarkChart[];
+  /** Animated before/after numbers (Boost testing) */
+  metrics?: CaseStudyMetric[];
   /** Sidebar label when it differs from the section label, e.g. "Ideate" */
   navLabel?: string;
   /** Body copy weight. Defaults to light. */
@@ -162,7 +196,9 @@ export interface CaseStudy {
   /** Case study hero band token (falls back to thumbnailTone) */
   heroTone?: TokenColor;
   thumbnailImage: string;
-  /** Animated thumbnail that replaces thumbnailImage on the landing card */
+  /** Artwork placed on the landing tile. Box and crop are percentages of the tile / box. */
+  thumbnailArt?: ThumbnailArt;
+  /** Animated tile that replaces the artwork on the landing page */
   thumbnailMotion?: "boost-intro";
   /**
    * Landing-card image treatment.
@@ -171,10 +207,8 @@ export interface CaseStudy {
   thumbnailLayout?: "logo" | "device" | "coming-soon";
   /** Optional second/third hero phone images */
   heroImages?: string[];
-  /** phones: colored band with device shots. frame: single cropped image. mark: centered logo crop. boost-intro: looping Boost animation. */
-  heroLayout?: "phones" | "frame" | "boost-intro" | "mark";
-  /** Meta row color. Defaults to accent (navy). */
-  metaTone?: "accent" | "primary";
+  /** phones: colored band with device shots. frame: single cropped image. mark: centered logo crop. boost-intro: looping Boost animation. contain: one image at its natural proportions on the hero color. */
+  heroLayout?: "phones" | "frame" | "boost-intro" | "mark" | "contain";
   /** Desktop space between the meta row and the first section. */
   introGap?: "56" | "88";
   pills: CaseStudyPill[];

@@ -1,7 +1,6 @@
 {
   "slug": "inviting-delight-in-the-unboxing-experience",
-  "title": "Packaging innovation for skincare brand",
-  "headline": "Strategic packaging innovation",
+  "title": "Strategic packaging innovation",
   "summary": "Research and physical prototyping for P&G e-commerce skincare packaging that meets SIOC shipping requirements and real user needs.",
   "year": "2025",
   "client": "Procter & Gamble",
@@ -9,15 +8,24 @@
   "thumbnailTone": "blue-50",
   "heroTone": "blue-25",
   "thumbnailImage": "/assets/thumbs/thumb-unboxing.png",
-  "thumbnailLayout": "logo",
   "heroLayout": "mark",
-  "heroImages": ["/assets/case-studies/pg/hero.png"],
-  "metaTone": "primary",
+  "heroImages": [
+    "/assets/case-studies/pg/hero.png"
+  ],
   "introGap": "88",
   "pills": [
-    { "label": "Procter & Gamble", "tone": "navy" },
-    { "label": "Concept", "tone": "green" },
-    { "label": "2025", "tone": "blue" }
+    {
+      "label": "Procter & Gamble",
+      "tone": "navy"
+    },
+    {
+      "label": "Concept",
+      "tone": "green"
+    },
+    {
+      "label": "2025",
+      "tone": "blue"
+    }
   ],
   "meta": {
     "tools": "Adobe Illustrator, Laser cutting, SolidWorks",
@@ -25,15 +33,15 @@
     "teamLabel": "TEAM",
     "duration": "10 weeks, 2025"
   },
-  "featuredOrder": 2,
-  "cardHeight": "tall",
+  "featuredOrder": 3,
+  "cardHeight": "short",
   "sections": [
     {
       "id": "overview",
       "label": "OVERVIEW",
       "title": "Leveraging generative research and physical prototyping to redefine the consumer unboxing experience.",
       "quote": "This project is protected by a 5-year Non-disclosure agreement.",
-      "bodyAfter": "Our team partnered with P&G to research, evaluate, and redesign e-commerce skincare packaging that meets both SIOC (Ships in Own Container) shipping requirements and real user needs.\n\nTo ground our design decisions in user behavior, we conducted **three rounds of user research** across in-home contextual visits and on-site sessions with 10 participants --> uncovering behavioral patterns, sensory preferences, and unmet functional needs that existing packaging failed to address.\n\nQualitative findings were synthesized into user profiles, task analyses, and **usability requirements** that drove iterative prototyping and evaluation. Each design decision was traceable back to a specific user need or identified risk area in the current product experience.",
+      "bodyAfter": "Our team partnered with P&G to research, evaluate, and redesign e-commerce skincare packaging that meets both SIOC (Ships in Own Container) shipping requirements and real user needs.\n\nTo ground our design decisions in user behavior, we conducted **three rounds of user research** across in-home contextual visits and on-site sessions with 10 participants — uncovering behavioral patterns, sensory preferences, and unmet functional needs that existing packaging failed to address.\n\nQualitative findings were synthesized into user profiles, task analyses, and **usability requirements** that drove iterative prototyping and evaluation. Each design decision was traceable back to a specific user need or identified risk area in the current product experience.",
       "nav": true
     },
     {
@@ -64,7 +72,10 @@
           "width": 1000,
           "height": 667,
           "frame": "943 / 564",
-          "crop": { "height": "111.52%", "top": "-7.09%" },
+          "crop": {
+            "height": "111.52%",
+            "top": "-7.09%"
+          },
           "alt": "Team synthesizing research findings together"
         }
       ],
@@ -83,7 +94,10 @@
           "width": 1500,
           "height": 1287,
           "frame": "948 / 690",
-          "crop": { "height": "117.88%", "top": "-0.03%" },
+          "crop": {
+            "height": "117.88%",
+            "top": "-0.03%"
+          },
           "alt": "Packaging prototypes arranged for comparison"
         }
       ],
@@ -102,7 +116,10 @@
           "width": 1500,
           "height": 835,
           "frame": "942 / 456",
-          "crop": { "height": "115%", "top": "-0.04%" },
+          "crop": {
+            "height": "115%",
+            "top": "-0.04%"
+          },
           "alt": "Sketches and physical packaging models"
         }
       ],
@@ -134,5 +151,20 @@
       "body": "Every opening mechanism and structural choice communicates something to the user. When those signals don't match user expectations, frustration or product damage follows.\n\nConducting three rounds of research taught me how much user needs shift when you move from observation to co-evaluation. The card sorting sessions in particular surfaced priorities that participants couldn't have articulated in a traditional interview. This shaped how I think about choosing the right evaluation method for the right phase of design while cementing the need for testing as a process.\n\nIf I were to continue this work, I'd want to move toward summative testing by measuring whether users can successfully complete the unboxing task of the final prototype without damage or confusion, rather than relying solely on preference data. I'd also want to involve more users with limited dexterity, to better account for accessibility in the packaging interaction.",
       "nav": true
     }
-  ]
+  ],
+  "thumbnailArt": {
+    "src": "/assets/thumbs/thumb-unboxing.png",
+    "box": {
+      "left": 28.817,
+      "top": 35.73,
+      "width": 42.444,
+      "height": 28.784
+    },
+    "crop": {
+      "left": -38.02,
+      "top": -75.72,
+      "width": 178.07,
+      "height": 271.1
+    }
+  }
 }

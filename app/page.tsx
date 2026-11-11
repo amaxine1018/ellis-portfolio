@@ -54,12 +54,12 @@ export default async function HomePage() {
             aria-label="Selected work"
             className="grid w-full gap-8 sm:gap-10 md:grid-cols-2 md:gap-12 lg:gap-[95px]"
           >
-            <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-[95px]">
+            <div className="flex flex-col gap-10 sm:gap-12 lg:gap-[72px]">
               {left.map((study) => (
                 <WorkCard key={study.slug} study={study} />
               ))}
             </div>
-            <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-[95px]">
+            <div className="flex flex-col gap-10 sm:gap-12 lg:gap-[72px]">
               {right.map((study) => (
                 <WorkCard key={study.slug} study={study} />
               ))}

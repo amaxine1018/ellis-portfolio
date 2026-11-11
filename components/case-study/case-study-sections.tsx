@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { Radio_Canada_Big } from "next/font/google";
 import type { ReactNode } from "react";
-import { BenchmarkCharts } from "@/components/case-study/benchmark-charts";
+import { CountUpMetrics } from "@/components/case-study/count-up-metrics";
+import { HorizontalShowcase } from "@/components/case-study/horizontal-showcase";
+import { PhoneVideo } from "@/components/case-study/phone-video";
 import type {
   CaseStudyImage,
   CaseStudyMediaBlock,
@@ -139,11 +141,25 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
             </div>
 
             {portrait && section.mediaBlocks?.length ? (
-              <div className="mt-8 flex flex-col gap-10 sm:mt-12 sm:gap-12">
-                {section.mediaBlocks.map((block) => (
-                  <PortraitBlock key={block.caption} block={block} />
-                ))}
-              </div>
+              section.horizontalScroll ||
+              section.mediaBlocks.every((block) => block.video) ? (
+                <HorizontalShowcase
+                  blocks={section.mediaBlocks}
+                  fallback={
+                    <div className="mt-8 flex flex-col gap-10 sm:mt-12 sm:gap-12">
+                      {section.mediaBlocks.map((block) => (
+                        <PortraitBlock key={block.caption} block={block} />
+                      ))}
+                    </div>
+                  }
+                />
+              ) : (
+                <div className="mt-8 flex flex-col gap-10 sm:mt-12 sm:gap-12">
+                  {section.mediaBlocks.map((block) => (
+                    <PortraitBlock key={block.caption} block={block} />
+                  ))}
+                </div>
+              )
             ) : null}
 
             {section.statRows?.length ? (
@@ -191,15 +207,22 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
               </div>
             ) : null}
 
-            {section.charts?.length ? (
-              <BenchmarkCharts
+            {section.metrics?.length ? (
+              <CountUpMetrics
                 legend={section.legend ?? []}
-                charts={section.charts}
+                metrics={section.metrics}
               />
             ) : null}
 
+            {split && section.leadImages?.length ? (
+              <SplitImages images={section.leadImages} lead />
+            ) : null}
+
             {split && section.images?.length ? (
-              <SplitImages images={section.images} />
+              <SplitImages
+                images={section.images}
+                follows={Boolean(section.leadImages?.length)}
+              />
             ) : null}
 
             {stacked && section.images?.length ? (
@@ -298,6 +321,7 @@ function StackedImage({
       width={size.width}
       height={size.height}
       className={cn("h-auto w-full", radius)}
+      style={asset && asset.width < 900 ? { maxWidth: asset.width } : undefined}
       sizes="(max-width: 1024px) 100vw, 943px"
     />
   );
@@ -328,6 +352,9 @@ function TitleWithLink({
     );
   }
 
+  // a phrase that isn't in the title means the link lives elsewhere (e.g. the hero)
+  if (link.phrase) return <>{title}</>;
+
   return (
     <>
       <span className="block">{title}</span>
@@ -348,16 +375,34 @@ function imageSize(image: CaseStudyImage): { width: number; height: number } {
   return { width: image.width, height: image.height };
 }
 
-function SplitImages({ images }: { images: CaseStudyImage[] }) {
+function SplitImages({
+  images,
+  lead = false,
+  follows = false,
+}: {
+  images: CaseStudyImage[];
+  /** First row of two: 29px gutter, square corners */
+  lead?: boolean;
+  /** Sits directly under a lead row: 38px gap instead of the section gap */
+  follows?: boolean;
+}) {
   return (
-    <div className="mt-10 flex flex-col gap-6 sm:mt-16 sm:flex-row sm:gap-16">
+    <div
+      className={`flex flex-col gap-6 sm:flex-row ${
+        lead ? "sm:gap-[29px]" : "sm:gap-16"
+      } ${follows ? "mt-6 sm:mt-[38px]" : "mt-10 sm:mt-16"}`}
+    >
       {images.map((image) => {
         const src = imageSrc(image);
         const asset = typeof image === "string" ? null : image;
         return (
           <div
             key={src}
-            className="relative w-full overflow-hidden rounded-[var(--radius-media-sm)] sm:min-w-0 sm:rounded-[var(--radius-media)]"
+            className={`relative w-full overflow-hidden sm:min-w-0 ${
+              lead
+                ? ""
+                : "rounded-[var(--radius-media-sm)] sm:rounded-[var(--radius-media)]"
+            }`}
             style={{
               aspectRatio: asset?.frame ?? "1 / 1",
               flexGrow: asset?.width ?? 1,
@@ -461,7 +506,9 @@ function PortraitBlock({ block }: { block: CaseStudyMediaBlock }) {
   return (
     <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-12">
       <div className="w-full shrink-0" style={{ maxWidth: width }}>
-        {block.image ? (
+        {block.video ? (
+          <PhoneVideo video={block.video} label={block.caption} />
+        ) : block.image ? (
           block.aspect ? (
             <div
               className="relative w-full overflow-hidden"

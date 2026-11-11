@@ -350,6 +350,9 @@ function TitleWithLink({
     );
   }
 
+  // a phrase that isn't in the title means the link lives elsewhere (e.g. the hero)
+  if (link.phrase) return <>{title}</>;
+
   return (
     <>
       <span className="block">{title}</span>

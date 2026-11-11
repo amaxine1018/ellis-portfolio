@@ -27,21 +27,21 @@
     {
       "id": "overview",
       "label": "OVERVIEW",
-      "title": "Driving app engagement through interactive prototyping.",
-      "body": "As the lead designer and researcher, I benchmarked core usability metrics, developed a coded prototype featuring new reward systems, and successfully pitched the validated UX to Account Executives to drive future revenue goals.\n\nThis work focused on strengthening comprehension, reinforcing feedback loops, and introducing a more expressive interaction model that aligns with Boost’s brand.",
+      "title": "Driving app engagement and completion rates through interactive prototyping.",
+      "body": "As the lead designer and researcher, I benchmarked core usability metrics, developed a coded prototype featuring new reward systems, and successfully pitched the validated UX to Account Executives to drive future revenue goals.",
       "nav": true
     },
     {
       "id": "problem",
       "label": "PROBLEM",
-      "title": "Fixing broken feedback loops in a static, utility‑only app.",
-      "body": "User research revealed a consistent gap: people struggled to understand where they were in a flow, what action to take next, and whether their submissions were successful. These breakdowns in clarity and feedback led to **high drop‑off rates** and stalled sessions across essential tasks.",
+      "title": "Addressing broken feedback loops in a static, utilitarian app.",
+      "body": "User research revealed a consistent gap: people struggled to understand where they were in a flow, what action to take next, and whether their submissions were successful. These breakdowns in clarity and feedback led to low completion rates and stalled sessions across essential tasks.",
       "nav": true
     },
     {
       "id": "solution",
       "label": "SOLUTION",
-      "title": "Prototyping in Code for high-fidelity validation. Play with it here.",
+      "title": "Prototyping in code for high-fidelity validation.",
       "titleLink": {
         "href": "https://bubblefinal.vercel.app/",
         "label": "https://bubblefinal.vercel.app/",
@@ -52,7 +52,7 @@
       "mediaBlocks": [
         {
           "caption": "Boost as a feeling.",
-          "body": "The bubble interaction model introduces a sense of momentum and delight without compromising clarity, increasing engagement across utility flows.",
+          "body": "The bubble animation introduces a sense of anticipation.",
           "width": 260,
           "video": {
             "mp4": "/assets/case-studies/reimagining/video/home-launch.mp4",
@@ -61,8 +61,8 @@
           }
         },
         {
-          "caption": "Simple data add interaction.",
-          "body": "A reorganized layout and clearer hierarchy reduce cognitive load, helping users quickly find and understand their data usage.",
+          "caption": "Engagement for each bubble.",
+          "body": "The most common utilitarian task becomes delightful without compromising clarity, helping users quickly find and understand their data usage.",
           "width": 260,
           "video": {
             "mp4": "/assets/case-studies/reimagining/video/line-expand.mp4",
@@ -71,7 +71,7 @@
           }
         },
         {
-          "caption": "Guided task flow",
+          "caption": "Guided flow to drive completion.",
           "body": "Inline prompts and contextual cues clarify what to do next, improving comprehension for users who previously stalled mid-task.",
           "width": 260,
           "video": {
@@ -97,7 +97,7 @@
       "id": "testing",
       "label": "TESTING",
       "title": "Research surfaced what drove drop‑off, Boost Bubble closed them with measurable impact.",
-      "body": "The unmoderated testing proved our hypothesis: the interactive, animated concept significantly improved completion rate and CES scores for key tasks. I leveraged these validated metrics and the coded prototype to pitch the new features directly to Account Executives.",
+      "body": "The bubble concept heavily leaned on clarifying completion and system status through repeated patterns. Usability testing proved our hypothesis: the interactive, animated concept significantly improved completion rate and CES scores for key tasks. I leveraged these validated metrics and the coded prototype to pitch the new features directly to Account Executives.",
       "nav": true,
       "legend": [
         { "series": "v1", "label": "Base Metrics" },

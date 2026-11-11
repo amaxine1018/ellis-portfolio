@@ -12,7 +12,7 @@ const DOT_CLASS = {
   v2: "bg-boost-positive",
 } as const;
 
-const DURATION = 1.8;
+const DURATION = 1;
 const HOLD_MS = 3000;
 
 interface CountUpMetricsProps {
@@ -22,24 +22,24 @@ interface CountUpMetricsProps {
 
 export function CountUpMetrics({ legend, metrics }: CountUpMetricsProps) {
   return (
-    <div className="mt-8 flex flex-col items-center gap-10 sm:mt-12 sm:gap-14">
-      <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+    <div className="mt-8 flex flex-col items-center gap-12 sm:mt-12 sm:gap-[79px]">
+      <div className="flex flex-col items-center gap-10 sm:flex-row sm:justify-center sm:gap-x-[111px]">
+        {metrics.map((metric) => (
+          <CountUpMetric key={metric.label} metric={metric} />
+        ))}
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-x-[46px] gap-y-3">
         {legend.map((item) => (
-          <div key={item.series} className="flex items-center gap-4">
+          <div key={item.series} className="flex items-center gap-[22px]">
             <span
               aria-hidden
-              className={`size-[26px] rounded-full ${DOT_CLASS[item.series]}`}
+              className={`size-[26px] rounded-full border-[3px] border-text-primary ${DOT_CLASS[item.series]}`}
             />
             <span className="font-mono text-lg text-text-primary sm:text-2xl">
               {item.label}
             </span>
           </div>
-        ))}
-      </div>
-
-      <div className="grid w-full grid-cols-1 justify-items-center gap-12 sm:grid-cols-2 sm:gap-x-[111px]">
-        {metrics.map((metric) => (
-          <CountUpMetric key={metric.label} metric={metric} />
         ))}
       </div>
     </div>
@@ -52,7 +52,7 @@ function format(value: number, decimals: number, suffix: string) {
 
 /**
  * Shows the baseline value in orange, then counts to the validated value while
- * in view and turns green on arrival. It holds each end for 3s, then counts back
+ * in view. The number is grey while counting and turns green on arrival. It holds each end for 3s, then counts back
  * and repeats. Reduced motion shows the green result without animating.
  */
 function CountUpMetric({ metric }: { metric: CaseStudyMetric }) {
@@ -61,14 +61,15 @@ function CountUpMetric({ metric }: { metric: CaseStudyMetric }) {
   const inView = useInView(ref, { amount: 0.6 });
   const reduced = useReducedMotion();
   const [value, setValue] = useState(from);
-  const [done, setDone] = useState(false);
+  // which end the number is resting on; null while it is counting
+  const [rest, setRest] = useState<"from" | "to" | null>("from");
   const valueRef = useRef(from);
   const headingRef = useRef(to);
 
   useEffect(() => {
     if (reduced) {
       setValue(to);
-      setDone(true);
+      setRest("to");
       return;
     }
     if (!inView) return;
@@ -82,6 +83,7 @@ function CountUpMetric({ metric }: { metric: CaseStudyMetric }) {
     const run = async () => {
       while (!cancelled) {
         const target = headingRef.current;
+        setRest(null);
         controls = animate(valueRef.current, target, {
           duration: DURATION,
           ease: "linear",
@@ -94,7 +96,7 @@ function CountUpMetric({ metric }: { metric: CaseStudyMetric }) {
         if (cancelled) return;
         valueRef.current = target;
         setValue(target);
-        setDone(target === to);
+        setRest(target === to ? "to" : "from");
         await new Promise<void>((resolve) => {
           timer = setTimeout(resolve, HOLD_MS);
         });
@@ -116,7 +118,11 @@ function CountUpMetric({ metric }: { metric: CaseStudyMetric }) {
       {/* invisible copies of both end values hold the width so nothing shifts while counting */}
       <p
         className={`inline-grid font-display text-[88px] leading-[1.1] font-bold tabular-nums transition-colors duration-150 sm:text-[104px] lg:text-[128px] ${
-          done ? "text-boost-positive" : "text-boost-alert"
+          rest === "to"
+            ? "text-boost-positive"
+            : rest === "from"
+              ? "text-boost-alert"
+              : "text-grey-50"
         }`}
       >
         <span aria-hidden className="invisible col-start-1 row-start-1">

@@ -75,7 +75,8 @@ export function SharpieNudgeStyle() {
         82%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); animation-timing-function: linear; }
       }
       .sharpie-nudge {
-        animation: sharpie-nudge 6s linear 1;
+        /* waits out the loading intro (~4s) plus a pause before nudging */
+        animation: sharpie-nudge 6s linear 6s 1;
         transform-origin: center;
       }
       @media (prefers-reduced-motion: reduce) {

@@ -209,6 +209,8 @@ export interface CaseStudy {
   heroImages?: string[];
   /** phones: colored band with device shots. frame: single cropped image. mark: centered logo crop. boost-intro: looping Boost animation. contain: one image at its natural proportions on the hero color. */
   heroLayout?: "phones" | "frame" | "boost-intro" | "mark" | "contain";
+  /** Makes the hero a link; on mouse hover the cursor becomes a pill with `label`. */
+  heroLink?: { href: string; label: string };
   /** Desktop space between the meta row and the first section. */
   introGap?: "56" | "88";
   pills: CaseStudyPill[];

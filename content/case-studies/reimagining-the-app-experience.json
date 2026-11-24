@@ -8,6 +8,10 @@
   "thumbnailTone": "purple-50",
   "thumbnailImage": "/assets/thumb-boost-app.png",
   "heroLayout": "boost-intro",
+  "heroLink": {
+    "href": "https://bubblefinal.vercel.app/",
+    "label": "Open prototype"
+  },
   "heroImages": [
     "/assets/case-studies/reimagining/hero.png"
   ],

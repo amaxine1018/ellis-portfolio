@@ -9,7 +9,7 @@ interface SiteFooterProps {
 // Secondary (outlined) button, same treatment as the header nav
 const buttonClass = cn(
   "inline-flex items-center justify-center rounded-full border-2 border-text-secondary px-2.5 py-0.5 font-mono text-xs leading-tight font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
-  "transition-colors duration-150 hover:border-orange-100 hover:bg-orange-100 hover:text-text-inverse",
+  "transition-colors duration-150 hover:border-orange-200 hover:bg-orange-200 hover:text-text-inverse",
 );
 
 export function SiteFooter({ className }: SiteFooterProps = {}) {

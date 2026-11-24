@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BoostThumb } from "@/components/landing/boost-thumb";
+import { CursorPillLink } from "@/components/ui/cursor-pill-link";
 import type { CaseStudy } from "@/lib/case-studies/types";
 import { tokenBg } from "@/lib/case-studies";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,19 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
               </h1>
 
               {study.heroLayout === "boost-intro" ? (
-                <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-card)]">
-                  <BoostThumb />
-                </div>
+                study.heroLink ? (
+                  <CursorPillLink
+                    href={study.heroLink.href}
+                    label={study.heroLink.label}
+                    className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-card)]"
+                  >
+                    <BoostThumb />
+                  </CursorPillLink>
+                ) : (
+                  <div className="relative aspect-[960/386] w-full overflow-hidden rounded-[var(--radius-card)]">
+                    <BoostThumb />
+                  </div>
+                )
               ) : study.heroLayout === "frame" ? (
                 <div
                   className="relative aspect-[960/342] w-full overflow-hidden rounded-[var(--radius-card-sm)] sm:rounded-[var(--radius-card)]"

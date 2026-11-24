@@ -55,7 +55,7 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
                   "transition-colors duration-150",
                   isActive
                     ? "bg-text-secondary text-bg-base"
-                    : "hover:border-orange-100 hover:bg-orange-100 hover:text-text-inverse",
+                    : "hover:border-orange-200 hover:bg-orange-200 hover:text-text-inverse",
                 )}
               >
                 <span

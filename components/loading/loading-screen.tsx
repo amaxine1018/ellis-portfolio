@@ -3,49 +3,53 @@
 import {
   AnimatePresence,
   animate,
-  cubicBezier,
-  mix,
   motion,
   motionValue,
   type AnimationSequence,
   type Variants,
 } from "framer-motion";
-import { useLayoutEffect, useRef, useState, type ComponentProps } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { headerShapeScale } from "@/components/brand/header-shape";
 import { LOGO_SLOT, LogoMark } from "@/components/brand/logo-mark";
 import {
-  BALL,
-  BALL_CENTER,
   LOADER_FRAME,
-  PERCH_CENTER,
-  STRAND_WIDTH,
-  STRANDS,
-  WAVES,
-  flowPath,
   headerPath,
-  wavePath,
   type Stage,
 } from "@/components/loading/loader-paths";
 
 const EASE: [number, number, number, number] = [0.43, 0.13, 0.23, 0.96];
-/** Fast start, long settle: a line snapping taut. */
-const SNAP: [number, number, number, number] = [0.16, 1, 0.3, 1];
-/** Shoved from below: instant velocity, decelerating into place. */
-const PUSH: [number, number, number, number] = [0.2, 0.9, 0.3, 1];
 
-/** Base box for the ball and logo; everything else is scale. */
-const BOX = BALL.size;
+/** Logo size in the Figma loading frames; everything else is scale. */
+const BOX = 150;
+
+/** Where the logo comes to rest on the left (Frame 7), in Figma frame space. */
+const PERCH_X = 82 + 75;
+/** How far above a straight line the jump into the header arcs, in Figma px. */
+const JUMP_LIFT = 90;
+
+/**
+ * The purple's bottom edge, sized from Frames 4–8 (crests around y 216,
+ * troughs around y 444). Three sine waves of different lengths and speeds
+ * stacked together, so the hills come out uneven and keep changing shape.
+ * `length` is px crest to crest, `period` seconds per cycle (negative runs
+ * the other way).
+ */
+const WAVE_BASE = 330;
+const WAVES = [
+  { amplitude: 98, length: 875, period: 3.6, phase: 0.41 },
+  { amplitude: 18, length: 530, period: -5.2, phase: 2.1 },
+];
 
 /** Module scope survives client navigations but resets on a full load. */
 let hasPlayed = false;
 
 const overlay: Variants = {
   shown: { opacity: 1 },
-  gone: { opacity: 0, transition: { duration: 0.35, ease: EASE } },
+  gone: { opacity: 0, transition: { duration: 0.4, ease: EASE } },
 };
 
-/** Set to `true` to turn the loading animation back on. */
-export const LOADING_SCREEN_ENABLED = false;
+/** Set to `false` to turn the loading animation off. */
+export const LOADING_SCREEN_ENABLED = true;
 
 export function LoadingScreen() {
   if (!LOADING_SCREEN_ENABLED) return null;
@@ -83,20 +87,14 @@ function LoadingOverlay() {
 function createValues() {
   return {
     stage: motionValue(0),
-    lineD: motionValue(""),
-    lineWidth: motionValue(STRAND_WIDTH),
-    lineOpacity: motionValue(1),
-    purpleD: motionValue(""),
-    purpleOpacity: motionValue(0),
-    ballX: motionValue(0),
-    ballY: motionValue(0),
-    ballScale: motionValue(1),
-    ballRotate: motionValue(0),
-    strands: STRANDS.map(() => ({
-      length: motionValue(1),
-      offset: motionValue(0),
-      opacity: motionValue(1),
-    })),
+    /** 0 → 1: the purple drops in from the top edge */
+    reach: motionValue(0),
+    /** logo centre x while it's rolling on the wave */
+    rollX: motionValue(0),
+    /** 0 → 1: off the wave in one arc into the header slot */
+    jump: motionValue(0),
+    /** 0 → 1: the wave becomes the header shape */
+    morph: motionValue(0),
     logoX: motionValue(0),
     logoY: motionValue(0),
     logoScale: motionValue(1),
@@ -106,13 +104,9 @@ function createValues() {
   };
 }
 
-type Values = ReturnType<typeof createValues>;
-
 interface Layout extends Stage {
-  /** Uniform scale for the ball and logo (frames 1–4). */
+  /** Uniform scale for the logo while it's on the wave. */
   unit: number;
-  ball: { x: number; y: number };
-  perch: { x: number; y: number };
   slot: { x: number; y: number; scale: number };
   header: { scale: number; top: number; right: number };
 }
@@ -121,6 +115,8 @@ function measure(stage: HTMLElement): Layout {
   const width = stage.clientWidth;
   const height = stage.clientHeight;
   const sx = width / LOADER_FRAME.width;
+  // Height follows width on desktop, but phones get a taller wave so the
+  // logo still has room to roll along it.
   const sy = Math.min(Math.max(sx, 0.55), 1.25, height / 500);
   const unit = sy;
 
@@ -145,11 +141,6 @@ function measure(stage: HTMLElement): Layout {
     sx,
     sy,
     unit,
-    ball: { x: BALL_CENTER[0] * sx, y: BALL_CENTER[1] * sy },
-    perch: {
-      x: Math.max(PERCH_CENTER[0] * sx, (BOX / 2) * unit + 12),
-      y: PERCH_CENTER[1] * sy,
-    },
     slot: { ...slot, scale: slotSize / BOX },
     header: {
       scale: headerScale,
@@ -159,151 +150,41 @@ function measure(stage: HTMLElement): Layout {
   };
 }
 
-function applyStart(v: Values, l: Layout) {
-  v.lineD.set(wavePath(WAVES.flat, l, { x: l.ball.x, unit: l.unit }));
-  v.lineWidth.set(STRAND_WIDTH * l.sy);
-  v.purpleD.set(flowPath(l, 0));
-  v.ballX.set(l.ball.x);
-  v.ballY.set(l.ball.y);
-  v.ballScale.set(l.unit);
-  v.logoX.set(l.ball.x);
-  v.logoY.set(l.ball.y);
-  v.logoScale.set(l.unit);
-  v.stage.set(1);
+/** Sample columns across the screen; the purple edge is drawn through them. */
+function columns(width: number) {
+  const count = Math.max(24, Math.ceil(width / 8));
+  return Array.from({ length: count + 1 }, (_, i) => (i / count) * width);
 }
 
 /**
- * One timeline for all five Figma frames:
- * 1 tangled ball → 2 strands unwind into the wave → 3 logo leaps free →
- * 4 purple flows down to the wave → 5 purple becomes the header, logo hops in.
+ * Bottom edge of the header shape at each column, found by probing the real
+ * outline, so the wave can melt into it point for point.
  */
-/**
- * Progress (0–1) through the purple → header morph at which the rising edge
- * passes `point`, so the push hop starts on contact at any viewport size.
- */
-function contactProgress(
-  probe: SVGPathElement,
-  from: string,
-  to: string,
-  point: DOMPoint,
-) {
-  const morph = mix(from, to);
-  const ease = cubicBezier(...EASE);
+function headerEdge(probe: SVGPathElement, d: string, xs: number[], max: number) {
   const restore = probe.getAttribute("d") ?? "";
-  let hit = 0.3;
-  for (let i = 0; i <= 50; i++) {
-    probe.setAttribute("d", morph(ease(i / 50)));
-    if (!probe.isPointInFill(point)) {
-      hit = i / 50;
-      break;
+  probe.setAttribute("d", d);
+  const point = new DOMPoint();
+  const edge = xs.map((x) => {
+    point.x = Math.min(Math.max(x, 0.5), xs[xs.length - 1] - 0.5);
+    let lo = 0;
+    let hi = max;
+    for (let i = 0; i < 14; i++) {
+      point.y = (lo + hi) / 2;
+      if (probe.isPointInFill(point)) lo = point.y;
+      else hi = point.y;
     }
-  }
-  probe.setAttribute("d", restore);
-  return hit;
-}
-
-function buildSequence(
-  v: Values,
-  l: Layout,
-  probe: SVGPathElement,
-): AnimationSequence {
-  const { sy, unit, ball, perch, slot } = l;
-  const anchor = { x: ball.x, unit };
-  const wave = (w: keyof typeof WAVES) =>
-    wavePath(WAVES[w], l, w === "free" || w === "recoil" ? undefined : anchor);
-  const flow = flowPath(l);
-  const header = headerPath(l.header.right, l.header.scale, l.header.top);
-
-  /** The slack line snaps taut into the wave; that snap launches the logo. */
-  const pullAt = 1.5;
-  const leapPeak = Math.min(ball.y, perch.y) - 110 * sy;
-  /** The purple rising into the header shape shoves the logo up. */
-  const pushAt = 3.5;
-  const pushDuration = 0.8;
-  const logoBottom = new DOMPoint(perch.x, perch.y + (BOX / 2) * unit);
-  const hopAt =
-    pushAt + pushDuration * contactProgress(probe, flow, header, logoBottom);
-  const hopOvershoot = slot.y - 10 * l.header.scale;
-
-  const strands: AnimationSequence = v.strands.flatMap((s, i) => {
-    const at = 0.6 + i * 0.17;
-    return [
-      [s.length, [1, 0], { duration: 0.4, at, ease: EASE }],
-      [s.offset, [0, 1], { duration: 0.4, at, ease: EASE }],
-      [s.opacity, [1, 0], { duration: 0.08, at: at + 0.35 }],
-    ];
+    return lo;
   });
-
-  return [
-    // Phase 1: the ball idles, line taut.
-    [v.ballRotate, [0, 3, -3, 0], { duration: 0.6, at: 0, ease: "easeInOut" }],
-
-    // Phase 2: strands unwind outer → inner; their slack loosens the line.
-    [v.ballRotate, [0, -25], { duration: pullAt - 0.6, at: 0.6, ease: "easeOut" }],
-    [
-      v.ballScale,
-      [unit, unit * 1.04, unit * 0.96, unit],
-      { duration: pullAt - 0.6, at: 0.6, ease: EASE },
-    ],
-    ...strands,
-    [
-      v.lineD,
-      [wave("flat"), wave("sag"), wave("loose")],
-      { duration: pullAt - 0.6, at: 0.6, times: [0, 0.35, 1], ease: EASE },
-    ],
-    [
-      v.lineWidth,
-      [STRAND_WIDTH * sy, 18 * sy],
-      { duration: 0.8, at: 0.6, ease: EASE },
-    ],
-    [v.logoRotate, [0, 4, -4, 0], { duration: 0.3, at: pullAt - 0.4, ease: "easeInOut" }],
-
-    // Phase 3: the line snaps into the wave and flings the logo up-left.
-    [v.squashY, [1, 0.82], { duration: 0.1, at: pullAt - 0.1, ease: "easeOut" }],
-    [v.squashX, [1, 1.12], { duration: 0.1, at: pullAt - 0.1, ease: "easeOut" }],
-    [v.logoY, [ball.y, ball.y + 6 * sy], { duration: 0.1, at: pullAt - 0.1 }],
-    [v.lineD, [wave("loose"), wave("free")], { duration: 0.3, at: pullAt, ease: SNAP }],
-    [v.logoX, [ball.x, perch.x], { duration: 0.55, at: pullAt, ease: "linear" }],
-    [
-      v.logoY,
-      [ball.y + 6 * sy, leapPeak, perch.y],
-      { duration: 0.55, at: pullAt, times: [0, 0.45, 1], ease: ["easeOut", "easeIn"] },
-    ],
-    [v.squashY, [0.82, 1.14, 1], { duration: 0.3, at: pullAt, ease: "easeOut" }],
-    [v.squashX, [1.12, 0.9, 1], { duration: 0.3, at: pullAt, ease: "easeOut" }],
-    [v.logoRotate, [0, -360], { duration: 0.55, at: pullAt, ease: EASE }],
-    [v.squashY, [1, 0.86, 1.04, 1], { duration: 0.23, at: pullAt + 0.55, ease: "easeOut" }],
-    [v.squashX, [1, 1.1, 0.97, 1], { duration: 0.23, at: pullAt + 0.55, ease: "easeOut" }],
-    [
-      v.lineD,
-      [wave("free"), wave("recoil"), wave("free")],
-      { duration: 0.6, at: pullAt + 0.3, ease: "easeInOut" },
-    ],
-
-    // Phase 4: purple pours down to the wave; logo bobs on its perch.
-    [v.purpleOpacity, [0, 1], { duration: 0.3, at: 2.4 }],
-    [v.purpleD, [flowPath(l, 0), flow], { duration: 0.9, at: 2.4, ease: EASE }],
-    [v.lineOpacity, [1, 0], { duration: 0.4, at: 2.7, ease: EASE }],
-    [
-      v.logoY,
-      [perch.y, perch.y - 4 * sy, perch.y + 3 * sy, perch.y],
-      { duration: 0.9, at: 2.5, ease: "easeInOut" },
-    ],
-
-    // Phase 5: purple rises into the header shape and pushes the logo up.
-    [v.purpleD, [flow, header], { duration: pushDuration, at: pushAt, ease: EASE }],
-    [v.logoX, [perch.x, slot.x], { duration: 0.32, at: hopAt, ease: PUSH }],
-    [
-      v.logoY,
-      [perch.y, hopOvershoot, slot.y],
-      { duration: 0.4, at: hopAt, times: [0, 0.7, 1], ease: [PUSH, "easeInOut"] },
-    ],
-    [v.logoScale, [unit, slot.scale], { duration: 0.32, at: hopAt, ease: PUSH }],
-    [v.squashY, [1, 1.15, 0.95, 1], { duration: 0.45, at: hopAt, ease: "easeOut" }],
-    [v.squashX, [1, 0.9, 1.04, 1], { duration: 0.45, at: hopAt, ease: "easeOut" }],
-  ];
+  probe.setAttribute("d", restore);
+  return edge;
 }
 
+/**
+ * The Figma "Loading State" frames as one sequence: the purple drops in and
+ * swells as a sine wave while the logo rolls in from the right over its hills
+ * (6 → 4 → 7), then jumps in one arc into its header slot as the wave pulls
+ * up into the header shape (5).
+ */
 function Sequence({ onDone }: { onDone: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const purpleRef = useRef<SVGPathElement>(null);
@@ -324,48 +205,136 @@ function Sequence({ onDone }: { onDone: () => void }) {
     el.addEventListener("wheel", block, { passive: false });
     el.addEventListener("touchmove", block, { passive: false });
 
-    const layout = measure(el);
-    applyStart(v, layout);
+    const l = measure(el);
+    const { sx, sy, unit, slot } = l;
+    const xs = columns(l.width);
+    const header = headerEdge(
+      purple,
+      headerPath(l.header.right, l.header.scale, l.header.top),
+      xs,
+      l.height,
+    );
+
+    const parts = WAVES.map((p) => ({
+      amplitude: p.amplitude,
+      k: (2 * Math.PI) / (p.length * sx),
+      w: (2 * Math.PI) / p.period,
+      phase: p.phase,
+    }));
+    /** The wave's height at x, `t` seconds in. */
+    const wave = (x: number, t: number) => {
+      let y = WAVE_BASE;
+      for (const p of parts) y += p.amplitude * Math.sin(p.k * x - p.w * t + p.phase);
+      return y * sy * v.reach.get();
+    };
+
+    const radius = (BOX / 2) * unit;
+    /**
+     * Centre height for a wheel of `radius` resting on the wave at x: the
+     * highest it can sit without sinking into the hill anywhere under it.
+     */
+    const restY = (x: number, t: number) => {
+      let y = Infinity;
+      for (let i = -8; i <= 8; i++) {
+        const dx = (i / 8) * radius;
+        y = Math.min(y, wave(x + dx, t) - Math.sqrt(radius * radius - dx * dx));
+      }
+      return y;
+    };
+
+    const enterX = l.width + radius;
+    const perchX = Math.max(PERCH_X * sx, radius + 12);
+    const lift = JUMP_LIFT * sy;
+
+    let raf = 0;
+    const t0 = performance.now();
+    let air = { x: 0, y: 0 };
+    const frame = (now: number) => {
+      const t = (now - t0) / 1000;
+      const morph = v.morph.get();
+
+      let d = `M0 0 L${l.width} 0`;
+      for (let i = xs.length - 1; i >= 0; i--) {
+        const y = wave(xs[i], t) * (1 - morph) + header[i] * morph;
+        d += ` L${xs[i].toFixed(1)} ${Math.max(0, y).toFixed(1)}`;
+      }
+      purple.setAttribute("d", `${d} Z`);
+
+      // On the ground it rolls: one radian of turn per radius travelled,
+      // landing upright at the perch.
+      const x = v.rollX.get();
+      const ground = { x, y: restY(x, t) };
+      // One jump: a straight line to the slot, bowed upward into an arc.
+      const jump = v.jump.get();
+      if (jump === 0) air = ground;
+      v.logoX.set(air.x + (slot.x - air.x) * jump);
+      v.logoY.set(air.y + (slot.y - air.y) * jump - lift * Math.sin(Math.PI * jump));
+      v.logoScale.set(unit + (slot.scale - unit) * jump);
+      v.logoRotate.set(((x - perchX) / radius) * (180 / Math.PI));
+
+      raf = requestAnimationFrame(frame);
+    };
+
+    v.rollX.set(enterX);
+    v.stage.set(1);
+    raf = requestAnimationFrame(frame);
+
+    // a beat after the purple has settled
+    const rollAt = 1;
+    const roll = 1.8;
+    const landAt = rollAt + roll;
+    const jumpAt = landAt + 0.2;
+    const jump = 0.6;
+
+    const sequence: AnimationSequence = [
+      [v.reach, [0, 1], { duration: 0.6, at: 0, ease: EASE }],
+      [v.rollX, [enterX, perchX], { duration: roll, at: rollAt, ease: [0.25, 0.1, 0.25, 1] }],
+      [v.squashY, [1, 0.9, 1.03, 1], { duration: 0.18, at: landAt - 0.05, ease: "easeOut" }],
+      [v.squashX, [1, 1.06, 0.99, 1], { duration: 0.18, at: landAt - 0.05, ease: "easeOut" }],
+
+      // Crouch, then spring up off the wave.
+      [v.squashY, [1, 0.82], { duration: 0.1, at: jumpAt - 0.1, ease: "easeOut" }],
+      [v.squashX, [1, 1.1], { duration: 0.1, at: jumpAt - 0.1, ease: "easeOut" }],
+      [v.jump, [0, 1], { duration: jump, at: jumpAt, ease: [0.3, 0.6, 0.4, 1] }],
+      [v.squashY, [0.82, 1.14, 1], { duration: 0.3, at: jumpAt, ease: "easeOut" }],
+      [v.squashX, [1.1, 0.92, 1], { duration: 0.3, at: jumpAt, ease: "easeOut" }],
+
+      // The wave pulls up into the header under it, and it lands in its slot.
+      [v.morph, [0, 1], { duration: 0.6, at: jumpAt + 0.05, ease: EASE }],
+      [v.squashY, [1, 0.9, 1.03, 1], { duration: 0.3, at: jumpAt + jump - 0.03, ease: "easeOut" }],
+      [v.squashX, [1, 1.06, 0.99, 1], { duration: 0.3, at: jumpAt + jump - 0.03, ease: "easeOut" }],
+    ];
 
     let cancelled = false;
-    const controls = animate(buildSequence(v, layout, purple));
+    const controls = animate(sequence);
     controls.then(() => {
+      cancelAnimationFrame(raf);
       if (!cancelled) onDone();
     });
 
     return () => {
       cancelled = true;
       controls.stop();
+      cancelAnimationFrame(raf);
       el.removeEventListener("wheel", block);
       el.removeEventListener("touchmove", block);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- plays once per mount
   }, [v]);
 
-  const box = { width: BOX, height: BOX, marginLeft: -BOX / 2, marginTop: -BOX / 2 };
-  const ballStyle = {
-    ...box,
-    x: v.ballX,
-    y: v.ballY,
-    scale: v.ballScale,
-    rotate: v.ballRotate,
-  };
-
   return (
     <motion.div ref={ref} className="absolute inset-0" style={{ opacity: v.stage }}>
-      <motion.svg
-        className="absolute inset-0 h-full w-full"
-        style={{ opacity: v.purpleOpacity }}
-      >
-        <motion.path ref={purpleRef} d={v.purpleD} fill="var(--purple-50)" />
-      </motion.svg>
-
-      <StrandLayer values={v} behind style={ballStyle} />
+      <svg className="absolute inset-0 h-full w-full">
+        <path ref={purpleRef} fill="var(--purple-50)" />
+      </svg>
 
       <motion.div
         className="absolute top-0 left-0"
         style={{
-          ...box,
+          width: BOX,
+          height: BOX,
+          marginLeft: -BOX / 2,
+          marginTop: -BOX / 2,
           x: v.logoX,
           y: v.logoY,
           scale: v.logoScale,
@@ -379,56 +348,6 @@ function Sequence({ onDone }: { onDone: () => void }) {
           <LogoMark className="size-full" />
         </motion.div>
       </motion.div>
-
-      <StrandLayer values={v} style={ballStyle} />
-
-      <motion.svg
-        className="absolute inset-0 h-full w-full overflow-visible"
-        style={{ opacity: v.lineOpacity }}
-      >
-        <motion.path
-          d={v.lineD}
-          stroke="var(--navy-800)"
-          strokeWidth={v.lineWidth}
-          fill="none"
-        />
-      </motion.svg>
     </motion.div>
-  );
-}
-
-function StrandLayer({
-  values,
-  behind = false,
-  style,
-}: {
-  values: Values;
-  behind?: boolean;
-  style: ComponentProps<typeof motion.svg>["style"];
-}) {
-  return (
-    <motion.svg
-      className="absolute top-0 left-0 overflow-visible"
-      viewBox={`${BALL.left} ${BALL.top} ${BALL.size} ${BALL.size}`}
-      style={style}
-    >
-      {STRANDS.map((strand, i) =>
-        Boolean(strand.behind) === behind ? (
-          <g key={i} transform={strand.transform}>
-            <motion.path
-              d={strand.d}
-              fill="none"
-              stroke="var(--navy-800)"
-              strokeWidth={STRAND_WIDTH}
-              style={{
-                pathLength: values.strands[i].length,
-                pathOffset: values.strands[i].offset,
-                opacity: values.strands[i].opacity,
-              }}
-            />
-          </g>
-        ) : null,
-      )}
-    </motion.svg>
   );
 }

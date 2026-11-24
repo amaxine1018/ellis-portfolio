@@ -86,7 +86,7 @@ export function SharpieNudgeStyle() {
 }
 
 /**
- * Orange "Click to draw" pill — Figma 285:49.
+ * Orange "Click to draw" pill, styled like a hovered nav button.
  * Follows the pointer and replaces the cursor while hovering the sharpie.
  */
 export function ClickToDrawPill({
@@ -102,7 +102,7 @@ export function ClickToDrawPill({
   return createPortal(
     <span
       aria-hidden
-      className="pointer-events-none fixed z-50 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-orange-100 px-4 py-1 font-mono text-xl font-bold leading-none text-text-inverse"
+      className="pointer-events-none fixed z-50 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full border-2 border-orange-100 bg-orange-100 px-5 py-0.5 font-mono text-xl font-light leading-tight text-text-inverse"
       style={{ left: x, top: y }}
     >
       Click to draw

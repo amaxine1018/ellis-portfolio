@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HEADER_SHAPE, HeaderShape } from "@/components/brand/header-shape";
+import { HeaderShape, fluid } from "@/components/brand/header-shape";
 import { LOGO_SLOT, LogoMark } from "@/components/brand/logo-mark";
 import { cn } from "@/lib/utils";
 
@@ -15,9 +15,6 @@ export type SiteNavActive = "home" | "work" | "studio" | "about";
 interface SiteHeaderProps {
   active?: SiteNavActive;
 }
-
-const fluid = (px: number) =>
-  `min(${px}px, calc(100cqw * ${px} / ${HEADER_SHAPE.frameWidth}))`;
 
 export function SiteHeader({ active = "home" }: SiteHeaderProps) {
   return (
@@ -54,11 +51,11 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "pointer-events-auto relative inline-flex items-center justify-center rounded-full border-2 border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
+                  "pointer-events-auto relative inline-flex items-center justify-center rounded-full border-2 border-text-secondary px-2.5 py-0.5 font-mono text-xs leading-tight font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
                   "transition-colors duration-150",
                   isActive
                     ? "bg-text-secondary text-bg-base"
-                    : "hover:bg-text-secondary hover:text-bg-base",
+                    : "hover:border-orange-100 hover:bg-orange-100 hover:text-text-inverse",
                 )}
               >
                 <span

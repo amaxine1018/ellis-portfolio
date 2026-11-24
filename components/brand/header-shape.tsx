@@ -9,13 +9,29 @@ export const HEADER_SHAPE = {
     "M154.5 171.5C80.5 203.163 0 159 0 80.5V0H276V47.5C185.5 47.5 228.5 139.837 154.5 171.5Z",
 } as const;
 
-/** Matches the `min(Npx, calc(100cqw * N / 1512))` sizing used in the header. */
+/**
+ * The header scales down with the viewport, but never below this, so the
+ * logo and purple shape stay a readable size on phones.
+ */
+export const HEADER_MIN_SCALE = 0.45;
+
+/**
+ * Room the nav buttons need on the right at their smallest (four buttons,
+ * gaps and the page gutter). On very narrow phones (iPhone SE) the shape
+ * gives up its minimum and shrinks so its lobe stays clear of the nav.
+ */
+const NAV_CLEARANCE = 280;
+
+/** Matches the `fluid()` sizing used in the header. */
 export function headerShapeScale(containerWidth: number) {
-  return Math.min(1, containerWidth / HEADER_SHAPE.frameWidth);
+  const natural = containerWidth / HEADER_SHAPE.frameWidth;
+  const roomy = (containerWidth - NAV_CLEARANCE) / HEADER_SHAPE.lobeWidth;
+  return Math.min(1, Math.max(natural, Math.min(HEADER_MIN_SCALE, roomy)));
 }
 
-const fluid = (px: number) =>
-  `min(${px}px, calc(100cqw * ${px} / ${HEADER_SHAPE.frameWidth}))`;
+/** A Figma px value on the 1512px frame, scaled like the header. */
+export const fluid = (px: number) =>
+  `min(${px}px, max(calc(100cqw * ${px} / ${HEADER_SHAPE.frameWidth}), min(${px * HEADER_MIN_SCALE}px, calc((100cqw - ${NAV_CLEARANCE}px) * ${px} / ${HEADER_SHAPE.lobeWidth}))))`;
 
 /**
  * Curved lobe keeps its aspect ratio; the flat right band stretches to the

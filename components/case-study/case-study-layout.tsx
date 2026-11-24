@@ -22,7 +22,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
 
   return (
     <div className="page-shell flex flex-col gap-8 sm:gap-10 lg:mt-[3px] lg:flex-row lg:items-start lg:gap-[171px]">
-      <aside className="hidden w-[142px] shrink-0 lg:block lg:self-stretch lg:pt-[131px]">
+      <aside className="hidden w-[142px] shrink-0 lg:block lg:self-stretch lg:pt-[86px]">
         <CaseStudyNav sections={study.sections} variant="sidebar" />
       </aside>
 
@@ -38,14 +38,7 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
           )}
         >
           <div className="flex flex-col gap-1">
-            <p className="font-mono text-base leading-normal text-navy-800 sm:text-xl">
-              <span className="font-semibold">{study.client}</span>{" "}
-              <span className="font-extralight">
-                / {study.status} {study.year}
-              </span>
-            </p>
-
-            <div className="flex flex-col gap-[14px]">
+            <div className="flex flex-col gap-6">
               <h1 className="font-display text-[clamp(2rem,4vw+0.75rem,4rem)] font-bold leading-[1.1] text-text-primary">
                 {study.headline ?? study.title}
               </h1>
@@ -133,31 +126,27 @@ export function CaseStudyLayout({ study }: CaseStudyLayoutProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 text-base leading-[30px] text-text-primary sm:gap-8 md:flex-row md:gap-12 lg:gap-[140px]">
+          <div className="flex flex-col gap-6 text-base leading-[30px] text-text-primary sm:gap-8 md:flex-row md:flex-wrap md:gap-x-16 lg:justify-between lg:gap-x-16">
             <MetaBlock
               label="TOOLS"
               value={study.meta.tools}
               className={study.meta.teamLabel ? "md:w-[263px]" : "md:w-[218px]"}
             />
-            {study.meta.teamLabel ? (
-              <MetaBlock
-                label="DURATION"
-                value={study.meta.duration}
-                className="md:w-[159px]"
-              />
-            ) : null}
+            <MetaBlock
+              label="DURATION"
+              value={study.meta.duration}
+              className={study.meta.teamLabel ? "md:w-[159px]" : "md:w-[136px]"}
+            />
+            <MetaBlock
+              label="COMPANY"
+              value={study.client}
+              className="md:w-[150px]"
+            />
             <MetaBlock
               label={study.meta.teamLabel ?? "TEAM"}
               value={study.meta.team}
               className="md:w-[177px]"
             />
-            {study.meta.teamLabel ? null : (
-              <MetaBlock
-                label="DURATION"
-                value={study.meta.duration}
-                className="md:w-[136px]"
-              />
-            )}
           </div>
         </header>
 

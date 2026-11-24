@@ -67,6 +67,7 @@
       "title": "Pacing the experience with visual branding.",
       "body": "To prevent user fatigue during a lengthy medical questionnaire, I designed key interstitial screens to act as emotional pauses. Using Photoshop, I assembled and integrated brand assets to create a welcoming introductory screen and reassuring transitional pages that aligned with the established design system.",
       "mediaLayout": "portrait",
+      "horizontalScroll": true,
       "mediaBlocks": [
         {
           "caption": "Introductory interstitial.",

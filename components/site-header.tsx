@@ -54,8 +54,11 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "pointer-events-auto relative inline-flex items-center justify-center rounded-[var(--radius-nav)] border-2 border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
-                  isActive && "bg-text-secondary text-bg-base",
+                  "pointer-events-auto relative inline-flex items-center justify-center rounded-full border-[3px] border-text-secondary px-2.5 py-1 font-mono text-xs font-light text-text-secondary touch-manipulation sm:px-3 sm:text-sm md:px-5 md:text-xl",
+                  "transition-colors duration-150",
+                  isActive
+                    ? "bg-text-secondary text-bg-base"
+                    : "hover:bg-text-secondary hover:text-bg-base",
                 )}
               >
                 <span

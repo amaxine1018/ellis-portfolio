@@ -146,7 +146,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                 <HorizontalShowcase
                   blocks={section.mediaBlocks}
                   fallback={
-                    <div className="mt-8 flex flex-col gap-10 sm:mt-12 sm:gap-12">
+                    <div className="mt-8 flex flex-col gap-16 sm:mt-12 sm:gap-20 lg:gap-[120px]">
                       {section.mediaBlocks.map((block) => (
                         <PortraitBlock key={block.caption} block={block} />
                       ))}
@@ -154,7 +154,7 @@ export function CaseStudySections({ sections }: CaseStudySectionsProps) {
                   }
                 />
               ) : (
-                <div className="mt-8 flex flex-col gap-10 sm:mt-12 sm:gap-12">
+                <div className="mt-8 flex flex-col gap-16 sm:mt-12 sm:gap-20 lg:gap-[120px]">
                   {section.mediaBlocks.map((block) => (
                     <PortraitBlock key={block.caption} block={block} />
                   ))}

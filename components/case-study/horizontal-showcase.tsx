@@ -19,14 +19,15 @@ const MOVE_VH = 45;
 const PHONE_RATIO = 2.085;
 
 /**
- * Wide screens with room for a pinned panel and no reduced-motion preference.
- * Everyone else (and the server render) gets the plain vertical `fallback`.
+ * Any screen with room for a pinned panel and no reduced-motion preference
+ * (phones included). Everyone else (and the server render) gets the plain
+ * vertical `fallback`.
  */
 function usePinned(): boolean {
   const [pinned, setPinned] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia(
-      "(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)",
+      "(min-height: 520px) and (prefers-reduced-motion: no-preference)",
     );
     const sync = () => setPinned(mq.matches);
     sync();
@@ -84,6 +85,7 @@ function Pinned({ blocks }: { blocks: CaseStudyMediaBlock[] }) {
     let settleTimer: ReturnType<typeof setTimeout> | undefined;
     let raf = 0;
     let snapping = false;
+    let touching = false;
     let lastY = window.scrollY;
     let dir = 1;
 
@@ -135,7 +137,8 @@ function Pinned({ blocks }: { blocks: CaseStudyMediaBlock[] }) {
       if (y !== lastY) dir = y > lastY ? 1 : -1;
       lastY = y;
       clearTimeout(settleTimer);
-      settleTimer = setTimeout(settle, 70);
+      // never fight a finger that is still on the screen
+      if (!touching) settleTimer = setTimeout(settle, 70);
     };
     // Swallow wheel input while gliding (trackpad inertia would otherwise
     // fight the tween); touch and keys hand control straight back.
@@ -143,17 +146,33 @@ function Pinned({ blocks }: { blocks: CaseStudyMediaBlock[] }) {
       if (snapping) e.preventDefault();
     };
     const onTakeOver = () => stop();
+    const onTouchStart = () => {
+      touching = true;
+      clearTimeout(settleTimer);
+      stop();
+    };
+    // Lifting a finger may start momentum (scroll events follow and re-arm
+    // the timer) or leave the page still (no events), so arm it here too.
+    const onTouchEnd = () => {
+      touching = false;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(settle, 120);
+    };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTakeOver, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     window.addEventListener("keydown", onTakeOver);
     return () => {
       clearTimeout(settleTimer);
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTakeOver);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
       window.removeEventListener("keydown", onTakeOver);
     };
   }, [n, step, total]);
@@ -221,14 +240,15 @@ function Panel({
 
   return (
     <motion.div
-      className="flex w-full shrink-0 items-center justify-center gap-12"
+      className="flex w-full shrink-0 flex-col items-center justify-center gap-5 px-6 sm:gap-8 lg:flex-row lg:gap-12 lg:px-0"
       style={{ opacity }}
     >
       <div
-        className="shrink-0"
-        // never taller than the viewport minus some breathing room
+        className="shrink-0 [--pad:17rem] lg:[--pad:10rem]"
+        // never wider than the screen, nor taller than the viewport minus
+        // room for the caption (stacked on small screens) or breathing room
         style={{
-          width: `min(${width}px, calc((100svh - 10rem) * ${ratio}))`,
+          width: `min(${width}px, 100%, calc((100svh - var(--pad)) * ${ratio}))`,
         }}
       >
         {block.video ? (
@@ -248,12 +268,12 @@ function Panel({
           </div>
         ) : null}
       </div>
-      <div className="flex min-w-0 max-w-[26rem] flex-1 flex-col gap-4">
-        <p className="font-display text-[clamp(1.5rem,2vw+0.5rem,2.25rem)] font-bold leading-normal text-text-primary">
+      <div className="flex min-w-0 w-full max-w-[26rem] flex-col gap-2 text-center lg:flex-1 lg:gap-4 lg:text-left">
+        <p className="font-display text-[clamp(1.25rem,2vw+0.5rem,2.25rem)] font-bold leading-normal text-text-primary">
           {block.caption}
         </p>
         {block.body ? (
-          <p className="font-body text-xl font-normal leading-[30px] text-text-primary">
+          <p className="font-body text-base font-normal leading-6 text-text-primary sm:text-xl sm:leading-[30px]">
             {block.body}
           </p>
         ) : null}

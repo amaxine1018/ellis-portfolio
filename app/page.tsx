@@ -24,18 +24,15 @@ export default async function HomePage() {
             <div className="flex w-full flex-col items-center gap-8 md:gap-10 lg:flex-row lg:items-start lg:justify-between">
               <div className="flex w-full max-w-[872px] items-center lg:py-[101px]">
                 <h1 className="w-full font-display text-[clamp(2rem,5vw+0.5rem,4rem)] font-bold leading-normal text-text-primary">
-                  Hello, I&apos;m Ellis, a research-driven product{" "}
-                  <span className="line-through decoration-solid">
-                    designer
-                  </span>{" "}
-                  <span className="text-text-highlight">builder</span>.
+                  Hello, I&apos;m Ellis, a product designer who{" "}
+                  <span className="text-text-highlight">builds</span>.
                 </h1>
               </div>
               <HeroSketch />
             </div>
 
             <div className="flex flex-col items-center gap-3.5">
-              <p className="font-mono text-base font-semibold text-orange-100 sm:text-lg md:text-2xl">
+              <p className="font-mono text-base font-semibold text-orange-200 sm:text-lg md:text-2xl">
                 scroll to see work
               </p>
               <img
